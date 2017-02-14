@@ -2,7 +2,7 @@
 
 ###Team Members:
 * Gannon Faul (gannonfaul)
-* D’Artagnan Wake(dawa6951)
+* D’Artagnan Wake (dawa6951)
 * Kassi Butler (kassi-butler)
 * Lucas Hayne (lhayne)
 * Scott Ewing (scew5145)
@@ -106,4 +106,4 @@ User Type: Developer
 **Project Tracking software:** Trello
 * Link: https://trello.com/b/WbCF7xuU
 
-Project plan: 
+**Project plan:** :100:
