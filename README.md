@@ -19,6 +19,7 @@
 * No prior experience working with the people on the team
 * Lack of backend access (no access to database information)
 * One task taking a lot longer than expected
+
 **Mitigation strategies:**
 * Learning how to make chrome extensions through online tutorials and Google’s documentation
 * Working with the team
@@ -26,7 +27,7 @@
 
 **User Stories**
 
-ID: 01
+**ID: 01**
 
 Story Summary: As a user, I want to integrate my degree audit into myCUinfo so that I can more easily register for classes I need to take in order to graduate
 
@@ -36,7 +37,7 @@ Priority: Low
 
 User Type: End User
 
-ID: 02
+**ID: 02**
 
 Story Summary: As a user, I want to view all the prerequisites required for each class graphically, so I can more easily see which classes I can take this semester.
 
@@ -46,7 +47,7 @@ Priority: Med
 
 User Type: End User
 
-ID: 03
+**ID: 03**
 
 Story Summary: As a user, I want to see schedule conflicts between classes in my shopping cart, so that I can see which classes might not fit my schedule with the other classes in my cart.
 
@@ -56,7 +57,7 @@ Priority: High
 
 User Type: End User
 
-ID: 04
+**ID: 04**
 
 Story Summary: As a developer, I want to be able to add new features without causing conflicts with existing ones, so that I can continue 
 to update functionality without any problems.
@@ -67,7 +68,7 @@ Priority: Med
 
 User Type: Developer
 
-ID: 05
+**ID: 05**
 
 Story Summary: As a user, I want a visual representation of my weekly schedule as I add and remove classes from my shopping cart, so that 
 I can see what my schedule might look like before I register for classes.
@@ -78,7 +79,7 @@ Priority: Med
 
 User Type: End User
 
-ID: 06
+**ID: 06**
 
 Story Summary: As a user, I want to be able to install and use this app easily so that I can get the most out of it, even if I’m not tech-savvy.
 
@@ -89,7 +90,7 @@ Priority: Med
 User Type: End User
 
 
-ID: 07
+**ID: 07**
 
 Story Summary: As a developer, I want to be able to distinguish between added functionality (chrome extension) and built in functionality 
 that comes with MyCUInfo.
@@ -100,9 +101,9 @@ Priority: Med
 
 User Type: Developer
 
-Methodology: Agile
+**Methodology:** Agile
 
-Project Tracking software: Trello
+**Project Tracking software:** Trello
 * Link: https://trello.com/b/WbCF7xuU
 
 Project plan: 
