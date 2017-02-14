@@ -1,11 +1,11 @@
-Classy Buffs
+#Classy Buffs
 
-Team Members:
-Gannon Faul (gannonfaul)
-D’Artagnan Wake(dawa6951)
-Kassi Butler (kassi-butler)
-Lucas Hayne (lhayne)
-Scott Ewing (scew5145)
+###Team Members:
+*Gannon Faul (gannonfaul)
+*D’Artagnan Wake(dawa6951)
+*Kassi Butler (kassi-butler)
+*Lucas Hayne (lhayne)
+*Scott Ewing (scew5145)
 
 Description: We want to create a Chrome extension to make the class registration process on MyCuInfo easier and faster for the students. To do this, it should pull class data from the user’s degree audit, the CU course catalog, and MyCUInfo itself, and overlay information relevant to the user onto the course registration platform. Features might include showing class conflicts in the “shopping cart” phase of registration, showing required prerequisites for potential classes, and a “what if” calendar that displays a visual schedule of potential classes. Advanced features might include a personalized display of coursed based on degree requirements, a tree of prerequisite classes, and a fully integrated user interface.
 Vision statement: A world where signing up for classes is user friendly.
