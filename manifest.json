@@ -7,7 +7,7 @@
   // Recommended
   "default_locale": "en",
   "description": "A tool to make class registration at CU Boulder more user-friendly.",
-  "icons": "CUicon.jpg",
+  //"icons": "CUicon.jpg",
 
   // Pick one (or none)
   "browser_action": {
