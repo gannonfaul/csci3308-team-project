@@ -13,26 +13,27 @@
   "browser_action": {
     "default_icon": "Icon.png",
     "default_popup": "popup.html"
-  }//,
+  },
   
 
-  /*
 
   // Optional
-  "author": "Team Name",
-  "automation": ...,
+  "author": "CSCI3308-ClassyBuffs",
+  //"automation": ...,
   "background": {
     // Recommended
     "persistent": false
-  },
-  "background_page": ...,
-  "chrome_settings_overrides": {...},
-  "chrome_ui_overrides": {
+  }//,
+  //"background_page": ...,
+  //"chrome_settings_overrides": {...},
+  /*"chrome_ui_overrides": {
     "bookmarks_ui": {
       "remove_bookmark_shortcut": true,
       "remove_button": true
     }
-  },
+  },*/
+
+  /*
   "chrome_url_overrides": {...},
   "commands": {...},
   "content_capabilities": ...,
@@ -45,12 +46,18 @@
   "externally_connectable": {
     "matches": ["*://*.example.com/*"]
   },
+  */
+
+  /*
   "file_browser_handlers": [...],
   "file_system_provider_capabilities": {
     "configurable": true,
     "multiple_mounts": true,
     "source": "network"
   },
+  */
+
+  /*
   "homepage_url": "http://path/to/homepage",
   "import": [{"id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}],
   "incognito": "spanning, split, or not_allowed",
@@ -63,6 +70,9 @@
   "omnibox": {
     "keyword": "aString"
   },
+  */
+
+  /*
   "optional_permissions": ["tabs"],
   "options_page": "options.html",
   "options_ui": {
