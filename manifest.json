@@ -16,7 +16,7 @@
   },
   
 
-  // Optional
+  /*// Optional
   "author": "Team Name",
   "automation": ...,
   "background": {
@@ -82,5 +82,5 @@
   "tts_engine": {...},
   "update_url": "http://path/to/updateInfo.xml",
   "version_name": "aString",
-  "web_accessible_resources": [...]
+  "web_accessible_resources": [...]*/
 }
