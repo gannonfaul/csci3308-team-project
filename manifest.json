@@ -11,13 +11,13 @@
 
   // Pick one (or none)
   "browser_action": {
-    "default_icon": "CUicon.jpg"
+    "default_icon": "CUicon.jpg",
     "default_popup": "popup.html"
   },
   "page_action": {...},
 
   // Optional
-  "author": ...,
+  "author": "Team Name",
   "automation": ...,
   "background": {
     // Recommended
