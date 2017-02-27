@@ -24,7 +24,6 @@
     // Recommended
     "persistent": false
   },
-  */
   //"background_page": ...,
   //"chrome_settings_overrides": {...},
   /*"chrome_ui_overrides": {
@@ -32,7 +31,8 @@
       "remove_bookmark_shortcut": true,
       "remove_button": true
     }
-  },*/
+  },
+  */
 
   /*
   "chrome_url_overrides": {...},
