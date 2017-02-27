@@ -6,7 +6,7 @@
 
   // Recommended
   "default_locale": "en",
-  "description": "A plain text description",
+  "description": "A tool to make class registration at CU Boulder more user-friendly.",
   "icons": {...},
 
   // Pick one (or none)
