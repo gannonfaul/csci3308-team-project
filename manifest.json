@@ -1,8 +1,8 @@
 {
   // Required
   "manifest_version": 1,
-  "name": "My Extension",
-  "version": "versionString",
+  "name": "ClassyBuffs",
+  "version": "v1.0",
 
   // Recommended
   "default_locale": "en",
