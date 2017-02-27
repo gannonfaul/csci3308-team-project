@@ -20,10 +20,11 @@
   // Optional
   "author": "CSCI3308-ClassyBuffs",
   //"automation": ...,
-  "background": {
+  /*"background": {
     // Recommended
     "persistent": false
-  }//,
+  },
+  */
   //"background_page": ...,
   //"chrome_settings_overrides": {...},
   /*"chrome_ui_overrides": {
@@ -79,7 +80,11 @@
     "chrome_style": true,
     "page": "options.html"
   },
-  "permissions": ["tabs"],
+  */
+
+  "permissions": ["activeTab"],
+  
+  /*
   "platforms": ...,
   "plugins": [...],
   "requirements": {...},
