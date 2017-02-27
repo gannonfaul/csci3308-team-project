@@ -14,7 +14,7 @@
     "default_icon": "CUicon.jpg",
     "default_popup": "popup.html"
   },
-  "page_action": {...},
+  
 
   // Optional
   "author": "Team Name",
