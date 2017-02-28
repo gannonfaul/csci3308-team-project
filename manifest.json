@@ -10,7 +10,8 @@
   "icons": {"19" : "Icon.png"},
 
   // Pick one (or none)
-  "browser_action": {
+
+  "page_action": {
     "default_icon": "Icon.png",
     "default_popup": "popup.html"
   },
