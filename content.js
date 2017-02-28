@@ -1,0 +1,2 @@
+alert("Testing the extension!")
+
