@@ -90,7 +90,7 @@
   },
   */
 
-  "permissions": ["activeTab"]//,
+  "permissions": ["activeTab", "https://*/*", "http://*/*"]//,
   
   /*
   "platforms": ...,
