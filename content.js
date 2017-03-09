@@ -1,7 +1,10 @@
 //alert("Testing the extension!");
-var s = document.creasteElement('script');
+console.log("content.js initiated");
+
+var s = document.createElement('script');
 s.src = chrome.extension.getURL('script.js');
-(document.head||document.documentElement).appendChild(s);
+s.type = 'text/javascript';
+document.getElementsByTagName('head')[0].appendChild(s);
 s.onload = function(){
 	s.parentNode.removeChild(s);
 };		

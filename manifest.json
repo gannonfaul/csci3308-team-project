@@ -46,7 +46,7 @@
 	"js":["content.js"]
      	}
   ],
-   /* 
+    /* 
   "content_security_policy": "policyString",
   "converted_from_user_script": ...,
   "current_locale": ...,
@@ -90,7 +90,7 @@
   },
   */
 
-  "permissions": ["activeTab", "https://*/*", "http://*/*"]//,
+  "permissions": ["activeTab", "https://*/*", "http://*/*"],
   
   /*
   "platforms": ...,
@@ -106,8 +106,7 @@
   "system_indicator": ...,
   "tts_engine": {...},
   "update_url": "http://path/to/updateInfo.xml",
-  "version_name": "aString",
-  "web_accessible_resources": [...]
+  "version_name": "aString",*/
+  "web_accessible_resources": ["script.js"]
 
-  */
 }
