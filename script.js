@@ -4,18 +4,19 @@ function getFrame(){
 	return $("#ptifrmtgtframe").contents();
 }
 
-$("iframe")[0].addEventListener("load", function(){
-	iframe = getFrame();
-	var classes = iframe[0].querySelector('[id^="E_CLASS_NAME"]').id;
-	for (var i = 0, len = classes.length; i<len;i++){
-		item = classes[i];
-		if(item.title){
-			item.title = "Custom hovertext";
-		}
-		else{
-			console.log("Womp Womp");
-		}	
-	}
+$(document).ready(function(){
+	$("iframe")[0].addEventListener("load", function(){
+		iframe = getFrame();
+		iframe.find('.PSLEVEL2GRIDROW').find('span').each(function(i, item){
+			//console.log(item);
+			if(item.id.match("^E_CLASS_NAME")){
+				$(item).attr('title', 'Custom hovertext');
+			}
+			else{
+				//console.log("womp womp");
+			}
+		});	
+	});
 });
 
 //alert('Testing the extension');
