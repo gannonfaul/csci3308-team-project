@@ -1,11 +1,10 @@
-alert("Testing the extension!")
-/*
-var classlinks = document.querySelector('[id^="E_CLASS_NAME"]');
+//alert("Testing the extension!");
+console.log("content.js initiated");
 
-for (var i=0; i<classlinks.length; i++){
-	var link = classlinks[i];
-	console.log(link);
-	link.innerHTML = "Custon Hovertext";
-}
-*/
-
+var s = document.createElement('script');
+s.src = chrome.extension.getURL('script.js');
+s.type = 'text/javascript';
+document.getElementsByTagName('head')[0].appendChild(s);
+s.onload = function(){
+	s.parentNode.removeChild(s);
+};		
