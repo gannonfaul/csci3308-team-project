@@ -7,8 +7,9 @@ function getFrame(){
 function getNameParts(courseObj){
 	var department = courseObj.data.split(" ")[0];
 	var courseNumber = courseObj.data.replace("-"," ").split(" ")[1];
-	console.log('deparment: ', department);
-	console.log('course number: ', courseNumber);
+	//console.log('deparment: ', department);
+	//console.log('course number: ', courseNumber);
+	return [department, courseNumber]
 }
 
 $(document).ready(function(){
@@ -20,13 +21,27 @@ $(document).ready(function(){
 				if(textObj.id != undefined){
 					textObj = textObj.firstChild;
 					console.log(textObj);
-					getNameParts(textObj);
 				}
 				else{
 					console.log(textObj);
 				}
+				var classinfo = getNameParts(textObj);
 				//console.log(item.firstChild);
 				$(item).attr('title', "Custom Hovertext");
+				$(item).hover(
+				function() {
+					/*
+					This function occurs when the mouse hover starts.
+					*/
+					console.log('hoverStartDpt:', classinfo[0]);
+					},
+				function() {
+					/*
+					This happens when the user stops hovering the mouse over the item.
+					*/
+					console.log('hoverReleaseCrse:', classinfo[1]);
+					}
+				);
 			}
 			else{
 				//console.log("womp womp");
