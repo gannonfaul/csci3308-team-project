@@ -54,7 +54,7 @@
 
     /*
 
-  "content_security_policy": "policyString",
+  "content_security_policy": "script-src 'self' http://www.smogon.com https://www.smogon.com; object-src 'self' http://www.smogon.com https://www.smogon.com",
   "converted_from_user_script": ...,
   "current_locale": ...,
   "devtools_page": "devtools.html",
@@ -97,7 +97,7 @@
   },
   */
 
-  "permissions": ["activeTab", "https://*/*", "http://*/*"],
+  "permissions": ["activeTab", "http://www.smogon.com/", "http://*/*"],
 
   /*
   "platforms": ...,

@@ -32,8 +32,24 @@ $(document).ready(function(){
 				function() {
 					/*
 					This function occurs when the mouse hover starts.
+					Example and what it does:
+					Creates a new request, sends the request, and (should) dump the output to the console.
+					Instead, it fails as soon as the request ends, because the server being accessed can't be
+					found in an HTTPS format. This example is using smogon, but the same thing happens for
+					the course catalog.
 					*/
-					console.log('hoverStartDpt:', classinfo[0]);
+					var catalogDump = new XMLHttpRequest();
+					catalogDump.open("GET", "https://www.smogon.com/stats/2017-01/chaos/gen4lc-1760.json", true);
+					catalogDump.onreadystatechange = function() {
+  						if (catalogDump.readyState == XMLHttpRequest.DONE) {
+							console.log("Words!")
+							console.log(JSON.parse(catalogDump.responseText));
+					  }else{
+					  	console.log("readystate:", catalogDump.readyState)
+					  }
+					}
+					catalogDump.send(null)
+					//console.log('hoverStartDpt:', classinfo[0]);
 					},
 				function() {
 					/*
