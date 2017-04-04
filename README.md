@@ -1,6 +1,6 @@
-#Classy Buffs
+# Classy Buffs
 
-###Team Members:
+### Team Members:
 * Gannon Faul (gannonfaul)
 * D’Artagnan Wake (dawa6951)
 * Kassi Butler (kassi-butler)
@@ -106,4 +106,4 @@ User Type: Developer
 **Project Tracking software:** Trello
 * Link: https://trello.com/b/WbCF7xuU
 
-**Project plan:** :100:
+**Project plan:** See image in repository
