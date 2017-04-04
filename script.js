@@ -15,8 +15,9 @@ function getNameParts(courseObj){
 $(document).ready(function(){
 	$("iframe")[0].addEventListener("load", function(){
 		iframe = getFrame();
-		iframe.find('.PSLEVEL2GRIDROW').find('span').each(function(i, item){
-			if(item.id.match("^E_CLASS_NAME")){
+		console.log("Load");
+		iframe.find('.PSLEVEL3GRIDWBO').find('span').each(function(i, item){
+			if(item.id.match("^P_CLASS_NAME")){
 				var textObj = item.firstChild;
 				if(textObj.id != undefined){
 					textObj = textObj.firstChild;
@@ -27,7 +28,7 @@ $(document).ready(function(){
 				}
 				var classinfo = getNameParts(textObj);
 				//console.log(item.firstChild);
-				$(item).attr('title', "Custom Hovertext");
+				$(item).attr('title', classinfo[0]+" "+classinfo[1]);
 				$(item).hover(
 				function() {
 					/*
