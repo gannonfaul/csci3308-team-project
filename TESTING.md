@@ -20,11 +20,11 @@
 * **DELETE** User Acceptance Test plans
 * **DELETE** The purpose of these tests is to have a formatted plan that you could provide to users to go through the steps in using your application and report whether it was successful or not.
 * **DELETE** Provide at least three test cases formatted similar to the following:
-.* Use case name
-    Verify login with valid user name and password
-Description
-    Test the Google login page
-Pre-conditions
+    Use case name
+        Verify login with valid user name and password
+    Description
+        Test the Google login page
+    Pre-conditions
     User has valid user name and password
 Test steps
     1. Navigate to login page
