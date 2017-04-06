@@ -19,6 +19,7 @@ $(document).ready(function(){
 		iframe.find('.PSLEVEL3GRIDWBO').find('span').each(function(i, item){
 			if(item.id.match("^P_CLASS_NAME")){
 				var textObj = item.firstChild;
+				console.log(textObj)
 				if(textObj.id != undefined){
 					textObj = textObj.firstChild;
 					console.log(textObj);
