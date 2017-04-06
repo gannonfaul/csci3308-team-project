@@ -1,5 +1,5 @@
 # Product Testing
-* **DELETE** The purpose is to create two types of tests for your project:
+
 ## Project: ClassyBuffs
 ### Team Members:
 * Gannon Faul (gannonfaul)
