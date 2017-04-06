@@ -21,9 +21,9 @@
 * **DELETE** The purpose of these tests is to have a formatted plan that you could provide to users to go through the steps in using your application and report whether it was successful or not.
 * **DELETE** Provide at least three test cases formatted similar to the following:
 1. Use case name
-..* Verify login with valid user name and password
+  * Verify login with valid user name and password
 2. Description
-..* Test the Google login page
+  * Test the Google login page
 3. Pre-conditions
 ..* User has valid user name and password
 4. Test steps
