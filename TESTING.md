@@ -17,13 +17,10 @@
 * **DELETE** Provide a copy of the output showing the results of the automated test cases running.
 
 ### User-Acceptance Tests: 
-* **DELETE** User Acceptance Test plans
-* **DELETE** The purpose of these tests is to have a formatted plan that you could provide to users to go through the steps in using your application and report whether it was successful or not.
-* **DELETE** Provide at least three test cases formatted similar to the following:
 
 #### Test 1: Verify Installation
-* **Description:** Test that the chrome extension can be installed correctly from the Chrome Web Store
-* **Pre-conditions:** User has Google Chrome installed on their computer
+* **Description:** Test that the chrome extension can be installed correctly from the Chrome Web Store.
+* **Pre-conditions:** User has Google Chrome installed on their computer.
 * **Test Steps:**
  1. Open Google Chrome
  2. Go to chrome://extensions
@@ -31,39 +28,40 @@
  4. Type "ClassyBuffs" in the search bar at the top left of the page
  5. Press the "+ Add to Chrome" button next to the ClassyBuffs logo and description
  6. Press"Add Extension" on the pop-up
-* **Expected Results:** Pop-up verification that says "ClassyBuffs has been added to Chrome."
-* **Actual Result:** Extension is not yet published, so it cannot be installed outside of developer mode
+* **Expected Results:** Pop-up verification that says "ClassyBuffs has been added to Chrome.".
+* **Actual Result:** Extension is not yet published, so it cannot be installed outside of developer mode.
 * **Status:** Fail
-* **Notes:** Test should pass once extension is published, there is no known problem with this in the code
-* **Post-conditions:** User has extension installed and it will perform function with no further action
+* **Notes:** Test should pass once extension is published, there is no known problem with this in the code.
+* **Post-conditions:** User has extension installed and it will perform function with no further action.
 
 #### Test 2: Verify Icon and Pop-up Description
-* **Description:** Test that the extension icon and pop-up description function as desired
-* **Pre-conditions:** User has Google Chrome and the ClassyBuffs extension installed on their computer
+* **Description:** Test that the extension icon and pop-up description function as desired.
+* **Pre-conditions:** User has Google Chrome and the ClassyBuffs extension installed on their computer.
 * **Test Steps:**
  1. Open Google Chrome
  2. View icons to the right of the search bar
  3. Verify that the CU Buffs icon is visible
  4. Hover over the CU Buffs icon with cursor and verify that title pop-up says "ClassyBuffs"
  5. Click CU Buffs icon to view extension description
-* **Expected Results:** Small pop-up showing ClassyBuffs official description: "**ClassyBuffs** -- *for all your registration needs*"
-* **Actual Result:** Small pop-up showing ClassyBuffs official description: "**ClassyBuffs** -- *for all your registration needs*"
+* **Expected Results:** Small pop-up containing ClassyBuffs official description: "**ClassyBuffs** -- *for all your registration needs*".
+* **Actual Result:** Small pop-up containing ClassyBuffs official description: "**ClassyBuffs** -- *for all your registration needs*".
 * **Status:** Pass
-* **Notes:** Test can currently only be executed in Developer Mode because the extension is not published
-* **Post-conditions:** User has extension installed and it will perform function with no further action
+* **Notes:** Test can currently only be executed in Developer Mode because the extension is not published.
+* **Post-conditions:** N/A
 
-#### Test 3: Verify Class Registration
-* **Description:** Test that the extension icon and pop-up description function as desired
-* **Pre-conditions:** User has Google Chrome and the ClassyBuffs extension installed on their computer
+#### Test 3: Verify Custom Hovertext for Class Registration
+* **Description:** Test that the hover text in user's class registration shopping cart shows the correct information.
+* **Pre-conditions:** User has Google Chrome and the ClassyBuffs extension installed on their computer. User is also enrolled in UC Boulder, has myCUinfo log-in credentials, and has added one or more classes to their shopping cart for Fall 2017 registration.
 * **Test Steps:**
  1. Open Google Chrome
- 2. View icons to the right of the search bar
- 3. Verify that the CU Buffs icon is visible
- 4. Hover over the CU Buffs icon with cursor and verify that title pop-up says "ClassyBuffs"
- 5. Click CU Buffs icon to view extension description
-* **Expected Results:** Small pop-up showing ClassyBuffs official description: "**ClassyBuffs** -- *for all your registration needs*"
-* **Actual Result:** Small pop-up showing ClassyBuffs official description: "**ClassyBuffs** -- *for all your registration needs*"
-* **Status:** Pass
-* **Notes:** Test can currently only be executed in Developer Mode because the extension is not published
-* **Post-conditions:** User has extension installed and it will perform function with no further action
+ 2. Navigate to myCUinfo home page
+ 3. Login to myCUinfo using student credentials
+ 4. Click "Register for Classes" on the left side of the page
+ 5. Select "Fall 2017 UC Boulder" and click "Continue"
+ 6. Hover cursor over a course in the registration "Shopping Cart"
+* **Expected Results:** Pop-up containing information on the course including pre-requisites and degree requirement satisfactions for the user.
+* **Actual Result:** Pop-up containing the course department and course number.
+* **Status:** Fail
+* **Notes:** N/A
+* **Post-conditions:** User has more information on their courses.
 
