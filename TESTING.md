@@ -25,7 +25,7 @@
 * This test verifies that the function navigates our course dictionary correctly
 
 * **Test Results:**
-> Insert image of mocha tests
+![Test Results](https://github.com/gannonfaul/csci3308-team-project/blob/master/Test.png)
 
 ### User-Acceptance Tests: 
 
