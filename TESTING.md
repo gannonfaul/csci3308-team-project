@@ -14,10 +14,10 @@
 ### Automated Test Cases:
 * We used the testing tool **Mocha** to test some of our extension functionality.
 * Mocha can be found at [this link](https://mochajs.org/)
-#### Test 1: getDept
+#### Test 1: getDep
 * The getDepartment function parses html elements on the myCUinfo registration page.
 * The test verifies that it is parsing the course departments correctly so that they match keys in our course dictionaries.
-#### Test 2: getCourse
+#### Test 2: getNum
 * The getCourse function parses html elements on the myCUinfo registration page.
 * This test verifies that the function is parsing the course numbers correctly so that we can perform dictionary look-ups correctly
 #### Test 3: showPreReq
