@@ -41,7 +41,7 @@ describe('getDep', function(){
 
 describe('getNum', function(){
   describe('#getNum()',  function(){
-    it('should return department name', function(){
+    it('should return class number', function(){
       assert.deepEqual('3074', getNameNum("PSCI 3074-001"));
     })
   })
