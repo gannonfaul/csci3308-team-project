@@ -30,16 +30,6 @@ $(document).ready(function(){
 		//Don't really understand why.
 		//Also, it currently won't update when you add a new item to your shopping cart.
 
-
-
-
-
-
-		//border = 1 ???
-
-
-
-
 		iframe.find('.PSLEVEL3GRIDWBO').find('span').each(function(i, item){
 			if(item.id.match("^P_CLASS_NAME")){
 				/*
@@ -67,7 +57,7 @@ $(document).ready(function(){
 				//The tr should be the closest one available in the doc tree. Look up 'jquery closest' for more info
 				var tableRow = item.closest('tr');
 				//add a new td after the last entry in the table, to make a new box to put stuff in:
-				$(tableRow).find('td:last').after('<td>'
+				$(tableRow).find('td:last').after('<td class="PSLEVEL3GRIDWBO" align=center>'
 				+ '<a href= '+ classCatalogLink+ '>'
 				+ classinfo[0]+'-'+classinfo[1]
 				+ '</a></td>');
