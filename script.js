@@ -4,6 +4,10 @@ function getFrame(){
 	return $("#ptifrmtgtframe").contents();
 }
 
+function testHref(){
+	alert('Testing href');
+}
+
 function getNameParts(courseObj){
 	var department = courseObj.data.split(" ")[0];
 	var courseNumber = courseObj.data.replace("-"," ").split(" ")[1];
@@ -21,14 +25,24 @@ $(document).ready(function(){
 		tableBody = iframe.find('.PSLEVEL1GRIDNBO');
 		tableBody.width(850) //change the width of the whole table so links fit
 		tableBody = tableBody.find('tbody');
-		x = $(tableBody).children().eq(0); 	//access first row in tbody
-		x.append('<td class="PSLEVEL3GRIDLABEL" colspan="12" align="left"><div id="win0divSSR_REGFORM_VWGP$0">Fall 2017 UC Boulder Shopping Cart</div></td>') // makes new row that looks better
-		y = $(tableBody).children().eq(0).children().eq(0).remove(); 	//deletes old row
+		firstRow = $(tableBody).children().eq(0); 	//access first row in tbody
+		firstRow = firstRow.find('td:first') //find first td
+		firstRow.attr('colspan', '12')	//change attribute vale
 		secondChild = $(tableBody).children().eq(1);
 		secondChild.append('<th scope="col" width="200" align="left" class="PSLEVEL3GRIDCOLUMNHDR"><a>Course Catalog Link</a></th>') //makes header
 		//Currently, Clicking any of the header buttons (select, class, days/times, etc) will remove this header.
 		//Don't really understand why.
+		//this goes away because it reorders the table ^ use onclick?
 		//Also, it currently won't update when you add a new item to your shopping cart.
+
+
+		y = $(tableBody).children().eq(1);		//use secondchild?
+		yp = y.find('th:first')
+		ypp = yp.find('a:first')
+		ypp.attr('onclick', "test") 	//puts onclick attribute into select
+
+
+
 
 		iframe.find('.PSLEVEL3GRIDWBO').find('span').each(function(i, item){
 			if(item.id.match("^P_CLASS_NAME")){
