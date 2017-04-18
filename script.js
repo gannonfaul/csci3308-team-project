@@ -39,7 +39,7 @@ $(document).ready(function(){
 		y = $(tableBody).children().eq(1);		//use secondchild?
 		yp = y.find('th:first')
 		ypp = yp.find('a:first')
-		ypp.attr('onclick', "test") 	//puts onclick attribute into select
+		ypp.attr('onclick', "test") 	//puts onclick attribute into select THIS ISN'T FINISHED
 
 
 
