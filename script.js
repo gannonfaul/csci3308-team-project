@@ -23,7 +23,7 @@ $(document).ready(function(){
 
 		//Add new header to shopping cart table for course catalog Links
 		tableBody = iframe.find('.PSLEVEL1GRIDNBO');
-		tableBody.width(850) //change the width of the whole table so links fit
+		tableBody.width(900) //change the width of the whole table so links fit
 		tableBody = tableBody.find('tbody');
 		firstRow = $(tableBody).children().eq(0); 	//access first row in tbody
 		firstRow = firstRow.find('td:first') //find first td
