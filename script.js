@@ -58,7 +58,7 @@ $(document).ready(function(){
 				var tableRow = item.closest('tr');
 				//add a new td after the last entry in the table, to make a new box to put stuff in:
 				$(tableRow).find('td:last').after('<td class="PSLEVEL3GRIDWBO" align=center>'
-				+ '<a href= '+ classCatalogLink+ '>'
+				+ '<a href= '+ classCatalogLink+ ' target="_blank">'
 				+ classinfo[0]+'-'+classinfo[1]
 				+ '</a></td>');
 
