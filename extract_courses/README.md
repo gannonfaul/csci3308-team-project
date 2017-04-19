@@ -1,3 +1,5 @@
+To scrape courses from catalog:
+rm courses.json
 scrapy crawl courses -o courses.json
 
 Scrapy Tutorial:
