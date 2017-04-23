@@ -21,7 +21,7 @@ $(document).ready(function(){
 		
 	$("iframe")[0].addEventListener("load", function(){
 		iframe = getFrame();
-		iframe.find(":contains('totalTimeoutMilliseconds')").remove(); //Removes second instance of session timeout counter
+		iframe.find(":contains('totalTimeoutMilliseconds')").remove("script"); //Removes second instance of session timeout counter
 		
 		//Add new header to shopping cart table for course catalog Links
 		tableBody = iframe.find('.PSLEVEL1GRIDNBO');
