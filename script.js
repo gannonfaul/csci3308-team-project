@@ -19,8 +19,12 @@ function getNameParts(courseObj){
 $(document).ready(function(){
 	$("iframe")[0].addEventListener("load", function(){
 		iframe = getFrame();
-		console.log("Load");
-
+		//console.log("Load");
+		
+		$("script").remove(":contains('TimeoutMilliseconds')");
+		//This is only removing the first instance. There's a second instance on the page but I can't get it to iterate through to the second one.
+		$("script").disable(":contains('TimeoutMilliseconds')");
+		
 		//Add new header to shopping cart table for course catalog Links
 		tableBody = iframe.find('.PSLEVEL1GRIDNBO');
 		tableBody.width(900) //change the width of the whole table so links fit
@@ -91,16 +95,6 @@ $(document).ready(function(){
 					}
 				);
 			}
-			else{
-				//console.log("womp womp");
-			}
 		});
 	});
 });
-
-//alert('Testing the extension');
-
-
-//$('#E_CLASS_NAME$0').prop('title', 'custom hovertext');
-
-//document.getElementById('#E_CLASS_NAME$0').title = "Custom Hovertext";
