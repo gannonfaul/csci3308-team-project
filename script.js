@@ -17,13 +17,11 @@ function getNameParts(courseObj){
 }
 
 $(document).ready(function(){
+	$("script").remove(":contains('totalTimeoutMilliseconds')"); //Removes first instance of session timeout counter
+		
 	$("iframe")[0].addEventListener("load", function(){
 		iframe = getFrame();
-		//console.log("Load");
-		
-		$("script").remove(":contains('TimeoutMilliseconds')");
-		//This is only removing the first instance. There's a second instance on the page but I can't get it to iterate through to the second one.
-		$("script").disable(":contains('TimeoutMilliseconds')");
+		iframe.find(":contains('totalTimeoutMilliseconds')").remove(); //Removes second instance of session timeout counter
 		
 		//Add new header to shopping cart table for course catalog Links
 		tableBody = iframe.find('.PSLEVEL1GRIDNBO');
