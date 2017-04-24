@@ -16,13 +16,30 @@ function getNameParts(courseObj){
 	return [department, courseNumber]
 }
 
+// # This function will eventually draw the course descriptions from the database
+// function getCourseDescription(str) {
+//   var xhttp;
+//   if (str == "") {
+//     document.getElementById("txtHint").innerHTML = "";
+//     return;
+//   }
+//   xhttp = new XMLHttpRequest();
+//   xhttp.onreadystatechange = function() {
+//     if (this.readyState == 4 && this.status == 200) {
+//     document.getElementById("txtHint").innerHTML = this.responseText;
+//     }
+//   };
+//   xhttp.open("GET", "getcustomer.asp?q="+str, true);
+//   xhttp.send();
+// }
+
 $(document).ready(function(){
 	$("script").remove(":contains('totalTimeoutMilliseconds')"); //Removes first instance of session timeout counter
-		
+
 	$("iframe")[0].addEventListener("load", function(){
 		iframe = getFrame();
 		iframe.find(":contains('totalTimeoutMilliseconds')").remove("script"); //Removes second instance of session timeout counter
-		
+
 		//Add new header to shopping cart table for course catalog Links
 		tableBody = iframe.find('.PSLEVEL1GRIDNBO');
 		tableBody.width(900) //change the width of the whole table so links fit
