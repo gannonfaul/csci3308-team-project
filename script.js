@@ -137,6 +137,7 @@ $(document).ready(function(){
 					//calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='1'>"
 					//calendar += "<span class='SSSTEXTWEEKLY' >"+Class Title+"</span></td>"
 				//}
+			//calendar += "</tr>"
 			//}
 		//}
 		
