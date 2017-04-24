@@ -4,10 +4,6 @@ function getFrame(){
 	return $("#ptifrmtgtframe").contents();
 }
 
-function testHref(){
-	alert('Testing href');
-}
-
 function getNameParts(courseObj){
 	var department = courseObj.data.split(" ")[0];
 	var courseNumber = courseObj.data.replace("-"," ").split(" ")[1];
@@ -18,11 +14,11 @@ function getNameParts(courseObj){
 
 $(document).ready(function(){
 	$("script").remove(":contains('totalTimeoutMilliseconds')"); //Removes first instance of session timeout counter
-		
+
 	$("iframe")[0].addEventListener("load", function(){
 		iframe = getFrame();
 		iframe.find(":contains('totalTimeoutMilliseconds')").remove("script"); //Removes second instance of session timeout counter
-		
+
 		//Add new header to shopping cart table for course catalog Links
 		tableBody = iframe.find('.PSLEVEL1GRIDNBO');
 		tableBody.width(900) //change the width of the whole table so links fit
@@ -36,12 +32,6 @@ $(document).ready(function(){
 		//Don't really understand why.
 		//this goes away because it reorders the table ^ use onclick?
 		//Also, it currently won't update when you add a new item to your shopping cart.
-
-
-		y = $(tableBody).children().eq(1);		//use secondchild?
-		yp = y.find('th:first')
-		ypp = yp.find('a:first')
-		ypp.attr('onclick', "test") 	//puts onclick attribute into select THIS ISN'T FINISHED
 
 
 		iframe.find('.PSLEVEL3GRIDWBO').find('span').each(function(i, item){
@@ -92,10 +82,10 @@ $(document).ready(function(){
 				);
 			}
 		});
-		
+
 		//All of this nonsense is straight copy-paste HTML from the "weekly calendar view" page
 		var calendar= "<div><p></p>"
-		
+
 		//This is all just formatting
 		calendar += "<table cellspacing='0' cellpadding='2' width='100%' class='PSLEVEL1GRIDNBO' id='SHOPPING_CART_SCHED_HTMLAREA'>"
 		calendar += "<colgroup span='1' width='9%' align='center' valign='middle'>"
@@ -108,7 +98,7 @@ $(document).ready(function(){
 		calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Sunday<br>"
 		calendar += "</th>"
 		calendar += "</tr>"
-		
+
 		//All this populates the calendar
 		/*
 		 * It looks like this is the way they're populating the table:
@@ -118,9 +108,9 @@ $(document).ready(function(){
 		 * SSTEXTWEEKLY => defines text to add to the cell
 		 * PSLEVEL3GRID "&nbsp => empty cell
 		 */
-		 
-		//For loop pseudocode 
-		
+
+		//For loop pseudocode
+
 		//var time;
 		//var max_time = 20;
 		//var weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thusday', 'Fiday'];
@@ -140,7 +130,7 @@ $(document).ready(function(){
 			//calendar += "</tr>"
 			//}
 		//}
-		
+
 		//8:00 am row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
@@ -154,7 +144,7 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
-		
+
 		//9:00 am row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
@@ -169,7 +159,7 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td><td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
-		
+
 		//10:00 am row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
@@ -181,7 +171,7 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
-		
+
 		//11:00 am row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
@@ -198,7 +188,7 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
-		
+
 		//12:00 pm row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
@@ -212,7 +202,7 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
-		
+
 		//1:00 pm row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
@@ -226,7 +216,7 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
-		
+
 		//2:00 pm row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
@@ -237,7 +227,7 @@ $(document).ready(function(){
 		calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='2'><span class='SSSTEXTWEEKLY' >MCEN 3047 - 013<br>Laboratory<br>2:00PM - 3:50PM<br>Drescher Undergrad Engr 1B10</span></td>"
 		calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='1'><span class='SSSTEXTWEEKLY' >MCEN 3032 - 001<br>Lecture<br>2:00PM - 2:50PM<br>Engineering Classroom Wing 265</span></td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td><td class='PSLEVEL3GRID'>&nbsp;</td></tr>"
-		
+
 		//3:00 pm row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
@@ -249,7 +239,7 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td></tr>"
-		
+
 		//4:00 pm row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
@@ -263,7 +253,7 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
-		
+
 		//5:00 pm row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
@@ -274,9 +264,9 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
-		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"	
+		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
-	
+
 		//6:00 pm row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
@@ -289,11 +279,11 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
-		
+
 		calendar += "</table>"
 		calendar += "</div>"
 		calendar += "</div>"
-		
+
 		iframe.find('.PSLEVEL1GRIDNBO').after(calendar);
 		//document.querySelector("[id^='win0div$ICField']").id.innerHTML += calendar;
 	});
