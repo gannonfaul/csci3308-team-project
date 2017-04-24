@@ -118,9 +118,12 @@ $(document).ready(function(){
 		 * SSTEXTWEEKLY => defines text to add to the cell
 		 * PSLEVEL3GRID "&nbsp => empty cell
 		 */
+		
+		//8:00 am row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
-		calendar += "<span class='SSSTEXTWEEKLYTIME' >8:00AM</span></td>"
+		calendar += "<span class='SSSTEXTWEEKLYTIME' >8:00AM</span>"
+		calendar += "</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
@@ -129,6 +132,8 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
+		
+		//9:00 am row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
 		calendar += "<span class='SSSTEXTWEEKLYTIME' >9:00AM</span>"
@@ -142,18 +147,24 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td><td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
+		
+		//10:00 am row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
-		calendar += "<span class='SSSTEXTWEEKLYTIME' >10:00AM</span></td>"
+		calendar += "<span class='SSSTEXTWEEKLYTIME' >10:00AM</span>"
+		calendar += "</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
+		
+		//11:00 am row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
-		calendar += "<span class='SSSTEXTWEEKLYTIME' >11:00AM</span></td>"
+		calendar += "<span class='SSSTEXTWEEKLYTIME' >11:00AM</span>"
+		calendar += "</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='1'>"
 		calendar += "<span class='SSSTEXTWEEKLY' >MCEN 4085 - 806<br>Laboratory<br>11:00AM - 11:50AM<br>See DEPT</span></td>"
@@ -165,9 +176,12 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
+		
+		//12:00 pm row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
-		calendar += "<span class='SSSTEXTWEEKLYTIME' >12:00PM</span></td>"
+		calendar += "<span class='SSSTEXTWEEKLYTIME' >12:00PM</span>"
+		calendar += "</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
@@ -176,9 +190,12 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
+		
+		//1:00 pm row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
-		calendar += "<span class='SSSTEXTWEEKLYTIME' >1:00PM</span></td>"
+		calendar += "<span class='SSSTEXTWEEKLYTIME' >1:00PM</span>"
+		calendar += "</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
@@ -187,6 +204,8 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
+		
+		//2:00 pm row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
 		calendar += "<span class='SSSTEXTWEEKLYTIME' >2:00PM</span></td>"
@@ -196,17 +215,24 @@ $(document).ready(function(){
 		calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='2'><span class='SSSTEXTWEEKLY' >MCEN 3047 - 013<br>Laboratory<br>2:00PM - 3:50PM<br>Drescher Undergrad Engr 1B10</span></td>"
 		calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='1'><span class='SSSTEXTWEEKLY' >MCEN 3032 - 001<br>Lecture<br>2:00PM - 2:50PM<br>Engineering Classroom Wing 265</span></td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td><td class='PSLEVEL3GRID'>&nbsp;</td></tr>"
+		
+		//3:00 pm row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
-		calendar += "<span class='SSSTEXTWEEKLYTIME' >3:00PM</span></td>"
+		calendar += "<span class='SSSTEXTWEEKLYTIME' >3:00PM</span>"
+		calendar += "</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='1'>"
 		calendar += "<span class='SSSTEXTWEEKLY' >MCEN 3047 - 010<br>Lecture<br>3:00PM - 3:50PM<br>Engineering Classroom Wing 1B40</span></td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td></tr>"
+		
+		//4:00 pm row
 		calendar += "<tr>"
-		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'><span class='SSSTEXTWEEKLYTIME' >4:00PM</span></td>"
+		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
+		calendar += "<span class='SSSTEXTWEEKLYTIME' >4:00PM</span>"
+		calendar += "</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='2'><span class='SSSTEXTWEEKLY' >CSCI 3308 - 102<br>Laboratory<br>4:00PM - 5:50PM<br>Engr Cntr - Comp Sci Dept Wing 112C</span></td>"
@@ -215,18 +241,24 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
+		
+		//5:00 pm row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
-		calendar += "<span class='SSSTEXTWEEKLYTIME' >5:00PM</span></td>"
+		calendar += "<span class='SSSTEXTWEEKLYTIME' >5:00PM</span>"
+		calendar += "</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
-		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
+		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"	
 		calendar += "</tr>"
+	
+		//6:00 pm row
 		calendar += "<tr>"
-		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'><span class='SSSTEXTWEEKLYTIME' >6:00PM</span></td>"
+		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
+		calendar += "<span class='SSSTEXTWEEKLYTIME' >6:00PM</span></td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
@@ -235,6 +267,7 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
+		
 		calendar += "</table>"
 		calendar += "</div>"
 		calendar += "</div>"
