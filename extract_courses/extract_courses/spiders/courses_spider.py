@@ -22,25 +22,3 @@ class CoursesSpider(scrapy.Spider):
                 'prerequisites' : course.css('div::text').re("Requisites:.*"),
                 'description' : course.css('div::text').re('[A-Za-z].*')
             }
-
-        # page = re.findall('page=.{1}',response.url)[0]
-        # counter = 0
-        # for course in response.xpath('//h2[@class="node-title"]/a/text()'):
-        #     yield {
-        #         'page' : page,
-        #         'counter' : counter,
-        #         'department' : course.re("^[A-Z]{4}"),
-        #         'course_number' : course.re("[0-9]{4}"),
-        #         'credits' : course.re("\([0-9]\)"),
-        #         'title' : course.re("\).*"),
-        #     }
-        #     counter+=1
-        # counter = 0
-        # for descriptions in response.xpath('//div[@class="field-items"]/div/text()'):
-        #     yield {
-        #         'page' : page,
-        #         'counter': counter,
-        #         'prerequisites' : descriptions.re("Requisites:.*"),
-        #         'description' : descriptions.extract()
-        #     }
-        #     counter+=1
