@@ -95,11 +95,10 @@ $(document).ready(function(){
 		
 		//All of this nonsense is straight copy-paste HTML from the "weekly calendar view" page
 		var calendar= "<div><p></p>"
-
+		
+		//This is all just formatting
 		calendar += "<table cellspacing='0' cellpadding='2' width='100%' class='PSLEVEL1GRIDNBO' id='SHOPPING_CART_SCHED_HTMLAREA'>"
-
 		calendar += "<colgroup span='1' width='9%' align='center' valign='middle'>"
-
 		calendar += "<colgroup span='7' width='13%' align='center' valign='middle'><tr><th scope='col' align='center' class='SSSWEEKLYA1BACKGROUND' >Time</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Monday<br>"
 		calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Tuesday<br>"
 		calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Wednesday<br>"
@@ -109,6 +108,16 @@ $(document).ready(function(){
 		calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Sunday<br>"
 		calendar += "</th>"
 		calendar += "</tr>"
+		
+		//All this populates the calendar
+		/*
+		 * It looks like this is the way they're populating the table:
+		 * rowspan => how many vertical rows to be populated
+		 * SSWEEKLYTIMEBACKGROUND => green background color
+		 * SSWEEKLYTIME => defines the time field
+		 * SSTEXTWEEKLY => defines text to add to the cell
+		 * PSLEVEL3GRID "&nbsp => empty cell
+		 */
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
 		calendar += "<span class='SSSTEXTWEEKLYTIME' >8:00AM</span></td>"
