@@ -17,10 +17,12 @@ function getNameParts(courseObj){
 }
 
 $(document).ready(function(){
+	$("script").remove(":contains('totalTimeoutMilliseconds')"); //Removes first instance of session timeout counter
+		
 	$("iframe")[0].addEventListener("load", function(){
 		iframe = getFrame();
-		console.log("Load");
-
+		iframe.find(":contains('totalTimeoutMilliseconds')").remove("script"); //Removes second instance of session timeout counter
+		
 		//Add new header to shopping cart table for course catalog Links
 		tableBody = iframe.find('.PSLEVEL1GRIDNBO');
 		tableBody.width(900) //change the width of the whole table so links fit
@@ -91,16 +93,6 @@ $(document).ready(function(){
 					}
 				);
 			}
-			else{
-				//console.log("womp womp");
-			}
 		});
 	});
 });
-
-//alert('Testing the extension');
-
-
-//$('#E_CLASS_NAME$0').prop('title', 'custom hovertext');
-
-//document.getElementById('#E_CLASS_NAME$0').title = "Custom Hovertext";
