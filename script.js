@@ -104,8 +104,8 @@ $(document).ready(function(){
 		calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Wednesday<br>"
 		calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Thursday<br>"
 		calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Friday<br>"
-		calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Saturday<br>"
-		calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Sunday<br>"
+		//calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Saturday<br>"
+		//calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Sunday<br>"
 		calendar += "</th>"
 		calendar += "</tr>"
 		
@@ -121,26 +121,27 @@ $(document).ready(function(){
 		 
 		//For loop pseudocode 
 		
-		//var time;
-		//var max_time = 20;
-		//var weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thusday', 'Fiday'];
-		//for(time = 8; time<=max_time; time++){
-			//calendar += "<tr>"
-			//calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
-			//calendar += "<span class='SSSTEXTWEEKLYTIME' >"+String(time)+":00</span>"
-			//calendar += "</td>"
-			//for(var day = 0; day<5; day++){
+		var time;
+		var max_time = 20;
+		var weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thusday', 'Fiday'];
+		for(time = 8; time<=max_time; time++){
+			calendar += "<tr>"
+			calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
+			calendar += "<span class='SSSTEXTWEEKLYTIME' >"+String(time)+":00</span>"
+			calendar += "</td>"
+			for(var day = 0; day<5; day++){
 				//if("day is empty"){
-					//calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
+					calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 				//}
 				//else{
 					//calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='1'>"
 					//calendar += "<span class='SSSTEXTWEEKLY' >"+Class Title+"</span></td>"
 				//}
-			//calendar += "</tr>"
-			//}
-		//}
+			}
+			calendar += "</tr>"
+		}
 		
+		/*
 		//8:00 am row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
@@ -289,6 +290,7 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
+		*/
 		
 		calendar += "</table>"
 		calendar += "</div>"
