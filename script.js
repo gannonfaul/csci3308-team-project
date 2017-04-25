@@ -20,7 +20,9 @@ function getDaysandTime(timeText) {
 	var data = timeText.split(" ");
 	var days = data[0];
 
-	var timeString = data[1] + " - " + data[3] 
+	days = days.match(/.{1,2}/g);
+
+	var timeString = data[1] + " - " + data[3];
 
 	var timeStart = data[1];
 	timeStart = timeStart.split("P")[0];
@@ -219,10 +221,130 @@ $(document).ready(function(){
 						break;
 					}
 				}
-				console.log(courseDict);
 			}
 
 		});
+
+
+		// Adding Calendar Functionality to Classes already registered
+
+		iframe.find('.PSLEVEL2GRIDROW').find('span').each(function(i, item){
+			if(item.id.match("^E_CLASS_NAME")){
+				/*
+				First thing's first, after locating a "course" in our shopping cart, we have to get the course name.
+				The text that defines the course ("CSCI 1300", for example) will be found as the first child of item if the
+				course has no link attached (.id == undefined) and will be the first child's first child if it is a hyperlink.
+				*/
+				var textObj = item.firstChild;
+				//console.log(textObj)
+				if(textObj.id != undefined){
+					textObj = textObj.firstChild;
+					console.log(textObj);
+				}
+				else{
+					console.log(textObj);
+				}
+				// Split the course name into a department tag and a course number:
+				var classinfo = getNameParts(textObj);
+				
+				if (courseDict[classinfo[0] + " " + classinfo[1]]) {
+					courseDict[classinfo[0] + " " + classinfo[1] + " Lab"] = {
+						"days": "null",
+						"time": "null",
+						"times": "null",
+						"location": "null",
+						"instr": "null",
+						"units": "null"
+					};
+				} 
+				else {
+					courseDict[classinfo[0] + " " + classinfo[1]] = {
+						"days": "null",
+						"time": "null",
+						"times": "null",
+						"location": "null",
+						"instr": "null",
+						"units": "null"
+					};
+				}
+			}
+
+			// Course Information Parser
+			else if(item.id.match("^DERIVED_REGFRM1_SSR_MTG_SCHED_LONG")) {
+				console.log(item);
+				var timeText = $(this).text();
+				console.log(timeText);
+
+				var schedule = getDaysandTime(timeText);
+
+				// Need to parse timeText into daysText and hourText
+
+				for (var course in courseDict) {
+					if(!courseDict.hasOwnProperty(course)) {
+						continue;
+					}
+					if (courseDict[course]["days"] == "null") {
+						courseDict[course]["days"] = schedule[0];
+						courseDict[course]["time"] = schedule[1];
+						courseDict[course]["times"] = schedule[2];
+						break;
+					}
+				}
+
+			}
+
+			else if(item.id.match("^DERIVED_REGFRM1_SSR_MTG_LOC_LONG")) {
+				console.log(item);
+				var locText = $(this).text();
+				console.log(locText);
+
+				for (var course in courseDict) {
+					if(!courseDict.hasOwnProperty(course)) {
+						continue;
+					}
+					if (courseDict[course]["location"] == "null") {
+						courseDict[course]["location"] = locText;
+						break;
+					}
+				}
+
+			}
+
+			else if(item.id.match("^DERIVED_REGFRM1_SSR_INSTR_LONG")) {
+				console.log(item);
+				var instrText = $(this).text();
+				console.log(instrText);
+
+				for (var course in courseDict) {
+					if(!courseDict.hasOwnProperty(course)) {
+						continue;
+					}
+					if (courseDict[course]["instr"] == "null") {
+						courseDict[course]["instr"] = instrText;
+						break;
+					}
+				}
+
+			}
+
+			else if(item.id.match("^STDNT_ENRL_SSVW_UNT_TAKEN")) {
+				console.log(item);
+				var unitText = $(this).text();
+				console.log(unitText);
+
+				for (var course in courseDict) {
+					if(!courseDict.hasOwnProperty(course)) {
+						continue;
+					}
+					if (courseDict[course]["units"] == "null") {
+						courseDict[course]["units"] = unitText;
+						break;
+					}
+				}
+			}
+		});
+
+		console.log(courseDict);
 		
 		//All of this nonsense is straight copy-paste HTML from the "weekly calendar view" page
 		var calendar= "<div><p></p>"
