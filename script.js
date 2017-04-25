@@ -93,15 +93,24 @@ $(document).ready(function(){
 					}
 				);
 
-				courseDict[classinfo[0] + " " + classinfo[1]] = {
-					"days": "null",
-					"time": "null",
-					"location": "null",
-					"instr": "null",
-					"units": "null"
-				};
-
-				console.log(courseDict[textObj]);
+				if (courseDict[classinfo[0] + " " + classinfo[1]]) {
+					courseDict[classinfo[0] + " " + classinfo[1] + " Lab"] = {
+						"days": "null",
+						"time": "null",
+						"location": "null",
+						"instr": "null",
+						"units": "null"
+					};
+				} 
+				else {
+					courseDict[classinfo[0] + " " + classinfo[1]] = {
+						"days": "null",
+						"time": "null",
+						"location": "null",
+						"instr": "null",
+						"units": "null"
+					};
+				}
 			}
 
 			// Course Information Parser
@@ -110,22 +119,72 @@ $(document).ready(function(){
 				var timeText = $(this).text();
 				console.log(timeText);
 
+				// Need to parse timeText into daysText and hourText
+
 				for (var course in courseDict) {
-					console.log(courseDict[course])
 					if(!courseDict.hasOwnProperty(course)) {
 						continue;
 					}
-					console.log(courseDict[course]);
 					if (courseDict[course]["days"] == "null") {
 						courseDict[course]["days"] = timeText;
+						courseDict[course]["time"] = timeText;
 						break;
 					}
-
 				}
 
-				console.log(courseDict);
+			}
+
+			else if(item.id.match("^DERIVED_REGFRM1_SSR_MTG_LOC_LONG")) {
+				console.log(item);
+				var locText = $(this).text();
+				console.log(locText);
+
+				for (var course in courseDict) {
+					if(!courseDict.hasOwnProperty(course)) {
+						continue;
+					}
+					if (courseDict[course]["location"] == "null") {
+						courseDict[course]["location"] = locText;
+						break;
+					}
+				}
 
 			}
+
+			else if(item.id.match("^DERIVED_REGFRM1_SSR_INSTR_LONG")) {
+				console.log(item);
+				var instrText = $(this).text();
+				console.log(instrText);
+
+				for (var course in courseDict) {
+					if(!courseDict.hasOwnProperty(course)) {
+						continue;
+					}
+					if (courseDict[course]["instr"] == "null") {
+						courseDict[course]["instr"] = instrText;
+						break;
+					}
+				}
+
+			}
+
+			else if(item.id.match("^SSR_REGFORM_VW_UNT_TAKEN")) {
+				console.log(item);
+				var unitText = $(this).text();
+				console.log(unitText);
+
+				for (var course in courseDict) {
+					if(!courseDict.hasOwnProperty(course)) {
+						continue;
+					}
+					if (courseDict[course]["units"] == "null") {
+						courseDict[course]["units"] = unitText;
+						break;
+					}
+				}
+				console.log(courseDict);
+			}
+
 		});
 		
 		//All of this nonsense is straight copy-paste HTML from the "weekly calendar view" page
