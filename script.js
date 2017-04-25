@@ -44,6 +44,8 @@ $(document).ready(function(){
 		ypp.attr('onclick', "test") 	//puts onclick attribute into select THIS ISN'T FINISHED
 
 
+		var courseDict = {};
+
 		iframe.find('.PSLEVEL3GRIDWBO').find('span').each(function(i, item){
 			if(item.id.match("^P_CLASS_NAME")){
 				/*
@@ -52,7 +54,7 @@ $(document).ready(function(){
 				course has no link attached (.id == undefined) and will be the first child's first child if it is a hyperlink.
 				*/
 				var textObj = item.firstChild;
-				console.log(textObj)
+				//console.log(textObj)
 				if(textObj.id != undefined){
 					textObj = textObj.firstChild;
 					console.log(textObj);
@@ -90,6 +92,39 @@ $(document).ready(function(){
 					console.log('hoverReleaseCrse:', classinfo[1]);
 					}
 				);
+
+				courseDict[classinfo[0] + " " + classinfo[1]] = {
+					"days": "null",
+					"time": "null",
+					"location": "null",
+					"instr": "null",
+					"units": "null"
+				};
+
+				console.log(courseDict[textObj]);
+			}
+
+			// Course Information Parser
+			else if(item.id.match("^DERIVED_REGFRM1_SSR_MTG_SCHED_LONG")) {
+				console.log(item);
+				var timeText = $(this).text();
+				console.log(timeText);
+
+				for (var course in courseDict) {
+					console.log(courseDict[course])
+					if(!courseDict.hasOwnProperty(course)) {
+						continue;
+					}
+					console.log(courseDict[course]);
+					if (courseDict[course]["days"] == "null") {
+						courseDict[course]["days"] = timeText;
+						break;
+					}
+
+				}
+
+				console.log(courseDict);
+
 			}
 		});
 		
