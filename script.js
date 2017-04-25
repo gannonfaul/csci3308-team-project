@@ -1,7 +1,7 @@
 console.log('Script.js injected!');
 
 // ***************************************
-// 			  HELPER FUNCTIONS
+//           HELPER FUNCTIONS
 // ***************************************
 
 function getFrame(){
@@ -64,7 +64,7 @@ function getDaysandTime(timeText) {
 
 
 // ***************************************
-// 			     MAIN FUNCTION
+//             MAIN FUNCTION
 // ***************************************
 
 $(document).ready(function(){
@@ -103,7 +103,7 @@ $(document).ready(function(){
 
 
 		// ***************************************
-		// 			SHOPPING CART DATA
+		//           SHOPPING CART DATA
 		// ***************************************
 
 		// Loop through courses in shopping cart and apply desired parsing/functions
@@ -267,7 +267,7 @@ $(document).ready(function(){
 
 
 		// ***************************************
-		// 		    ENROLLED COURSE DATA
+		//         ENROLLED COURSE DATA
 		// ***************************************
 
 		// Loop through courses already registered and apply desired parsing/functions
@@ -407,7 +407,7 @@ $(document).ready(function(){
 
 
 		// ***************************************
-		// 			"WHAT IF" CALENDAR
+		//           "WHAT IF" CALENDAR
 		// ***************************************
 
 		//All of this nonsense is straight copy-paste HTML from the "weekly calendar view" page
