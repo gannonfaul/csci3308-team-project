@@ -16,6 +16,38 @@ function getNameParts(courseObj){
 	return [department, courseNumber]
 }
 
+function getDaysandTime(timeText) {
+	var data = timeText.split(" ");
+	var days = data[0];
+
+	var timeString = data[1] + " - " + data[3] 
+
+	var timeStart = data[1];
+	timeStart = timeStart.split("P")[0];
+	timeStart = timeStart.split("A")[0];
+	timeStart1 = timeStart.split(":");
+	timeStart = timeStart1[0] + timeStart1[1];
+
+	timeStart = parseInt(timeStart);
+
+	var timeEnd = data[3]
+	timeEnd = timeEnd.split("P")[0];
+	timeEnd = timeEnd.split("A")[0];
+	timeEnd1 = timeEnd.split(":");
+	timeEnd = timeEnd1[0] + timeEnd1[1];
+
+	timeEnd = parseInt(timeEnd);
+
+	if (timeEnd % 100 > 30) {
+		timeEnd = timeEnd + (100 - (timeEnd % 100))
+	}
+	else if (timeEnd % 100 > 10) {
+		timeEnd  = timeEnd + (30 - (timeEnd % 100))
+	}
+
+	return [days, timeString, [timeStart, timeEnd]]
+}
+
 $(document).ready(function(){
 	$("script").remove(":contains('totalTimeoutMilliseconds')"); //Removes first instance of session timeout counter
 		
@@ -97,6 +129,7 @@ $(document).ready(function(){
 					courseDict[classinfo[0] + " " + classinfo[1] + " Lab"] = {
 						"days": "null",
 						"time": "null",
+						"times": "null",
 						"location": "null",
 						"instr": "null",
 						"units": "null"
@@ -106,6 +139,7 @@ $(document).ready(function(){
 					courseDict[classinfo[0] + " " + classinfo[1]] = {
 						"days": "null",
 						"time": "null",
+						"times": "null",
 						"location": "null",
 						"instr": "null",
 						"units": "null"
@@ -119,6 +153,8 @@ $(document).ready(function(){
 				var timeText = $(this).text();
 				console.log(timeText);
 
+				var schedule = getDaysandTime(timeText);
+
 				// Need to parse timeText into daysText and hourText
 
 				for (var course in courseDict) {
@@ -126,8 +162,9 @@ $(document).ready(function(){
 						continue;
 					}
 					if (courseDict[course]["days"] == "null") {
-						courseDict[course]["days"] = timeText;
-						courseDict[course]["time"] = timeText;
+						courseDict[course]["days"] = schedule[0];
+						courseDict[course]["time"] = schedule[1];
+						courseDict[course]["times"] = schedule[2];
 						break;
 					}
 				}
