@@ -1,5 +1,9 @@
 console.log('Script.js injected!');
 
+// ***************************************
+// 			  HELPER FUNCTIONS
+// ***************************************
+
 function getFrame(){
 	return $("#ptifrmtgtframe").contents();
 }
@@ -15,6 +19,11 @@ function getNameParts(courseObj){
 	//console.log('course number: ', courseNumber);
 	return [department, courseNumber]
 }
+
+
+// FUNCTION: getDaysandTime() parses course times into more usable pieces
+// INPUT: ("MoWeFr 2:00PM - 2:50PM")
+// OUTPUT: [    ["Mo, "We", "Fr"],   "2:00PM - 2:50PM",   [200, 300]    ]
 
 function getDaysandTime(timeText) {
 	var data = timeText.split(" ");
@@ -50,6 +59,14 @@ function getDaysandTime(timeText) {
 	return [days, timeString, [timeStart, timeEnd]]
 }
 
+
+
+
+
+// ***************************************
+// 			     MAIN FUNCTION
+// ***************************************
+
 $(document).ready(function(){
 	$("script").remove(":contains('totalTimeoutMilliseconds')"); //Removes first instance of session timeout counter
 		
@@ -78,9 +95,21 @@ $(document).ready(function(){
 		ypp.attr('onclick', "test") 	//puts onclick attribute into select THIS ISN'T FINISHED
 
 
+		// Initialize Course Dictionary that will be used to populate "What If Calendar"
 		var courseDict = {};
 
+
+
+
+
+		// ***************************************
+		// 			SHOPPING CART DATA
+		// ***************************************
+
+		// Loop through courses in shopping cart and apply desired parsing/functions
 		iframe.find('.PSLEVEL3GRIDWBO').find('span').each(function(i, item){
+
+			// Parse Course Name Information from shopping cart and apply functionality
 			if(item.id.match("^P_CLASS_NAME")){
 				/*
 				First thing's first, after locating a "course" in our shopping cart, we have to get the course name.
@@ -127,6 +156,8 @@ $(document).ready(function(){
 					}
 				);
 
+				// Create dictionary entry for the course in courseDict for future use in "What If" Calendar
+				// If statement to avoid over-writing lecture in dictionary with lab section
 				if (courseDict[classinfo[0] + " " + classinfo[1]]) {
 					courseDict[classinfo[0] + " " + classinfo[1] + " Lab"] = {
 						"days": "null",
@@ -149,16 +180,16 @@ $(document).ready(function(){
 				}
 			}
 
-			// Course Information Parser
+			// Parse Course Time Information from shopping cart
 			else if(item.id.match("^DERIVED_REGFRM1_SSR_MTG_SCHED_LONG")) {
 				console.log(item);
 				var timeText = $(this).text();
 				console.log(timeText);
 
+				// Parse course time into more usable format
 				var schedule = getDaysandTime(timeText);
 
-				// Need to parse timeText into daysText and hourText
-
+				// Search for first course in dictionary missing a date/time and populate with new data
 				for (var course in courseDict) {
 					if(!courseDict.hasOwnProperty(course)) {
 						continue;
@@ -173,11 +204,13 @@ $(document).ready(function(){
 
 			}
 
+			// Parse Course Location Information from shopping cart
 			else if(item.id.match("^DERIVED_REGFRM1_SSR_MTG_LOC_LONG")) {
 				console.log(item);
 				var locText = $(this).text();
 				console.log(locText);
 
+				// Search for first course in dictionary missing a location and populate with new data
 				for (var course in courseDict) {
 					if(!courseDict.hasOwnProperty(course)) {
 						continue;
@@ -190,11 +223,13 @@ $(document).ready(function(){
 
 			}
 
+			// Parse Course Instructor Information from shopping cart
 			else if(item.id.match("^DERIVED_REGFRM1_SSR_INSTR_LONG")) {
 				console.log(item);
 				var instrText = $(this).text();
 				console.log(instrText);
 
+				// Search for first course in dictionary missing an instructor and populate with new data
 				for (var course in courseDict) {
 					if(!courseDict.hasOwnProperty(course)) {
 						continue;
@@ -207,11 +242,13 @@ $(document).ready(function(){
 
 			}
 
+			// Parse Course Unit Information from shopping cart
 			else if(item.id.match("^SSR_REGFORM_VW_UNT_TAKEN")) {
 				console.log(item);
 				var unitText = $(this).text();
 				console.log(unitText);
 
+				// Search for first course in dictionary missing unit information and populate with new data
 				for (var course in courseDict) {
 					if(!courseDict.hasOwnProperty(course)) {
 						continue;
@@ -226,12 +263,20 @@ $(document).ready(function(){
 		});
 
 
-		// Adding Calendar Functionality to Classes already registered
 
+
+
+		// ***************************************
+		// 		    ENROLLED COURSE DATA
+		// ***************************************
+
+		// Loop through courses already registered and apply desired parsing/functions
 		iframe.find('.PSLEVEL2GRIDROW').find('span').each(function(i, item){
+
+			// Parse Course Name Information from enrolled courses
 			if(item.id.match("^E_CLASS_NAME")){
 				/*
-				First thing's first, after locating a "course" in our shopping cart, we have to get the course name.
+				First thing's first, after locating a "course" in our course list, we have to get the course name.
 				The text that defines the course ("CSCI 1300", for example) will be found as the first child of item if the
 				course has no link attached (.id == undefined) and will be the first child's first child if it is a hyperlink.
 				*/
@@ -247,6 +292,10 @@ $(document).ready(function(){
 				// Split the course name into a department tag and a course number:
 				var classinfo = getNameParts(textObj);
 				
+
+				// Create dictionary entry for the course in courseDict for future use in "What If" Calendar
+
+				// If statement to avoid over-writing lecture in dictionary with lab section
 				if (courseDict[classinfo[0] + " " + classinfo[1]]) {
 					courseDict[classinfo[0] + " " + classinfo[1] + " Lab"] = {
 						"days": "null",
@@ -269,16 +318,16 @@ $(document).ready(function(){
 				}
 			}
 
-			// Course Information Parser
+			// Parse Course Time Information from enrolled courses
 			else if(item.id.match("^DERIVED_REGFRM1_SSR_MTG_SCHED_LONG")) {
 				console.log(item);
 				var timeText = $(this).text();
 				console.log(timeText);
 
+				// Parse course time into more usable format
 				var schedule = getDaysandTime(timeText);
 
-				// Need to parse timeText into daysText and hourText
-
+				// Search for first course in dictionary missing a date/time and populate with new data
 				for (var course in courseDict) {
 					if(!courseDict.hasOwnProperty(course)) {
 						continue;
@@ -293,11 +342,13 @@ $(document).ready(function(){
 
 			}
 
+			// Parse Course Location Information from enrolled courses
 			else if(item.id.match("^DERIVED_REGFRM1_SSR_MTG_LOC_LONG")) {
 				console.log(item);
 				var locText = $(this).text();
 				console.log(locText);
 
+				// Search for first course in dictionary missing a location and populate with new data
 				for (var course in courseDict) {
 					if(!courseDict.hasOwnProperty(course)) {
 						continue;
@@ -310,11 +361,13 @@ $(document).ready(function(){
 
 			}
 
+			// Parse Course Instructor Information from enrolled courses
 			else if(item.id.match("^DERIVED_REGFRM1_SSR_INSTR_LONG")) {
 				console.log(item);
 				var instrText = $(this).text();
 				console.log(instrText);
 
+				// Search for first course in dictionary missing an instructor and populate with new data
 				for (var course in courseDict) {
 					if(!courseDict.hasOwnProperty(course)) {
 						continue;
@@ -327,11 +380,13 @@ $(document).ready(function(){
 
 			}
 
+			// Parse Course Unit Information from enrolled courses
 			else if(item.id.match("^STDNT_ENRL_SSVW_UNT_TAKEN")) {
 				console.log(item);
 				var unitText = $(this).text();
 				console.log(unitText);
 
+				// Search for first course in dictionary missing unit information and populate with new data
 				for (var course in courseDict) {
 					if(!courseDict.hasOwnProperty(course)) {
 						continue;
@@ -344,8 +399,17 @@ $(document).ready(function(){
 			}
 		});
 
+		// Display  final course dictionary for "What If" Calendar
 		console.log(courseDict);
-		
+
+
+
+
+
+		// ***************************************
+		// 			"WHAT IF" CALENDAR
+		// ***************************************
+
 		//All of this nonsense is straight copy-paste HTML from the "weekly calendar view" page
 		var calendar= "<div><p></p>"
 		
