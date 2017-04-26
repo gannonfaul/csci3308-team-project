@@ -83,15 +83,7 @@ $(document).ready(function(){
 		//Don't really understand why.
 		//this goes away because it reorders the table ^ use onclick?
 		//Also, it currently won't update when you add a new item to your shopping cart.
-
-
-
-		y = $(tableBody).children().eq(1);		//use secondchild?
-		yp = y.find('th:first')
-		ypp = yp.find('a:first')
-		ypp.attr('onclick', "test") 	//puts onclick attribute into select THIS ISN'T FINISHED
-
-
+\
 		// Initialize Course Dictionary that will be used to populate "What If Calendar"
 		var courseDict = {};
 
@@ -104,7 +96,6 @@ $(document).ready(function(){
 		// ***************************************
 
 		// Loop through courses in shopping cart and apply desired parsing/functions
-		//2e6565d41306654a895ea2f737ad6b4b0cffd477
 		iframe.find('.PSLEVEL3GRIDWBO').find('span').each(function(i, item){
 
 			// Parse Course Name Information from shopping cart and apply functionality
@@ -409,7 +400,6 @@ $(document).ready(function(){
 		//           "WHAT IF" CALENDAR
 		// ***************************************
 
-		//2e6565d41306654a895ea2f737ad6b4b0cffd477
 		//All of this nonsense is straight copy-paste HTML from the "weekly calendar view" page
 		var calendar= "<div><p></p>"
 
