@@ -12,6 +12,12 @@ function viewAssign() {
    chrome.tabs.create({active: true, url: "http://www.lousymedia.com/csci-3308/assignments/team-project"});
 }
 
+function viewExtensions() {
+   chrome.tabs.create({active: true, url: "chrome://extensions"});
+}
+
 document.getElementById('github').addEventListener('click', viewGithub);
 document.getElementById('trello').addEventListener('click', viewTrello);
 document.getElementById('project').addEventListener('click', viewAssign);
+document.getElementById('chromeExt').addEventListener('click', viewExtensions);
+
