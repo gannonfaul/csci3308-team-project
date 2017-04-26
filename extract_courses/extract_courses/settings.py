@@ -15,6 +15,13 @@ SPIDER_MODULES = ['extract_courses.spiders']
 NEWSPIDER_MODULE = 'extract_courses.spiders'
 
 DATABASE = {
+    # 'drivername':'postgres',
+    # 'database':'d9s11dbcap6q1s',
+    # 'host':'ec2-54-243-252-91.compute-1.amazonaws.com',
+    # 'port':'5432',
+    # 'username':'zqwljlebwqpmmt',
+    # 'password':'d2a377b8544b1a57888ff91078012258dfc6ffc6489de053d7e3ffeac9f278a2'
+
     'drivername' : 'postgres',
     'host' : 'localhost',
     'port' : '5432',

@@ -16,22 +16,22 @@ function getNameParts(courseObj){
 	return [department, courseNumber]
 }
 
-// # This function will eventually draw the course descriptions from the database
-// function getCourseDescription(str) {
-//   var xhttp;
-//   if (str == "") {
-//     document.getElementById("txtHint").innerHTML = "";
-//     return;
-//   }
-//   xhttp = new XMLHttpRequest();
-//   xhttp.onreadystatechange = function() {
-//     if (this.readyState == 4 && this.status == 200) {
-//     document.getElementById("txtHint").innerHTML = this.responseText;
-//     }
-//   };
-//   xhttp.open("GET", "getcustomer.asp?q="+str, true);
-//   xhttp.send();
-// }
+// This function will eventually draw the course descriptions from the database
+function getCourseDescription(deptartment,number) {
+  var xhttp;
+  if (department == "" || number == "") {
+    document.getElementById("txtHint").innerHTML = "";
+    return;
+  }
+  xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    document.getElementById("txtHint").innerHTML = this.responseText;
+    }
+  };
+  xhttp.open("GET", "getcustomer.asp?deparment="+deparment+"number="+number, true);
+  xhttp.send();
+}
 
 $(document).ready(function(){
 	$("script").remove(":contains('totalTimeoutMilliseconds')"); //Removes first instance of session timeout counter
@@ -109,7 +109,7 @@ $(document).ready(function(){
 				);
 			}
 		});
-		
+
 		//All of this nonsense is straight copy-paste HTML from the "weekly calendar view" page
 		var calendar= "<div><p></p>"
 
@@ -246,7 +246,7 @@ $(document).ready(function(){
 		calendar += "</table>"
 		calendar += "</div>"
 		calendar += "</div>"
-		
+
 		iframe.find('.PSLEVEL1GRIDNBO').after(calendar);
 		//document.querySelector("[id^='win0div$ICField']").id.innerHTML += calendar;
 	});
