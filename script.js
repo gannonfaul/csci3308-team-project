@@ -1,11 +1,11 @@
 console.log('Script.js injected!');
 
+// ***************************************
+//           HELPER FUNCTIONS
+// ***************************************
+
 function getFrame(){
 	return $("#ptifrmtgtframe").contents();
-}
-
-function testHref(){
-	alert('Testing href');
 }
 
 function getNameParts(courseObj){
@@ -17,21 +17,67 @@ function getNameParts(courseObj){
 }
 
 // This function will eventually draw the course descriptions from the database
-function getCourseDescription(deptartment,number) {
-  var xhttp;
-  if (department == "" || number == "") {
-    document.getElementById("txtHint").innerHTML = "";
-    return;
-  }
-  xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-    document.getElementById("txtHint").innerHTML = this.responseText;
-    }
-  };
-  xhttp.open("GET", "getcustomer.asp?deparment="+deparment+"number="+number, true);
-  xhttp.send();
+// function getCourseDescription(deptartment,number) {
+//   var xhttp;
+//   if (department == "" || number == "") {
+//     document.getElementById("txtHint").innerHTML = "";
+//     return;
+//   }
+//   xhttp = new XMLHttpRequest();
+//   xhttp.onreadystatechange = function() {
+//     if (this.readyState == 4 && this.status == 200) {
+//     document.getElementById("txtHint").innerHTML = this.responseText;
+//     }
+//   };
+//   xhttp.open("GET", "getcustomer.asp?deparment="+deparment+"number="+number, true);
+//   xhttp.send();
+// }
+
+// FUNCTION: getDaysandTime() parses course times into more usable pieces
+// INPUT: ("MoWeFr 2:00PM - 2:50PM")
+// OUTPUT: [    ["Mo, "We", "Fr"],   "2:00PM - 2:50PM",   [200, 300]    ]
+
+function getDaysandTime(timeText) {
+	var data = timeText.split(" ");
+	var days = data[0];
+
+	days = days.match(/.{1,2}/g);
+
+	var timeString = data[1] + " - " + data[3];
+
+	var timeStart = data[1];
+	timeStart = timeStart.split("P")[0];
+	timeStart = timeStart.split("A")[0];
+	timeStart1 = timeStart.split(":");
+	timeStart = timeStart1[0] + timeStart1[1];
+
+	timeStart = parseInt(timeStart);
+
+	var timeEnd = data[3]
+	timeEnd = timeEnd.split("P")[0];
+	timeEnd = timeEnd.split("A")[0];
+	timeEnd1 = timeEnd.split(":");
+	timeEnd = timeEnd1[0] + timeEnd1[1];
+
+	timeEnd = parseInt(timeEnd);
+
+	if (timeEnd % 100 > 30) {
+		timeEnd = timeEnd + (100 - (timeEnd % 100))
+	}
+	else if (timeEnd % 100 > 10) {
+		timeEnd  = timeEnd + (30 - (timeEnd % 100))
+	}
+
+	return [days, timeString, [timeStart, timeEnd]]
 }
+
+
+
+
+
+// ***************************************
+//             MAIN FUNCTION
+// ***************************************
 
 $(document).ready(function(){
 	$("script").remove(":contains('totalTimeoutMilliseconds')"); //Removes first instance of session timeout counter
@@ -53,15 +99,21 @@ $(document).ready(function(){
 		//Don't really understand why.
 		//this goes away because it reorders the table ^ use onclick?
 		//Also, it currently won't update when you add a new item to your shopping cart.
+		// Initialize Course Dictionary that will be used to populate "What If Calendar"
+		var courseDict = {};
 
 
-		y = $(tableBody).children().eq(1);		//use secondchild?
-		yp = y.find('th:first')
-		ypp = yp.find('a:first')
-		ypp.attr('onclick', "test") 	//puts onclick attribute into select THIS ISN'T FINISHED
 
 
+
+		// ***************************************
+		//           SHOPPING CART DATA
+		// ***************************************
+
+		// Loop through courses in shopping cart and apply desired parsing/functions
 		iframe.find('.PSLEVEL3GRIDWBO').find('span').each(function(i, item){
+
+			// Parse Course Name Information from shopping cart and apply functionality
 			if(item.id.match("^P_CLASS_NAME")){
 				/*
 				First thing's first, after locating a "course" in our shopping cart, we have to get the course name.
@@ -69,7 +121,7 @@ $(document).ready(function(){
 				course has no link attached (.id == undefined) and will be the first child's first child if it is a hyperlink.
 				*/
 				var textObj = item.firstChild;
-				console.log(textObj)
+				//console.log(textObj)
 				if(textObj.id != undefined){
 					textObj = textObj.firstChild;
 					console.log(textObj);
@@ -107,28 +159,313 @@ $(document).ready(function(){
 					console.log('hoverReleaseCrse:', classinfo[1]);
 					}
 				);
+
+				// Create dictionary entry for the course in courseDict for future use in "What If" Calendar
+				// If statement to avoid over-writing lecture in dictionary with lab section
+				if (courseDict[classinfo[0] + " " + classinfo[1]]) {
+					courseDict[classinfo[0] + " " + classinfo[1] + " Lab"] = {
+						"days": "null",
+						"time": "null",
+						"times": "null",
+						"location": "null",
+						"instr": "null",
+						"units": "null"
+					};
+				}
+				else {
+					courseDict[classinfo[0] + " " + classinfo[1]] = {
+						"days": "null",
+						"time": "null",
+						"times": "null",
+						"location": "null",
+						"instr": "null",
+						"units": "null"
+					};
+				}
+			}
+
+			// Parse Course Time Information from shopping cart
+			else if(item.id.match("^DERIVED_REGFRM1_SSR_MTG_SCHED_LONG")) {
+				console.log(item);
+				var timeText = $(this).text();
+				console.log(timeText);
+
+				// Parse course time into more usable format
+				var schedule = getDaysandTime(timeText);
+
+				// Search for first course in dictionary missing a date/time and populate with new data
+				for (var course in courseDict) {
+					if(!courseDict.hasOwnProperty(course)) {
+						continue;
+					}
+					if (courseDict[course]["days"] == "null") {
+						courseDict[course]["days"] = schedule[0];
+						courseDict[course]["time"] = schedule[1];
+						courseDict[course]["times"] = schedule[2];
+						break;
+					}
+				}
+
+			}
+
+			// Parse Course Location Information from shopping cart
+			else if(item.id.match("^DERIVED_REGFRM1_SSR_MTG_LOC_LONG")) {
+				console.log(item);
+				var locText = $(this).text();
+				console.log(locText);
+
+				// Search for first course in dictionary missing a location and populate with new data
+				for (var course in courseDict) {
+					if(!courseDict.hasOwnProperty(course)) {
+						continue;
+					}
+					if (courseDict[course]["location"] == "null") {
+						courseDict[course]["location"] = locText;
+						break;
+					}
+				}
+
+			}
+
+			// Parse Course Instructor Information from shopping cart
+			else if(item.id.match("^DERIVED_REGFRM1_SSR_INSTR_LONG")) {
+				console.log(item);
+				var instrText = $(this).text();
+				console.log(instrText);
+
+				// Search for first course in dictionary missing an instructor and populate with new data
+				for (var course in courseDict) {
+					if(!courseDict.hasOwnProperty(course)) {
+						continue;
+					}
+					if (courseDict[course]["instr"] == "null") {
+						courseDict[course]["instr"] = instrText;
+						break;
+					}
+				}
+
+			}
+
+			// Parse Course Unit Information from shopping cart
+			else if(item.id.match("^SSR_REGFORM_VW_UNT_TAKEN")) {
+				console.log(item);
+				var unitText = $(this).text();
+				console.log(unitText);
+
+				// Search for first course in dictionary missing unit information and populate with new data
+				for (var course in courseDict) {
+					if(!courseDict.hasOwnProperty(course)) {
+						continue;
+					}
+					if (courseDict[course]["units"] == "null") {
+						courseDict[course]["units"] = unitText;
+						break;
+					}
+				}
+			}
+
+		});
+
+
+		// ***************************************
+		//         ENROLLED COURSE DATA
+		// ***************************************
+
+		// Loop through courses already registered and apply desired parsing/functions
+		iframe.find('.PSLEVEL2GRIDROW').find('span').each(function(i, item){
+
+			// Parse Course Name Information from enrolled courses
+			if(item.id.match("^E_CLASS_NAME")){
+				/*
+				First thing's first, after locating a "course" in our course list, we have to get the course name.
+				The text that defines the course ("CSCI 1300", for example) will be found as the first child of item if the
+				course has no link attached (.id == undefined) and will be the first child's first child if it is a hyperlink.
+				*/
+				var textObj = item.firstChild;
+				//console.log(textObj)
+				if(textObj.id != undefined){
+					textObj = textObj.firstChild;
+					console.log(textObj);
+				}
+				else{
+					console.log(textObj);
+				}
+				// Split the course name into a department tag and a course number:
+				var classinfo = getNameParts(textObj);
+
+
+				// Create dictionary entry for the course in courseDict for future use in "What If" Calendar
+
+				// If statement to avoid over-writing lecture in dictionary with lab section
+				if (courseDict[classinfo[0] + " " + classinfo[1]]) {
+					courseDict[classinfo[0] + " " + classinfo[1] + " Lab"] = {
+						"days": "null",
+						"time": "null",
+						"times": "null",
+						"location": "null",
+						"instr": "null",
+						"units": "null"
+					};
+				}
+				else {
+					courseDict[classinfo[0] + " " + classinfo[1]] = {
+						"days": "null",
+						"time": "null",
+						"times": "null",
+						"location": "null",
+						"instr": "null",
+						"units": "null"
+					};
+				}
+			}
+
+			// Parse Course Time Information from enrolled courses
+			else if(item.id.match("^DERIVED_REGFRM1_SSR_MTG_SCHED_LONG")) {
+				console.log(item);
+				var timeText = $(this).text();
+				console.log(timeText);
+
+				// Parse course time into more usable format
+				var schedule = getDaysandTime(timeText);
+
+				// Search for first course in dictionary missing a date/time and populate with new data
+				for (var course in courseDict) {
+					if(!courseDict.hasOwnProperty(course)) {
+						continue;
+					}
+					if (courseDict[course]["days"] == "null") {
+						courseDict[course]["days"] = schedule[0];
+						courseDict[course]["time"] = schedule[1];
+						courseDict[course]["times"] = schedule[2];
+						break;
+					}
+				}
+
+			}
+
+			// Parse Course Location Information from enrolled courses
+			else if(item.id.match("^DERIVED_REGFRM1_SSR_MTG_LOC_LONG")) {
+				console.log(item);
+				var locText = $(this).text();
+				console.log(locText);
+
+				// Search for first course in dictionary missing a location and populate with new data
+				for (var course in courseDict) {
+					if(!courseDict.hasOwnProperty(course)) {
+						continue;
+					}
+					if (courseDict[course]["location"] == "null") {
+						courseDict[course]["location"] = locText;
+						break;
+					}
+				}
+
+			}
+
+			// Parse Course Instructor Information from enrolled courses
+			else if(item.id.match("^DERIVED_REGFRM1_SSR_INSTR_LONG")) {
+				console.log(item);
+				var instrText = $(this).text();
+				console.log(instrText);
+
+				// Search for first course in dictionary missing an instructor and populate with new data
+				for (var course in courseDict) {
+					if(!courseDict.hasOwnProperty(course)) {
+						continue;
+					}
+					if (courseDict[course]["instr"] == "null") {
+						courseDict[course]["instr"] = instrText;
+						break;
+					}
+				}
+
+			}
+
+			// Parse Course Unit Information from enrolled courses
+			else if(item.id.match("^STDNT_ENRL_SSVW_UNT_TAKEN")) {
+				console.log(item);
+				var unitText = $(this).text();
+				console.log(unitText);
+
+				// Search for first course in dictionary missing unit information and populate with new data
+				for (var course in courseDict) {
+					if(!courseDict.hasOwnProperty(course)) {
+						continue;
+					}
+					if (courseDict[course]["units"] == "null") {
+						courseDict[course]["units"] = unitText;
+						break;
+					}
+				}
 			}
 		});
+
+		// Display  final course dictionary for "What If" Calendar
+		console.log(courseDict);
+
+
+
+
+
+		// ***************************************
+		//           "WHAT IF" CALENDAR
+		// ***************************************
 
 		//All of this nonsense is straight copy-paste HTML from the "weekly calendar view" page
 		var calendar= "<div><p></p>"
 
+		//This is all just formatting
 		calendar += "<table cellspacing='0' cellpadding='2' width='100%' class='PSLEVEL1GRIDNBO' id='SHOPPING_CART_SCHED_HTMLAREA'>"
-
 		calendar += "<colgroup span='1' width='9%' align='center' valign='middle'>"
-
 		calendar += "<colgroup span='7' width='13%' align='center' valign='middle'><tr><th scope='col' align='center' class='SSSWEEKLYA1BACKGROUND' >Time</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Monday<br>"
 		calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Tuesday<br>"
 		calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Wednesday<br>"
 		calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Thursday<br>"
 		calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Friday<br>"
-		calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Saturday<br>"
-		calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Sunday<br>"
+		//calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Saturday<br>"
+		//calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Sunday<br>"
 		calendar += "</th>"
 		calendar += "</tr>"
+
+		//All this populates the calendar
+		/*
+		 * It looks like this is the way they're populating the table:
+		 * rowspan => how many vertical rows to be populated
+		 * SSWEEKLYTIMEBACKGROUND => green background color
+		 * SSWEEKLYTIME => defines the time field
+		 * SSTEXTWEEKLY => defines text to add to the cell
+		 * PSLEVEL3GRID "&nbsp => empty cell
+		 */
+
+		//For loop pseudocode
+
+		var time;
+		var max_time = 20;
+		var weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thusday', 'Fiday'];
+		for(time = 8; time<=max_time; time++){
+			calendar += "<tr>"
+			calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
+			calendar += "<span class='SSSTEXTWEEKLYTIME' >"+String(time)+":00</span>"
+			calendar += "</td>"
+			for(var day = 0; day<5; day++){
+				//if("day is empty"){
+					calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
+				//}
+				//else{
+					//calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='1'>"
+					//calendar += "<span class='SSSTEXTWEEKLY' >"+Class Title+"</span></td>"
+				//}
+			}
+			calendar += "</tr>"
+		}
+
+		/*
+
+		//8:00 am row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
-		calendar += "<span class='SSSTEXTWEEKLYTIME' >8:00AM</span></td>"
+		calendar += "<span class='SSSTEXTWEEKLYTIME' >8:00AM</span>"
+		calendar += "</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
@@ -137,6 +474,8 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
+
+		//9:00 am row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
 		calendar += "<span class='SSSTEXTWEEKLYTIME' >9:00AM</span>"
@@ -150,18 +489,24 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td><td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
+
+		//10:00 am row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
-		calendar += "<span class='SSSTEXTWEEKLYTIME' >10:00AM</span></td>"
+		calendar += "<span class='SSSTEXTWEEKLYTIME' >10:00AM</span>"
+		calendar += "</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
+
+		//11:00 am row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
-		calendar += "<span class='SSSTEXTWEEKLYTIME' >11:00AM</span></td>"
+		calendar += "<span class='SSSTEXTWEEKLYTIME' >11:00AM</span>"
+		calendar += "</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='1'>"
 		calendar += "<span class='SSSTEXTWEEKLY' >MCEN 4085 - 806<br>Laboratory<br>11:00AM - 11:50AM<br>See DEPT</span></td>"
@@ -173,9 +518,12 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
+
+		//12:00 pm row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
-		calendar += "<span class='SSSTEXTWEEKLYTIME' >12:00PM</span></td>"
+		calendar += "<span class='SSSTEXTWEEKLYTIME' >12:00PM</span>"
+		calendar += "</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
@@ -184,9 +532,12 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
+
+		//1:00 pm row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
-		calendar += "<span class='SSSTEXTWEEKLYTIME' >1:00PM</span></td>"
+		calendar += "<span class='SSSTEXTWEEKLYTIME' >1:00PM</span>"
+		calendar += "</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
@@ -195,6 +546,8 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
+
+		//2:00 pm row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
 		calendar += "<span class='SSSTEXTWEEKLYTIME' >2:00PM</span></td>"
@@ -204,17 +557,24 @@ $(document).ready(function(){
 		calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='2'><span class='SSSTEXTWEEKLY' >MCEN 3047 - 013<br>Laboratory<br>2:00PM - 3:50PM<br>Drescher Undergrad Engr 1B10</span></td>"
 		calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='1'><span class='SSSTEXTWEEKLY' >MCEN 3032 - 001<br>Lecture<br>2:00PM - 2:50PM<br>Engineering Classroom Wing 265</span></td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td><td class='PSLEVEL3GRID'>&nbsp;</td></tr>"
+
+		//3:00 pm row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
-		calendar += "<span class='SSSTEXTWEEKLYTIME' >3:00PM</span></td>"
+		calendar += "<span class='SSSTEXTWEEKLYTIME' >3:00PM</span>"
+		calendar += "</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='1'>"
 		calendar += "<span class='SSSTEXTWEEKLY' >MCEN 3047 - 010<br>Lecture<br>3:00PM - 3:50PM<br>Engineering Classroom Wing 1B40</span></td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td></tr>"
+
+		//4:00 pm row
 		calendar += "<tr>"
-		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'><span class='SSSTEXTWEEKLYTIME' >4:00PM</span></td>"
+		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
+		calendar += "<span class='SSSTEXTWEEKLYTIME' >4:00PM</span>"
+		calendar += "</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='2'><span class='SSSTEXTWEEKLY' >CSCI 3308 - 102<br>Laboratory<br>4:00PM - 5:50PM<br>Engr Cntr - Comp Sci Dept Wing 112C</span></td>"
@@ -223,9 +583,12 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
+
+		//5:00 pm row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
-		calendar += "<span class='SSSTEXTWEEKLYTIME' >5:00PM</span></td>"
+		calendar += "<span class='SSSTEXTWEEKLYTIME' >5:00PM</span>"
+		calendar += "</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
@@ -233,8 +596,11 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
+
+		//6:00 pm row
 		calendar += "<tr>"
-		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'><span class='SSSTEXTWEEKLYTIME' >6:00PM</span></td>"
+		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
+		calendar += "<span class='SSSTEXTWEEKLYTIME' >6:00PM</span></td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
@@ -243,6 +609,8 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
+		*/
+
 		calendar += "</table>"
 		calendar += "</div>"
 		calendar += "</div>"

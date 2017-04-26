@@ -1,12 +1,57 @@
 <!DOCTYPE html>
 <html lang="en-US">
+<head>
+	<meta charset="utf-8">
+	<title>ClassyBuffs</title>
+	<style>
+		* { 
+			box-sizing: border-box;
+	 	}
+	 	body {
+	 		width: 200px;
+	 	}
+
+	 	button {
+	 		position: relative;
+	 		display: block;
+	 		width: 100%;
+	 		padding: 10px;
+	 		font-size: 14px;
+	 	}
+
+	 	button:focus {
+	 		outline: none;
+	 	}
+
+	 	button:hover {
+	 		background-color: gray;
+	 	}
+
+	 	img {
+	 		align-self: center;
+	 	}
+
+	 	h3 {
+	 		align: center;
+	 	}
+
+	 	p {
+	 		align: center;
+	 	}
+
+	</style>
+</head>
 <body>
-<p>
-
-  <b>ClassyBuffs</b> -- <i> For all your registration needs.</i>
-
-</p>
-
-
+	<center>
+		<h2><b>ClassyBuffs</b></h2>
+		<img src="icon-128.png" alt="ClassyBuffs" style="width:75px;height:75px;">
+		<p><i> For all your registration needs.</i></p>
+	</center>
+	<button id="github" title="View Github">View Github Repository</button>
+	<button id="trello" title="View Trello">View Trello Board</button>
+	<button id="project" title="View Assignment">View Project Specifications</button>
+	<button id="chromeExt" title="View Extensions">View Extensions</button>
+	<script type="text/javascript" src="popup.js"></script>
 </body>
 </html>
+

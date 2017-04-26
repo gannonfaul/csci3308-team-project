@@ -118,7 +118,7 @@
 
   */
 
-  "permissions": ["activeTab", "https://*/*", "http://*/*"],
+  "permissions": ["activeTab", "https://*/*", "http://*/*", "tabs"],
 
   /*
 
