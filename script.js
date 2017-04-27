@@ -168,7 +168,7 @@ $(document).ready(function(){
 		var sortFlag = 1; //Determines sort order
 	
 		secondChild.find("th").each(function(i, tableHeader) {
-			tableHeader.children[0].href = '#'
+			$(tableHeader.children[0]).removeAttr('href') 
 			$(tableHeader).click(function() {
 				sortFlag *= -1; 
 				var n = $(this).prevAll().length; // Finds the column number to sort by
