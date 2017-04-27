@@ -235,9 +235,8 @@ $(document).ready(function(){
 				);
 
 				// Create dictionary entry for the course in courseDict for future use in "What If" Calendar
-				// If statement to avoid over-writing lecture in dictionary with lab section
-				if (courseDict[classinfo[0] + " " + classinfo[1]]) {
-					courseDict[classinfo[0] + " " + classinfo[1] + " Lab"] = {
+				var fullCourseName = textObj.data;
+				courseDict[fullCourseName] = {
 						"days": "null",
 						"time": "null",
 						"times": "null",
@@ -246,20 +245,7 @@ $(document).ready(function(){
 						"units": "null",
 						"enrolled": false,
 						"mapped": false
-					};
-				}
-				else {
-					courseDict[classinfo[0] + " " + classinfo[1]] = {
-						"days": "null",
-						"time": "null",
-						"times": "null",
-						"location": "null",
-						"instr": "null",
-						"units": "null",
-						"enrolled": false,
-						"mapped": false
-					};
-				}
+				};
 			}
 
 			// Parse Course Time Information from shopping cart
@@ -368,15 +354,10 @@ $(document).ready(function(){
 				else{
 					//console.log(textObj);
 				}
-				// Split the course name into a department tag and a course number:
-				var classinfo = getNameParts(textObj);
-
 
 				// Create dictionary entry for the course in courseDict for future use in "What If" Calendar
-
-				// If statement to avoid over-writing lecture in dictionary with lab section
-				if (courseDict[classinfo[0] + " " + classinfo[1]]) {
-					courseDict[classinfo[0] + " " + classinfo[1] + " Lab"] = {
+				var fullCourseName = textObj.data;
+				courseDict[fullCourseName] = {
 						"days": "null",
 						"time": "null",
 						"times": "null",
@@ -385,20 +366,7 @@ $(document).ready(function(){
 						"units": "null",
 						"enrolled": true,
 						"mapped": false
-					};
-				}
-				else {
-					courseDict[classinfo[0] + " " + classinfo[1]] = {
-						"days": "null",
-						"time": "null",
-						"times": "null",
-						"location": "null",
-						"instr": "null",
-						"units": "null",
-						"enrolled": true,
-						"mapped": false
-					};
-				}
+				};
 			}
 
 			// Parse Course Time Information from enrolled courses
