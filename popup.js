@@ -17,7 +17,7 @@ function viewExtensions() {
 }
 
 function viewCU() {
-   chrome.tabs.create({active: true, url: "https://portal.prod.cu.edu/psp/epprod/UCB2/ENTP/h/?tab=CU_STUDENT"});
+   chrome.tabs.create({active: true, url: "https://mycuinfo.colorado.edu"});
 }
 
 document.getElementById('github').addEventListener('click', viewGithub);
