@@ -63,12 +63,11 @@ function getDaysandTime(timeText) {
 //             MAIN FUNCTION
 // ***************************************
 
-$(document).ready(function(){
-	$("script").remove(":contains('totalTimeoutMilliseconds')"); //Removes first instance of session timeout counter
 
-	$("iframe")[0].addEventListener("load", function(){
+$(document).ready(function(){
+	$("iframe")[0].addEventListener("load",function(){
 		iframe = getFrame();
-		iframe.find(":contains('totalTimeoutMilliseconds')").remove("script"); //Removes second instance of session timeout counter
+		
 
 		//Add new header to shopping cart table for course catalog Links
 		tableBody = iframe.find('.PSLEVEL1GRIDNBO');
@@ -76,21 +75,76 @@ $(document).ready(function(){
 		tableBody = tableBody.find('tbody');
 		firstRow = $(tableBody).children().eq(0); 	//access first row in tbody
 		firstRow = firstRow.find('td:first') //find first td
-		firstRow.attr('colspan', '12')	//change attribute vale
+		firstRow.attr('colspan', '12')	//change attribute value
 		secondChild = $(tableBody).children().eq(1);
-		secondChild.append('<th scope="col" width="200" align="left" class="PSLEVEL3GRIDCOLUMNHDR"><a>Course Catalog Link</a></th>') //makes header
-		//Currently, Clicking any of the header buttons (select, class, days/times, etc) will remove this header.
-		//Don't really understand why.
-		//this goes away because it reorders the table ^ use onclick?
-		//Also, it currently won't update when you add a new item to your shopping cart.
-\
-		// Initialize Course Dictionary that will be used to populate "What If Calendar"
+		secondChild.append('<th scope="col" width="200" align="left" class="PSLEVEL3GRIDCOLUMNHDR"><a>Course Catalog Link</a></th>') //makes header 
+		
+
+
+//Shopping Cart Sort Function Fix
+		/*
+		* I had to create a sort function from scratch because CU handles all of their
+		* requests through really shitty hrefs attributes linking to javascript, making it impossible to call
+		* for our load event to go off again after you click the header buttons.
+		* 
+		* Still Needs a way to sort by status / enroll status.
+		*/	
+		function sortShoppingCart(f,n, tableBody){
+			//Helper Function for sorting the shopping cart
+			var rows = $(tableBody).find('tr').get();
+			console.log(tableBody)
+			rows.sort(function(a, b) { 
+			// This is a prototype for javascript's built in sort function.
+			// More here: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort?v=control
+				var A = getVal(a);
+				var B = getVal(b);
+				if(A < B) {
+					return -1*f;
+				}
+				if(A > B) {
+					return 1*f;
+				}
+				return 0;
+			});
+
+			function getVal(elm){
+				var v = $(elm).children('td').eq(n).text().toUpperCase();
+				if ($.isNumeric(v)) {
+					v = parseInt(v,10);
+				}
+				return v;
+			}
+
+			$.each(rows, function(index, row) {
+				firstTD = $(row).children('td').eq(0).text().toUpperCase()
+				if(firstTD == ''){
+					//Table Header Row
+					$(tableBody).before(row);
+
+				}else if($(row).children().length == 1){
+					//Table Label Row (the part that says Fall 2017 UC Boulder... etc)
+					$(tableBody).before(row);
+					
+				}else{
+					$(tableBody).append(row);
+				}
+			});
+		}
+		var sortFlag = 1; //Determines sort order
+	
+		secondChild.find("th").each(function(i, tableHeader) {
+			tableHeader.children[0].href = '#'
+			$(tableHeader).click(function() {
+				sortFlag *= -1; 
+				var n = $(this).prevAll().length; // Finds the column number to sort by
+				sortShoppingCart(sortFlag,n,tableBody);
+			});
+		});
+//End of sort fix
+
+
+
 		var courseDict = {};
-
-
-
-
-
 		// ***************************************
 		//           SHOPPING CART DATA
 		// ***************************************
@@ -109,10 +163,10 @@ $(document).ready(function(){
 				//console.log(textObj)
 				if(textObj.id != undefined){
 					textObj = textObj.firstChild;
-					console.log(textObj);
+					//console.log(textObj);
 				}
 				else{
-					console.log(textObj);
+					//console.log(textObj);
 				}
 				// Split the course name into a department tag and a course number:
 				var classinfo = getNameParts(textObj);
@@ -135,13 +189,13 @@ $(document).ready(function(){
 					/*
 					This function occurs when the mouse hover starts.
 					*/
-					console.log('hoverStartDpt:', classinfo[0]);
+					//console.log('hoverStartDpt:', classinfo[0]);
 					},
 				function() {
 					/*
 					This happens when the user stops hovering the mouse over the item.
 					*/
-					console.log('hoverReleaseCrse:', classinfo[1]);
+					//console.log('hoverReleaseCrse:', classinfo[1]);
 					}
 				);
 
@@ -171,9 +225,9 @@ $(document).ready(function(){
 
 			// Parse Course Time Information from shopping cart
 			else if(item.id.match("^DERIVED_REGFRM1_SSR_MTG_SCHED_LONG")) {
-				console.log(item);
+				//console.log(item);
 				var timeText = $(this).text();
-				console.log(timeText);
+				//console.log(timeText);
 
 				// Parse course time into more usable format
 				var schedule = getDaysandTime(timeText);
@@ -197,7 +251,7 @@ $(document).ready(function(){
 			else if(item.id.match("^DERIVED_REGFRM1_SSR_MTG_LOC_LONG")) {
 				console.log(item);
 				var locText = $(this).text();
-				console.log(locText);
+				//console.log(locText);
 
 				// Search for first course in dictionary missing a location and populate with new data
 				for (var course in courseDict) {
@@ -214,9 +268,9 @@ $(document).ready(function(){
 
 			// Parse Course Instructor Information from shopping cart
 			else if(item.id.match("^DERIVED_REGFRM1_SSR_INSTR_LONG")) {
-				console.log(item);
+				//console.log(item);
 				var instrText = $(this).text();
-				console.log(instrText);
+				//console.log(instrText);
 
 				// Search for first course in dictionary missing an instructor and populate with new data
 				for (var course in courseDict) {
@@ -235,7 +289,7 @@ $(document).ready(function(){
 			else if(item.id.match("^SSR_REGFORM_VW_UNT_TAKEN")) {
 				console.log(item);
 				var unitText = $(this).text();
-				console.log(unitText);
+				//console.log(unitText);
 
 				// Search for first course in dictionary missing unit information and populate with new data
 				for (var course in courseDict) {
@@ -274,10 +328,10 @@ $(document).ready(function(){
 				//console.log(textObj)
 				if(textObj.id != undefined){
 					textObj = textObj.firstChild;
-					console.log(textObj);
+					//console.log(textObj);
 				}
 				else{
-					console.log(textObj);
+					//console.log(textObj);
 				}
 				// Split the course name into a department tag and a course number:
 				var classinfo = getNameParts(textObj);
@@ -312,7 +366,7 @@ $(document).ready(function(){
 			else if(item.id.match("^DERIVED_REGFRM1_SSR_MTG_SCHED_LONG")) {
 				console.log(item);
 				var timeText = $(this).text();
-				console.log(timeText);
+				//console.log(timeText);
 
 				// Parse course time into more usable format
 				var schedule = getDaysandTime(timeText);
@@ -336,7 +390,7 @@ $(document).ready(function(){
 			else if(item.id.match("^DERIVED_REGFRM1_SSR_MTG_LOC_LONG")) {
 				console.log(item);
 				var locText = $(this).text();
-				console.log(locText);
+				//console.log(locText);
 
 				// Search for first course in dictionary missing a location and populate with new data
 				for (var course in courseDict) {
@@ -353,9 +407,9 @@ $(document).ready(function(){
 
 			// Parse Course Instructor Information from enrolled courses
 			else if(item.id.match("^DERIVED_REGFRM1_SSR_INSTR_LONG")) {
-				console.log(item);
+				//console.log(item);
 				var instrText = $(this).text();
-				console.log(instrText);
+				//console.log(instrText);
 
 				// Search for first course in dictionary missing an instructor and populate with new data
 				for (var course in courseDict) {
