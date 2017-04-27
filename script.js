@@ -16,6 +16,22 @@ function getNameParts(courseObj){
 	return [department, courseNumber]
 }
 
+// This function will eventually draw the course descriptions from the database
+// function getCourseDescription(deptartment,number) {
+//   var xhttp;
+//   if (department == "" || number == "") {
+//     document.getElementById("txtHint").innerHTML = "";
+//     return;
+//   }
+//   xhttp = new XMLHttpRequest();
+//   xhttp.onreadystatechange = function() {
+//     if (this.readyState == 4 && this.status == 200) {
+//     document.getElementById("txtHint").innerHTML = this.responseText;
+//     }
+//   };
+//   xhttp.open("GET", "getcustomer.asp?deparment="+deparment+"number="+number, true);
+//   xhttp.send();
+// }
 
 // FUNCTION: getDaysandTime() parses course times into more usable pieces
 // INPUT: ("MoWeFr 2:00PM - 2:50PM")
@@ -106,6 +122,7 @@ $(document).ready(function(){
 				}
 				return 0;
 			});
+
 
 			function getVal(elm){
 				var v = $(elm).children('td').eq(n).text().toUpperCase();
@@ -210,7 +227,7 @@ $(document).ready(function(){
 						"instr": "null",
 						"units": "null"
 					};
-				} 
+				}
 				else {
 					courseDict[classinfo[0] + " " + classinfo[1]] = {
 						"days": "null",
@@ -306,10 +323,6 @@ $(document).ready(function(){
 		});
 
 
-
-
-
-
 		// ***************************************
 		//         ENROLLED COURSE DATA
 		// ***************************************
@@ -335,7 +348,7 @@ $(document).ready(function(){
 				}
 				// Split the course name into a department tag and a course number:
 				var classinfo = getNameParts(textObj);
-				
+
 
 				// Create dictionary entry for the course in courseDict for future use in "What If" Calendar
 
@@ -349,7 +362,7 @@ $(document).ready(function(){
 						"instr": "null",
 						"units": "null"
 					};
-				} 
+				}
 				else {
 					courseDict[classinfo[0] + " " + classinfo[1]] = {
 						"days": "null",
@@ -479,9 +492,9 @@ $(document).ready(function(){
 		 * SSTEXTWEEKLY => defines text to add to the cell
 		 * PSLEVEL3GRID "&nbsp => empty cell
 		 */
-		 
-		//For loop pseudocode 
-		
+
+		//For loop pseudocode
+
 		var time;
 		var max_time = 20;
 		var weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thusday', 'Fiday'];
@@ -653,7 +666,7 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
 		*/
-		
+
 		calendar += "</table>"
 		calendar += "</div>"
 		calendar += "</div>"
