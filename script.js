@@ -243,7 +243,9 @@ $(document).ready(function(){
 						"times": "null",
 						"location": "null",
 						"instr": "null",
-						"units": "null"
+						"units": "null",
+						"enrolled": false,
+						"mapped": false
 					};
 				}
 				else {
@@ -253,7 +255,9 @@ $(document).ready(function(){
 						"times": "null",
 						"location": "null",
 						"instr": "null",
-						"units": "null"
+						"units": "null",
+						"enrolled": false,
+						"mapped": false
 					};
 				}
 			}
@@ -378,7 +382,9 @@ $(document).ready(function(){
 						"times": "null",
 						"location": "null",
 						"instr": "null",
-						"units": "null"
+						"units": "null",
+						"enrolled": true,
+						"mapped": false
 					};
 				}
 				else {
@@ -388,7 +394,9 @@ $(document).ready(function(){
 						"times": "null",
 						"location": "null",
 						"instr": "null",
-						"units": "null"
+						"units": "null",
+						"enrolled": true,
+						"mapped": false
 					};
 				}
 			}
