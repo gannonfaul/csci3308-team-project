@@ -40,6 +40,8 @@ function getNameParts(courseObj){
 function getDaysandTime(timeText) {
 	var data = timeText.split(" ");
 	var days = data[0];
+	var startPM = false;
+	var endPM = false;
 
 	days = days.match(/.{1,2}/g);
 
@@ -47,7 +49,11 @@ function getDaysandTime(timeText) {
 
 	var timeStart = data[1];
 	timeStart = timeStart.split("P")[0];
-	timeStart = timeStart.split("A")[0];
+	if(timeStart.length <= 4) {
+		startPM = true;
+	} else {
+		timeStart = timeStart.split("A")[0];
+	}
 	timeStart1 = timeStart.split(":");
 	timeStart = timeStart1[0] + timeStart1[1];
 
@@ -55,11 +61,23 @@ function getDaysandTime(timeText) {
 
 	var timeEnd = data[3]
 	timeEnd = timeEnd.split("P")[0];
-	timeEnd = timeEnd.split("A")[0];
+	if(timeEnd.length <= 4) {
+		endPM = true;
+	} else {
+		timeEnd= timeEnd.split("A")[0];
+	}
 	timeEnd1 = timeEnd.split(":");
 	timeEnd = timeEnd1[0] + timeEnd1[1];
 
 	timeEnd = parseInt(timeEnd);
+
+	if(startPM && timeStart < 1200) { 
+		timeStart += 1200
+	}
+
+	if(endPM && timeEnd < 1200) { 
+		timeEnd += 1200
+	}
 
 	if (timeEnd % 100 > 30) {
 		timeEnd = timeEnd + (100 - (timeEnd % 100))
