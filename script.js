@@ -111,7 +111,8 @@ $(document).ready(function(){
 		firstRow = firstRow.find('td:first') //find first td
 		firstRow.attr('colspan', '12')	//change attribute value
 		secondChild = $(tableBody).children().eq(1);
-		secondChild.append('<th scope="col" width="200" align="left" class="PSLEVEL3GRIDCOLUMNHDR"><a>Course Catalog Link</a></th>') //makes header 
+		
+		secondChild.append('<th scope="col" width="200" align="left" class="PSLEVEL3GRIDCOLUMNHDR"><a name="SSR_REGFORM_VW$srt17$0" id="SSR_REGFORM_VW$srt17$0" tabindex="147" class="PSLEVEL3GRIDCOLUMNHDR" href="#" title="Click to sort">Course Catalog Link</a></th>') //makes header 
 		
 
 
