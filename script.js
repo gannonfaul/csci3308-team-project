@@ -97,7 +97,6 @@ function getDaysandTime(timeText) {
 //             MAIN FUNCTION
 // ***************************************
 
-
 $(document).ready(function(){
 	$("iframe")[0].addEventListener("load",function(){
 		iframe = getFrame();
