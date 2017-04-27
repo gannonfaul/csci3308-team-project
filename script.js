@@ -519,21 +519,23 @@ $(document).ready(function(){
 			calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
 			calendar += "<span class='SSSTEXTWEEKLYTIME' >"+String(time)+"</span>"
 			calendar += "</td>"
-			for(var day in weekdays){
-				console.log(day)
+			for(var i = 0; i<5; i++){
+				var empty = 0;
+				//console.log(weekdays[i])
 				for(var course in courseDict){	
-					console.log(course)
-					console.log($.inArray(day, course.days))
-					if($.inArray(day, course.days)!=(-1)){
-						if(course[times][0] == time){
+					//console.log(course)
+					//console.log($.inArray(weekdays[i], courseDict[course]["days"]))
+					if($.inArray(weekdays[i], courseDict[course]["days"])!=(-1)){
+						if(courseDict[course]["times"][0] == time){
 							calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='1'>"
-							calendar += "<span class='SSSTEXTWEEKLY' >"+course+"<br>"+course[instr]+"<br>"+course[time]+"<br>"+course[location]+"<br>"+course[time]+"</span></td>"
+							calendar += "<span class='SSSTEXTWEEKLY' >"+course+"<br>"+courseDict[course]["instr"]+"<br>"+courseDict[course]["time"]+"<br>"+courseDict[course]["location"]+"<br>"+courseDict[course]["units"]+"</span></td>"
+							empty = 1;
 						}
 					}
-					else{
-						calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
-						console.log("Empty")
-					}
+				}
+				if (empty == 0){
+					calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
+					//console.log("Empty")
 				}
 			}
 			calendar += "</tr>"
