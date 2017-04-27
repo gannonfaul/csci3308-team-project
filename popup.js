@@ -16,8 +16,13 @@ function viewExtensions() {
    chrome.tabs.create({active: true, url: "chrome://extensions"});
 }
 
+function viewCU() {
+   chrome.tabs.create({active: true, url: "https://portal.prod.cu.edu/psp/epprod/UCB2/ENTP/h/?tab=CU_STUDENT"});
+}
+
 document.getElementById('github').addEventListener('click', viewGithub);
 document.getElementById('trello').addEventListener('click', viewTrello);
 document.getElementById('project').addEventListener('click', viewAssign);
 document.getElementById('chromeExt').addEventListener('click', viewExtensions);
+document.getElementById('mycuinfo').addEventListener('click', viewCU);
 
