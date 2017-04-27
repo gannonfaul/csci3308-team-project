@@ -111,8 +111,7 @@ $(document).ready(function(){
 		firstRow = firstRow.find('td:first') //find first td
 		firstRow.attr('colspan', '12')	//change attribute value
 		secondChild = $(tableBody).children().eq(1);
-		
-		secondChild.append('<th scope="col" width="200" align="left" class="PSLEVEL3GRIDCOLUMNHDR"><a name="SSR_REGFORM_VW$srt17$0" id="SSR_REGFORM_VW$srt17$0" tabindex="147" class="PSLEVEL3GRIDCOLUMNHDR" href="#" title="Click to sort">Course Catalog Link</a></th>') //makes header 
+		secondChild.append('<th scope="col" width="200" align="left" class="PSLEVEL3GRIDCOLUMNHDR"><a>Course Catalog Link</a></th>') //makes header 
 		
 
 
@@ -516,9 +515,19 @@ $(document).ready(function(){
 		var max_time = 2000;
 		var weekdays = ["Mo", "Tu", "We", "Th", "Fr"];
 		for(time = 800; time<=max_time; time=time+100){
+			var civ_time = String(time/100);
+			if (time<1200){
+				civ_time += ":00 am"
+			}
+			else if (time>1200){
+				civ_time = String((time/100)-12)+":00 pm"
+			}
+			else{
+				civ_time += ":00 pm"
+			}
 			calendar += "<tr>"
 			calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
-			calendar += "<span class='SSSTEXTWEEKLYTIME' >"+String(time)+"</span>"
+			calendar += "<span class='SSSTEXTWEEKLYTIME' >"+civ_time+"</span>"
 			calendar += "</td>"
 			for(var i = 0; i<5; i++){
 				var empty = 0;
