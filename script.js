@@ -1,5 +1,7 @@
 console.log('Script.js injected!');
 
+
+
 // ***************************************
 //           HELPER FUNCTIONS
 // ***************************************
@@ -91,8 +93,6 @@ function getDaysandTime(timeText) {
 
 
 
-
-
 // ***************************************
 //             MAIN FUNCTION
 // ***************************************
@@ -178,8 +178,11 @@ $(document).ready(function(){
 //End of sort fix
 
 
-
+		// Create course dictionary for use in "What If" Calendar
 		var courseDict = {};
+
+
+
 		// ***************************************
 		//           SHOPPING CART DATA
 		// ***************************************
@@ -331,6 +334,7 @@ $(document).ready(function(){
 		});
 
 
+
 		// ***************************************
 		//         ENROLLED COURSE DATA
 		// ***************************************
@@ -452,8 +456,6 @@ $(document).ready(function(){
 
 		// Display  final course dictionary for "What If" Calendar
 		console.log(courseDict);
-
-
 
 
 
