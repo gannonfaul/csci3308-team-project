@@ -511,24 +511,30 @@ $(document).ready(function(){
 		 * PSLEVEL3GRID "&nbsp => empty cell
 		 */
 
-		//For loop pseudocode
-
 		var time;
-		var max_time = 20;
-		var weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thusday', 'Fiday'];
-		for(time = 8; time<=max_time; time++){
+		var max_time = 2000;
+		var weekdays = ["Mo", "Tu", "We", "Th", "Fr"];
+		for(time = 800; time<=max_time; time=time+100){
 			calendar += "<tr>"
 			calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
-			calendar += "<span class='SSSTEXTWEEKLYTIME' >"+String(time)+":00</span>"
+			calendar += "<span class='SSSTEXTWEEKLYTIME' >"+String(time)+"</span>"
 			calendar += "</td>"
-			for(var day = 0; day<5; day++){
-				//if("day is empty"){
-					calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
-				//}
-				//else{
-					//calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='1'>"
-					//calendar += "<span class='SSSTEXTWEEKLY' >"+Class Title+"</span></td>"
-				//}
+			for(var day in weekdays){
+				console.log(day)
+				for(var course in courseDict){	
+					console.log(course)
+					console.log($.inArray(day, course.days))
+					if($.inArray(day, course.days)!=(-1)){
+						if(course[times][0] == time){
+							calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='1'>"
+							calendar += "<span class='SSSTEXTWEEKLY' >"+course+"<br>"+course[instr]+"<br>"+course[time]+"<br>"+course[location]+"<br>"+course[time]+"</span></td>"
+						}
+					}
+					else{
+						calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
+						console.log("Empty")
+					}
+				}
 			}
 			calendar += "</tr>"
 		}
