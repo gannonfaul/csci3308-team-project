@@ -266,7 +266,7 @@ $(document).ready(function(){
 
 			// Parse Course Location Information from shopping cart
 			else if(item.id.match("^DERIVED_REGFRM1_SSR_MTG_LOC_LONG")) {
-				console.log(item);
+				// console.log(item);
 				var locText = $(this).text();
 				//console.log(locText);
 
@@ -304,7 +304,7 @@ $(document).ready(function(){
 
 			// Parse Course Unit Information from shopping cart
 			else if(item.id.match("^SSR_REGFORM_VW_UNT_TAKEN")) {
-				console.log(item);
+				// console.log(item);
 				var unitText = $(this).text();
 				//console.log(unitText);
 
@@ -377,7 +377,7 @@ $(document).ready(function(){
 
 			// Parse Course Time Information from enrolled courses
 			else if(item.id.match("^DERIVED_REGFRM1_SSR_MTG_SCHED_LONG")) {
-				console.log(item);
+				// console.log(item);
 				var timeText = $(this).text();
 				//console.log(timeText);
 
@@ -401,7 +401,7 @@ $(document).ready(function(){
 
 			// Parse Course Location Information from enrolled courses
 			else if(item.id.match("^DERIVED_REGFRM1_SSR_MTG_LOC_LONG")) {
-				console.log(item);
+				// console.log(item);
 				var locText = $(this).text();
 				//console.log(locText);
 
@@ -439,9 +439,9 @@ $(document).ready(function(){
 
 			// Parse Course Unit Information from enrolled courses
 			else if(item.id.match("^STDNT_ENRL_SSVW_UNT_TAKEN")) {
-				console.log(item);
+				// console.log(item);
 				var unitText = $(this).text();
-				console.log(unitText);
+				// console.log(unitText);
 
 				// Search for first course in dictionary missing unit information and populate with new data
 				for (var course in courseDict) {
