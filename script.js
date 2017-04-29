@@ -515,6 +515,8 @@ $(document).ready(function(){
 		var time;
 		var max_time = 2000;
 		var weekdays = ["Mo", "Tu", "We", "Th", "Fr"];
+		var conflictDict = {};
+
 		for(time = 800; time<=max_time; time=time+100){
 			var civ_time = String(time/100);
 			if (time<1200){
@@ -532,15 +534,26 @@ $(document).ready(function(){
 			calendar += "</td>"
 			for(var i = 0; i<5; i++){
 				var empty = 0;
+				var prevEntry = null;
 				//console.log(weekdays[i])
 				for(var course in courseDict){	
 					//console.log(course)
 					//console.log($.inArray(weekdays[i], courseDict[course]["days"]))
 					if($.inArray(weekdays[i], courseDict[course]["days"])!=(-1)){
 						if(courseDict[course]["times"][0] == time){
-							calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='1'>"
-							calendar += "<span class='SSSTEXTWEEKLY' >"+course+"<br>"+courseDict[course]["instr"]+"<br>"+courseDict[course]["time"]+"<br>"+courseDict[course]["location"]+"<br>"+courseDict[course]["units"]+"</span></td>"
-							empty = 1;
+							if(empty != 1){
+
+								calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='1'>"
+								calendar += "<span class='SSSTEXTWEEKLY' >"+course+"<br>"+courseDict[course]["instr"]+"<br>"+courseDict[course]["time"]+"<br>"+courseDict[course]["location"]+"<br>"+courseDict[course]["units"]+"</span></td>"
+								empty = 1;
+								prevEntry = course
+							}else{
+								conflictDict[i + ' ' + time] = {
+									'course1': course,
+									'course2': prevEntry
+								}
+							}
+							
 						}
 					}
 				}
@@ -551,6 +564,7 @@ $(document).ready(function(){
 			}
 			calendar += "</tr>"
 		}
+		console.log(conflictDict)
 
 		/*
 
@@ -709,6 +723,24 @@ $(document).ready(function(){
 		calendar += "</div>"
 
 		iframe.find('.PSLEVEL1GRIDNBO').after(calendar);
+
+		var calendar = iframe.find('#SHOPPING_CART_SCHED_HTMLAREA');
+
+		calendar.find('tr').each(function(i, row){
+			rowTime = i*100 +700
+			for (conflict in conflictDict){
+				if (conflict.substr(2, conflict.length)  == rowTime) {
+					console.log('Con Found ', conflict)
+					var dayIndex = parseInt(conflict[0]) + 1
+					console.log($(row).find('td')[dayIndex])
+
+				}
+
+			}	
+		});
+		
+
+
 		//document.querySelector("[id^='win0div$ICField']").id.innerHTML += calendar;
 	});
 });
