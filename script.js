@@ -142,7 +142,24 @@ $(document).ready(function(){
 
 
 			function getVal(elm){
-				var v = $(elm).children('td').eq(n).text().toUpperCase();
+				var v = -1
+				if (n == 7) { //case Status
+					vElm = $(elm).children('td').eq(n).find('img')
+					if(vElm.length == 0){ //Just some error catching. Uses default.
+						v =  $(elm).children('td').eq(n).text().toUpperCase();
+					}else{
+						console.log('I just hit status!')
+						if(vElm[0].alt == 'Open'){
+							v = 0
+						}else if(vElm[0].alt == 'Wait List'){
+							v = 1
+						}else{
+							v = 2
+						}
+					}
+				} else { //All other cases
+					v = $(elm).children('td').eq(n).text().toUpperCase();
+				}
 				if ($.isNumeric(v)) {
 					v = parseInt(v,10);
 				}
