@@ -157,6 +157,13 @@ $(document).ready(function(){
 							v = 2
 						}
 					}
+				} else if (n == 8){ //Enroll Status
+					vElm = $(elm).children('td').eq(n).find('img')
+					if(vElm.length == 0){
+						v = 0
+					}else{
+						v = 1
+					}
 				} else { //All other cases
 					v = $(elm).children('td').eq(n).text().toUpperCase();
 				}
