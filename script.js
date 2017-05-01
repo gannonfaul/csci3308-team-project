@@ -553,7 +553,7 @@ $(document).ready(function(){
 				for(var course in courseDict){	
 					if($.inArray(weekdays[i], courseDict[course]["days"])!=(-1)){
 						if(courseDict[course]["times"][0] == time){
-							if (courseDict[course]["mapped"] == false){
+							if (courseDict[course]["dropped"] == false){
 								if(empty != 1){
 									calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='"+String(courseDict[course]["span"])+"'>"
 									calendar += "<span class='SSSTEXTWEEKLY' >"+course+"<br>"+courseDict[course]["instr"]+"<br>"+courseDict[course]["time"]+"<br>"+courseDict[course]["location"]+"<br>"+courseDict[course]["units"]+"</span></td>"
