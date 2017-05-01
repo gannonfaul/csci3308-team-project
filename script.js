@@ -1,7 +1,8 @@
 console.log('Script.js injected!');
 
-//Dictionary of prerequisites only works for CSCI right now
+//Dictionary of prerequisites
 var prereqs = {
+  'CSCI': {
 '4113': ' Requisites: Requires prerequisite course of CSCI 2400 (minimum grade C-). ',
 '4229': ' Requisites: Requires prerequisite course of CSCI 2270 (minimum grade C-). ',
 '4239': ' Requisites: Requires prerequisite course of CSCI 4229 (minimum grade C-). ',
@@ -248,6 +249,13 @@ var prereqs = {
 '4810': ' None ',
 '3753': ' Requisites: Requires prerequisite courses of CSCI 2270 and either CSCI 2400 or ECEN 3350 (all minimum grade C-). ',
 '4830': ' Requisites: Requires prerequisite course of CSCI 2400 (minimum grade C-). '
+  },
+'ATLS': {
+	'2000': 'Test ATLS'
+  },
+'TLEN': {
+	'5842': 'Test TLEN'
+	}
 };
 
 
@@ -480,7 +488,7 @@ $(document).ready(function(){
 				}
 				// Split the course name into a department tag and a course number:
 				var classinfo = getNameParts(textObj);
-				$(item).attr('title', prereqs[classinfo[1]]);
+				$(item).attr('title', prereqs[classinfo[0]][classinfo[1]]);
 				//Create our link to the course catalog based on the info we pulled from the class name:
 				var classCatalogLink = 'http://www.colorado.edu/catalog/2016-17/courses?subject='+classinfo[0]+'&number='+classinfo[1]
 
