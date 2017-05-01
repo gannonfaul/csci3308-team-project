@@ -367,6 +367,13 @@ $(document).ready(function(){
 
 			// Parse Course Name Information from enrolled courses
 			if(item.id.match("^E_CLASS_NAME")){
+				$(this).closest('tr').find('div').each(function(i, imgItem){
+					if(imgItem.id.match("^win0divDERIVED_REGFRM1_SSR_STATUS_LONG")){
+						var imgDiv = imgItem.firstChild;
+						console.log(imgDiv);
+					}
+				});
+
 				/*
 				First thing's first, after locating a "course" in our course list, we have to get the course name.
 				The text that defines the course ("CSCI 1300", for example) will be found as the first child of item if the
