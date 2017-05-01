@@ -1,5 +1,254 @@
 console.log('Script.js injected!');
 
+//Dictionary of prerequisites only works for CSCI right now
+var prereqs = {
+'4113': ' Requisites: Requires prerequisite course of CSCI 2400 (minimum grade C-). ',
+'4229': ' Requisites: Requires prerequisite course of CSCI 2270 (minimum grade C-). ',
+'4239': ' Requisites: Requires prerequisite course of CSCI 4229 (minimum grade C-). ',
+'4900': ' Undergraduate Level Independent Study" ',
+'1000': ' Requisites: Restricted to students with 0-26 credits (Freshmen) Computer Science (CSEN-BS ',
+'6402': ' Requisites: Restricted to graduate students only. ',
+'4250': ' Requisites: Restricted to students with 57-180 credits (Juniors or Seniors). ',
+'4253': ' Systems and Techniques" ',
+'4950': ' Requisites: Requires a prerequisite or corequisite course of CSCI 3100 (minimum grade C-). Restricted to students with 87-180 credits (Senior ',
+'4960': ' Requisites: Restricted to students with 87-180 credits (Senior ',
+'1220': ' None ',
+'1240': ' None ',
+'6454': ' Requisites: Requires prerequisite course of CSCI 5454 (minimum grade B). Restricted to graduate students only. ',
+'6622': ' Requisites: Restricted to graduate students only. ',
+'4273': ' Requisites: Requires prerequisite course of CSCI 3753 (minimum grade C-). ',
+'4302': ' Requisites: Requires prerequisite course of CSCI 3302 (minimum grade C-). ',
+'5573': ' Requisites: Requires prerequisite course of CSCI 2400 (minimum grade C). Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5135': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5229': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'1300': ' Requisites: Requires a prerequisite or corequisite course of MATH 1300 or MATH 1310 or APPM 1345 or APPM 1350 (all minimum grade C-). ',
+'1310': ' Requisites: Requires a prerequisite or corequisite course of MATH 1300 or MATH 1310 or APPM 1345 or APPM 1350 (all minimum grade C-). ',
+'6676': ' Requisites: Requires prerequisite course of CSCI 5606 (minimum grade B). Restricted to graduate students only. ',
+'6686': ' Requisites: Requires prerequisite course of CSCI 5606 (minimum grade B). Restricted to graduate students only. ',
+'4308': ' Requisites: Requires prerequisite courses of CSCI 3155 and CSCI 3308 (all minimum grade C-). Restricted to students with 87-180 credits (Senior ',
+'4314': ' Requisites: Requires a prerequisite course of CSCI 3104 (minimum grade C-). ',
+'5576': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'4448': ' Requisites: Requires prerequisite courses of CSCI 3155 and CSCI 3308 (all minimum grade C-). ',
+'5593': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5239': ' Requisites: Requires prerequisite course of CSCI 5229 (minimum grade B). Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5250': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'1320': ' Requisites: Requires a prerequisite or corequisite course of MATH 1300 or MATH 1310 or APPM 1345 or APPM 1350 (all minimum grade C-). Restricted to College of Engineering or Computer Science (CSEN) or Pre-Engineering Arts and Science (PREN) majors only. ',
+'2270': ' Requisites: Requires prerequisite courses of CSCI 1300 or CSCI 1310 or CSCI 1320 or ECEN 1030 or ECEN 1310 and APPM 1345 or APPM 1350 or MATH 1300 or MATH 1310 (all minimum grade C-). ',
+'6800': ' Requisites: Restricted to graduate student Computer Sciences (CSEN) students only. ',
+'6810': ' None ',
+'4318': ' Requisites: Requires prerequisite course of CSCI 4308 (minimum grade C-). ',
+'4328': ' Requisites: Requires prerequisite courses of CSCI 3155 and CSCI 3308 (all minimum grade C-). Restricted to students with 87-180 credits (Senior ',
+'5606': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5608': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5253': ' Systems and Techniques ',
+'5254': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'2400': ' Requisites: Requires prerequisite course of CSCI 2270 and a prereq or coreq course of CSCI 2824 or MATH 2001 or ECEN 2703 or APPM 3170 (minimum grade C-). ',
+'2820': ' Requisites: Requires prerequisite courses of CSCI 2270 and APPM 1360 or MATH 2300 (all minimum grade C-). ',
+'6940': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'6950': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'4338': ' Requisites: Requires prerequisite courses of CSCI 3155 and CSCI 3308 (all minimum grade C-). Restricted to students with 87-180 credits (Senior ',
+'4348': ' Requisites: Requires prerequisite courses of CSCI 3155 and CSCI 3308 (all minimum grade C-). Restricted to students with 87-180 credits (Senior ',
+'5622': ' Requisites: Requires prerequisite courses of CSCI 2400 and CSCI 3104 (all minimum grade C). Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5636': ' Requisites: Requires prerequisite course of CSCI 5606 (minimum grade B). Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only.only. ',
+'5273': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5302': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'2824': ' Requisites: Requires prerequisite or corequisite course of CSCI 2270 and a prerequisite course of MATH 1300 or MATH 1310 or APPM 1350 or APPM 1345 (minimum grade C-). ',
+'2830': ' None ',
+'2900': ' Undergraduate Level Independent Study ',
+'7000': ' Requisites: Restricted to graduate students only. ',
+'7123': ' Requisites: Requires prerequisite course of CSCI 5573 (minimum grade B). Restricted to graduate students only. ',
+'4413': ' Requisites: Requires prerequisite courses of CSCI 2400 and CSCI 4273 (all minimum grade C-). ',
+'4446': ' Requisites: Requires prerequisite course of CSCI 1300 or CSCI 1310 or CSCI 1320 and APPM 2350 or MATH 2400 (all minimum grade C-). ',
+'5646': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5654': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5314': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5340': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'3002': ' Requisites: Restricted to students with 27-180 credits (Sophomores ',
+'3100': ' Requisites: Requires prerequisite course of CSCI 3308 (minimum grade C-). Restricted to Computer Science (CSEN-BS ',
+'7135': ' Requisites: Restricted to graduate students only. ',
+'7143': ' Requisites: Restricted to graduate students only. ',
+'4502': ' Requisites: Requires prerequisite course of CSCI 2270 (minimum grade C-). ',
+'5673': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5714': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5722': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5352': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5413': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'3104': ' Requisites: Requires prerequisite courses of CSCI 2270 and APPM 1360 or MATH 2300 and one of the following:  CSCI 2824 ',
+'3112': ' None ',
+'7154': ' Requisites: Requires prerequisite course of CSCI 5454 (minimum grade B). Restricted to graduate students only. ',
+'7176': ' Requisites: Restricted to graduate students only. ',
+'4555': ' Requisites: Requires prerequisite courses of CSCI 3155 and CSCI 2400 or ECEN 3350 (all minimum grade C-). ',
+'4576': ' None ',
+'5753': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5809': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'3287': ' Requisites: Requires prerequisite course of CSCI 3104 (minimum grade C-). ',
+'5417': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5444': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'3155': ' Requisites: Requires prerequisite courses of CSCI 2270 and CSCI 2824 or ECEN 2703 or APPM 3170 or MATH 2001 (all minimum grade C-). ',
+'3202': ' Requisites: Requires prerequisite courses of CSCI 2270 and CSCI 2824 or MATH 2001 or ECEN 2703 or APPM 3170 and one of the following:  APPM 3570 ',
+'7222': ' Requisites: Restricted to graduate students only. ',
+'7412': ' Requisites: Requires a prerequisite course of CSCI 6402 or EDUC 6504 or LING 6200 or PHIL 6310 or PSYC 6200 (minimum grade B). Restricted to graduate students only. ',
+'4586': ' Requisites: Requires prerequisite course of CSCI 4576 (minimum grade C-). ',
+'4593': ' Requisites: Requires prerequisite course of ECEN 3350 or CSCI 2400 (minimum grade C-).  Restricted to College of Engineering majors only. ',
+'5817': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5822': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5446': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5448': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'7000': ' Requisites: Restricted to graduate students only. ',
+'3302': ' Requisites: Requires prerequisite courses of CSCI 2270 and CSCI 2824 or ECEN 2703 or APPM 3170 or MATH 2001(all minimum grade C-). ',
+'7422': ' Requisites: Requires a prerequisite course of LING 7415 or PSYC 7415 or CSCI 7412 or EDUC 6506 (minimum grade B). Restricted to graduate students only. ',
+'7717': ' Requisites: Requires prerequisite course of CSCI 5817 (minimum grade B). Restricted to graduate students only. ',
+'4753': ' Requisites: Requires prerequisite course of CSCI 3753 (minimum grade C-). ',
+'4809': ' None ',
+'5828': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5832': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5454': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5502': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'3308': ' Requisites: Requires prerequisite course of CSCI 2270 (minimum grade C-). ',
+'3434': ' Requisites: Requires prerequisite courses of CSCI 3104 and CSCI 3155 (all minimum grade C-). ',
+'7772': ' Requisites: Restricted to graduate students only. ',
+'7818': ' Requisites: Restricted to graduate students only. ',
+'4810': ' None ',
+'4830': ' Requisites: Requires prerequisite course of CSCI 2400 (minimum grade C-). ',
+'5839': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5900': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5525': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5535': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'3656': ' Requisites: Requires prerequisite courses of CSCI 1300 or CSCI 1310 or CSCI 1320 and APPM 1350 or MATH 1300 and APPM 1360 or MATH 2300 and MATH 3130 or APPM 3310 or CSCI 2820 (all minimum grade C-). ',
+'3702': ' None ',
+'7900': ' Requisites: Restricted to graduate students only. ',
+'8990': ' Requisites: Restricted to graduate students only. ',
+'5919': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5929': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5548': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5551': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'3753': ' Requisites: Requires prerequisite courses of CSCI 2270 and either CSCI 2400 or ECEN 3350 (all minimum grade C-). ',
+'7123': ' Requisites: Requires prerequisite course of CSCI 5573 (minimum grade B). Restricted to graduate students only. ',
+'6000': ' Requisites: Restricted to graduate students only. ',
+'6268': ' Requisites: Requires prerequisite course of CSCI 5273 (minimum grade B). Restricted to graduate students only. ',
+'6302': ' Requisites: Restricted to graduate students only. ',
+'5573': ' Requisites: Requires prerequisite course of CSCI 2400 (minimum grade C). Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5576': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5593': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'4900': ' None Undergraduate Level Independent Study" ',
+'5606': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5608': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'4950': ' Requisites: Requires a prerequisite or corequisite course of CSCI 3100 (minimum grade C-). Restricted to students with 87-180 credits (Senior ',
+'4960': ' Requisites: Restricted to students with 87-180 credits (Senior ',
+'1300': ' Requisites: Requires a prerequisite or corequisite course of MATH 1300 or MATH 1310 or APPM 1345 or APPM 1350 (all minimum grade C-). ',
+'5622': ' Requisites: Requires prerequisite courses of CSCI 2400 and CSCI 3104 (all minimum grade C). Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5636': ' Requisites: Requires prerequisite course of CSCI 5606 (minimum grade B). Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only.only. ',
+'6402': ' Requisites: Restricted to graduate students only. ',
+'1000': ' Requisites: Restricted to students with 0-26 credits (Freshmen) Computer Science (CSEN-BS ',
+'5135': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5229': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5646': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5654': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'6454': ' Requisites: Requires prerequisite course of CSCI 5454 (minimum grade B). Restricted to graduate students only. ',
+'6622': ' Requisites: Restricted to graduate students only. ',
+'6676': ' Requisites: Requires prerequisite course of CSCI 5606 (minimum grade B). Restricted to graduate students only. ',
+'4113': ' Requisites: Requires prerequisite course of CSCI 2400 (minimum grade C-). ',
+'1220': ' None ',
+'1240': ' None ',
+'5239': ' Requisites: Requires prerequisite course of CSCI 5229 (minimum grade B). Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5250': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5673': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5714': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'6686': ' Requisites: Requires prerequisite course of CSCI 5606 (minimum grade B). Restricted to graduate students only. ',
+'6800': ' Requisites: Restricted to graduate student Computer Sciences (CSEN) students only. ',
+'4229': ' Requisites: Requires prerequisite course of CSCI 2270 (minimum grade C-). ',
+'4239': ' Requisites: Requires prerequisite course of CSCI 4229 (minimum grade C-). ',
+'1310': ' Requisites: Requires a prerequisite or corequisite course of MATH 1300 or MATH 1310 or APPM 1345 or APPM 1350 (all minimum grade C-). ',
+'1320': ' Requisites: Requires a prerequisite or corequisite course of MATH 1300 or MATH 1310 or APPM 1345 or APPM 1350 (all minimum grade C-). Restricted to College of Engineering or Computer Science (CSEN) or Pre-Engineering Arts and Science (PREN) majors only. ',
+'5253': ' Systems and Techniques ',
+'5817': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'6950': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5254': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5722': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5753': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'6810': ' None ',
+'6940': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'4250': ' Requisites: Restricted to students with 57-180 credits (Juniors or Seniors). ',
+'4253': ' Systems and Techniques" ',
+'2270': ' Requisites: Requires prerequisite courses of CSCI 1300 or CSCI 1310 or CSCI 1320 or ECEN 1030 or ECEN 1310 and APPM 1345 or APPM 1350 or MATH 1300 or MATH 1310 (all minimum grade C-). ',
+'2400': ' Requisites: Requires prerequisite course of CSCI 2270 and a prereq or coreq course of CSCI 2824 or MATH 2001 or ECEN 2703 or APPM 3170 (minimum grade C-). ',
+'5273': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5302': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5314': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5809': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'4273': ' Requisites: Requires prerequisite course of CSCI 3753 (minimum grade C-). ',
+'4302': ' Requisites: Requires prerequisite course of CSCI 3302 (minimum grade C-). ',
+'2820': ' Requisites: Requires prerequisite courses of CSCI 2270 and APPM 1360 or MATH 2300 (all minimum grade C-). ',
+'2824': ' Requisites: Requires prerequisite or corequisite course of CSCI 2270 and a prerequisite course of MATH 1300 or MATH 1310 or APPM 1350 or APPM 1345 (minimum grade C-). ',
+'5340': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5352': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5822': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5828': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'7135': ' Requisites: Restricted to graduate students only. ',
+'7143': ' Requisites: Restricted to graduate students only. ',
+'4308': ' Requisites: Requires prerequisite courses of CSCI 3155 and CSCI 3308 (all minimum grade C-). Restricted to students with 87-180 credits (Senior ',
+'4314': ' Requisites: Requires a prerequisite course of CSCI 3104 (minimum grade C-). ',
+'2830': ' None ',
+'2900': ' Undergraduate Level Independent Study" ',
+'5413': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5417': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5832': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5839': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'7154': ' Requisites: Requires prerequisite course of CSCI 5454 (minimum grade B). Restricted to graduate students only. ',
+'7176': ' Requisites: Restricted to graduate students only. ',
+'4318': ' Requisites: Requires prerequisite course of CSCI 4308 (minimum grade C-). ',
+'4328': ' Requisites: Requires prerequisite courses of CSCI 3155 and CSCI 3308 (all minimum grade C-). Restricted to students with 87-180 credits (Senior ',
+'3002': ' Requisites: Restricted to students with 27-180 credits (Sophomores ',
+'3100': ' Requisites: Requires prerequisite course of CSCI 3308 (minimum grade C-). Restricted to Computer Science (CSEN-BS ',
+'5444': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5446': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5900': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5919': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'7222': ' Requisites: Restricted to graduate students only. ',
+'7412': ' Requisites: Requires a prerequisite course of CSCI 6402 or EDUC 6504 or LING 6200 or PHIL 6310 or PSYC 6200 (minimum grade B). Restricted to graduate students only. ',
+'4338': ' Requisites: Requires prerequisite courses of CSCI 3155 and CSCI 3308 (all minimum grade C-). Restricted to students with 87-180 credits (Senior ',
+'4348': ' Requisites: Requires prerequisite courses of CSCI 3155 and CSCI 3308 (all minimum grade C-). Restricted to students with 87-180 credits (Senior ',
+'3104': ' Requisites: Requires prerequisite courses of CSCI 2270 and APPM 1360 or MATH 2300 and one of the following:  CSCI 2824 ',
+'3112': ' None ',
+'5448': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5454': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5929': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'6000': ' Requisites: Restricted to graduate students only. ',
+'7422': ' Requisites: Requires a prerequisite course of LING 7415 or PSYC 7415 or CSCI 7412 or EDUC 6506 (minimum grade B). Restricted to graduate students only. ',
+'7717': ' Requisites: Requires prerequisite course of CSCI 5817 (minimum grade B). Restricted to graduate students only. ',
+'4413': ' Requisites: Requires prerequisite courses of CSCI 2400 and CSCI 4273 (all minimum grade C-). ',
+'4446': ' Requisites: Requires prerequisite course of CSCI 1300 or CSCI 1310 or CSCI 1320 and APPM 2350 or MATH 2400 (all minimum grade C-). ',
+'3155': ' Requisites: Requires prerequisite courses of CSCI 2270 and CSCI 2824 or ECEN 2703 or APPM 3170 or MATH 2001 (all minimum grade C-). ',
+'3202': ' Requisites: Requires prerequisite courses of CSCI 2270 and CSCI 2824 or MATH 2001 or ECEN 2703 or APPM 3170 and one of the following:  APPM 3570 ',
+'5502': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5525': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'6268': ' Requisites: Requires prerequisite course of CSCI 5273 (minimum grade B). Restricted to graduate students only. ',
+'6302': ' Requisites: Restricted to graduate students only. ',
+'7772': ' Requisites: Restricted to graduate students only. ',
+'7818': ' Requisites: Restricted to graduate students only. ',
+'4448': ' Requisites: Requires prerequisite courses of CSCI 3155 and CSCI 3308 (all minimum grade C-). ',
+'4502': ' Requisites: Requires prerequisite course of CSCI 2270 (minimum grade C-). ',
+'3287': ' Requisites: Requires prerequisite course of CSCI 3104 (minimum grade C-). ',
+'3302': ' Requisites: Requires prerequisite courses of CSCI 2270 and CSCI 2824 or ECEN 2703 or APPM 3170 or MATH 2001(all minimum grade C-). ',
+'5535': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'5548': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'7900': ' Requisites: Restricted to graduate students only. ',
+'8990': ' Requisites: Restricted to graduate students only. ',
+'4555': ' Requisites: Requires prerequisite courses of CSCI 3155 and CSCI 2400 or ECEN 3350 (all minimum grade C-). ',
+'4576': ' None ',
+'4586': ' Requisites: Requires prerequisite course of CSCI 4576 (minimum grade C-). ',
+'3308': ' Requisites: Requires prerequisite course of CSCI 2270 (minimum grade C-). ',
+'3434': ' Requisites: Requires prerequisite courses of CSCI 3104 and CSCI 3155 (all minimum grade C-). ',
+'5551': ' Requisites: Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only. ',
+'4593': ' Requisites: Requires prerequisite course of ECEN 3350 or CSCI 2400 (minimum grade C-).  Restricted to College of Engineering majors only. ',
+'4753': ' Requisites: Requires prerequisite course of CSCI 3753 (minimum grade C-). ',
+'3656': ' Requisites: Requires prerequisite courses of CSCI 1300 or CSCI 1310 or CSCI 1320 and APPM 1350 or MATH 1300 and APPM 1360 or MATH 2300 and MATH 3130 or APPM 3310 or CSCI 2820 (all minimum grade C-). ',
+'3702': ' None ',
+'4809': ' None ',
+'4810': ' None ',
+'3753': ' Requisites: Requires prerequisite courses of CSCI 2270 and either CSCI 2400 or ECEN 3350 (all minimum grade C-). ',
+'4830': ' Requisites: Requires prerequisite course of CSCI 2400 (minimum grade C-). '
+};
 
 
 // ***************************************
@@ -73,11 +322,11 @@ function getDaysandTime(timeText) {
 
 	timeEnd = parseInt(timeEnd);
 
-	if(startPM && timeStart < 1200) { 
+	if(startPM && timeStart < 1200) {
 		timeStart += 1200
 	}
 
-	if(endPM && timeEnd < 1200) { 
+	if(endPM && timeEnd < 1200) {
 		timeEnd += 1200
 	}
 
@@ -100,7 +349,7 @@ function getDaysandTime(timeText) {
 $(document).ready(function(){
 	$("iframe")[0].addEventListener("load",function(){
 		iframe = getFrame();
-		
+
 
 		//Add new header to shopping cart table for course catalog Links
 		tableBody = iframe.find('.PSLEVEL1GRIDNBO');
@@ -110,8 +359,8 @@ $(document).ready(function(){
 		firstRow = firstRow.find('td:first') //find first td
 		firstRow.attr('colspan', '12')	//change attribute value
 		secondChild = $(tableBody).children().eq(1);
-		secondChild.append('<th scope="col" width="200" align="left" class="PSLEVEL3GRIDCOLUMNHDR"><a>Course Catalog Link</a></th>') //makes header 
-		
+		secondChild.append('<th scope="col" width="200" align="left" class="PSLEVEL3GRIDCOLUMNHDR"><a>Course Catalog Link</a></th>') //makes header
+
 
 
 //Shopping Cart Sort Function Fix
@@ -119,14 +368,14 @@ $(document).ready(function(){
 		* I had to create a sort function from scratch because CU handles all of their
 		* requests through really shitty hrefs attributes linking to javascript, making it impossible to call
 		* for our load event to go off again after you click the header buttons.
-		* 
+		*
 		* Still Needs a way to sort by status / enroll status.
-		*/	
+		*/
 		function sortShoppingCart(f,n, tableBody){
 			//Helper Function for sorting the shopping cart
 			var rows = $(tableBody).find('tr').get();
 			console.log(tableBody)
-			rows.sort(function(a, b) { 
+			rows.sort(function(a, b) {
 			// This is a prototype for javascript's built in sort function.
 			// More here: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort?v=control
 				var A = getVal(a);
@@ -182,18 +431,18 @@ $(document).ready(function(){
 				}else if($(row).children().length == 1){
 					//Table Label Row (the part that says Fall 2017 UC Boulder... etc)
 					$(tableBody).before(row);
-					
+
 				}else{
 					$(tableBody).append(row);
 				}
 			});
 		}
 		var sortFlag = 1; //Determines sort order
-	
+
 		secondChild.find("th").each(function(i, tableHeader) {
-			$(tableHeader.children[0]).removeAttr('href') 
+			$(tableHeader.children[0]).removeAttr('href')
 			$(tableHeader).click(function() {
-				sortFlag *= -1; 
+				sortFlag *= -1;
 				var n = $(this).prevAll().length; // Finds the column number to sort by
 				sortShoppingCart(sortFlag,n,tableBody);
 			});
@@ -231,7 +480,7 @@ $(document).ready(function(){
 				}
 				// Split the course name into a department tag and a course number:
 				var classinfo = getNameParts(textObj);
-				$(item).attr('title', classinfo[0]+" "+classinfo[1]);
+				$(item).attr('title', prereqs[classinfo[1]]);
 				//Create our link to the course catalog based on the info we pulled from the class name:
 				var classCatalogLink = 'http://www.colorado.edu/catalog/2016-17/courses?subject='+classinfo[0]+'&number='+classinfo[1]
 
@@ -405,7 +654,7 @@ $(document).ready(function(){
 						if($(this).find('img').attr('alt') == "Dropped") {
 							console.log("This class has been dropped");
 							courseDict[fullCourseName]["dropped"] = true;
-						} 
+						}
 					}
 				});
 			}
@@ -428,7 +677,7 @@ $(document).ready(function(){
 						courseDict[course]["days"] = schedule[0];
 						courseDict[course]["time"] = schedule[1];
 						courseDict[course]["times"] = schedule[2];
-						courseDict[course]["span"] = Math.ceil((schedule[2][1]-schedule[2][0])/100);		
+						courseDict[course]["span"] = Math.ceil((schedule[2][1]-schedule[2][0])/100);
 						break;
 					}
 				}
@@ -550,7 +799,7 @@ $(document).ready(function(){
 			for(var i = 0; i<5; i++){
 				var empty = 0;
 				var prevEntry = null;
-				for(var course in courseDict){	
+				for(var course in courseDict){
 					if($.inArray(weekdays[i], courseDict[course]["days"])!=(-1)){
 						if(courseDict[course]["times"][0] == time){
 							if (courseDict[course]["dropped"] == false){
@@ -564,12 +813,12 @@ $(document).ready(function(){
 										'course1': course,
 										'course2': prevEntry
 									}
-								}	
-							}								
+								}
+							}
 						}
 						else if((courseDict[course]["times"][0] == time-100)&&(courseDict[course]["span"] > 1)){
 							empty = 1;
-						}	
+						}
 					}
 				}
 				if (empty == 0){
@@ -602,7 +851,7 @@ $(document).ready(function(){
 						courseFlag *= -1;
 						if(courseFlag == 1){
 							course = conflictDict[$(conflictElm).attr('conflict')]['course1']
-							
+
 						}else{
 							course = conflictDict[$(conflictElm).attr('conflict')]['course2']
 						}
@@ -615,9 +864,9 @@ $(document).ready(function(){
 
 				}
 
-			}	
+			}
 		});
-		
+
 
 
 		//document.querySelector("[id^='win0div$ICField']").id.innerHTML += calendar;
