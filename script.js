@@ -592,9 +592,26 @@ $(document).ready(function(){
 			rowTime = i*100 +700
 			for (conflict in conflictDict){
 				if (conflict.substr(2, conflict.length)  == rowTime) {
-					console.log('Con Found ', conflict)
 					var dayIndex = parseInt(conflict[0]) + 1
-					console.log($(row).find('td')[dayIndex])
+					var course = 'BLANK'
+					var conflictElm = $(row).find('td')[dayIndex]
+					var conflictSpan = $(conflictElm).find('span')
+					$(conflictElm).attr('conflict', conflict)
+					var courseFlag = 1; //determines whether course1 or course2 should be displayed
+					$(conflictElm)[0].addEventListener('click', function(){
+						courseFlag *= -1;
+						if(courseFlag == 1){
+							course = conflictDict[$(conflictElm).attr('conflict')]['course1']
+							
+						}else{
+							course = conflictDict[$(conflictElm).attr('conflict')]['course2']
+						}
+						$(this).html(course+"<br>"
+						+courseDict[course]["instr"]+"<br>"
+						+courseDict[course]["time"]+"<br>"
+						+courseDict[course]["location"]+"<br>"
+						+courseDict[course]["units"])
+					});
 
 				}
 
