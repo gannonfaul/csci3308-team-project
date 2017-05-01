@@ -535,15 +535,12 @@ $(document).ready(function(){
 			for(var i = 0; i<5; i++){
 				var empty = 0;
 				var prevEntry = null;
-				//console.log(weekdays[i])
 				for(var course in courseDict){	
-					//console.log(course)
-					//console.log($.inArray(weekdays[i], courseDict[course]["days"]))
 					if($.inArray(weekdays[i], courseDict[course]["days"])!=(-1)){
 						if(courseDict[course]["times"][0] == time){
+							var class_span = Math.ceil((courseDict[course]["times"][1]-courseDict[course]["times"][0])/100);
 							if(empty != 1){
-
-								calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='1'>"
+								calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='"+String(class_span)+"'>"
 								calendar += "<span class='SSSTEXTWEEKLY' >"+course+"<br>"+courseDict[course]["instr"]+"<br>"+courseDict[course]["time"]+"<br>"+courseDict[course]["location"]+"<br>"+courseDict[course]["units"]+"</span></td>"
 								empty = 1;
 								prevEntry = course
@@ -684,7 +681,8 @@ $(document).ready(function(){
 		calendar += "</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
-		calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='2'><span class='SSSTEXTWEEKLY' >CSCI 3308 - 102<br>Laboratory<br>4:00PM - 5:50PM<br>Engr Cntr - Comp Sci Dept Wing 112C</span></td>"
+		calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='2'>
+		calendar += "<span class='SSSTEXTWEEKLY' >CSCI 3308 - 102<br>Laboratory<br>4:00PM - 5:50PM<br>Engr Cntr - Comp Sci Dept Wing 112C</span></td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
