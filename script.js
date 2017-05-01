@@ -269,6 +269,7 @@ $(document).ready(function(){
 						"location": "null",
 						"instr": "null",
 						"units": "null",
+						"span": "null",
 						"enrolled": false,
 						"mapped": false
 				};
@@ -292,6 +293,7 @@ $(document).ready(function(){
 						courseDict[course]["days"] = schedule[0];
 						courseDict[course]["time"] = schedule[1];
 						courseDict[course]["times"] = schedule[2];
+						courseDict[course]["span"] = Math.ceil((schedule[2][1]-schedule[2][0])/100);
 						break;
 					}
 				}
@@ -391,6 +393,7 @@ $(document).ready(function(){
 						"location": "null",
 						"instr": "null",
 						"units": "null",
+						"span": "null",
 						"enrolled": true,
 						"mapped": false
 				};
@@ -414,6 +417,7 @@ $(document).ready(function(){
 						courseDict[course]["days"] = schedule[0];
 						courseDict[course]["time"] = schedule[1];
 						courseDict[course]["times"] = schedule[2];
+						courseDict[course]["span"] = Math.ceil((schedule[2][1]-schedule[2][0])/100);		
 						break;
 					}
 				}
@@ -538,20 +542,23 @@ $(document).ready(function(){
 				for(var course in courseDict){	
 					if($.inArray(weekdays[i], courseDict[course]["days"])!=(-1)){
 						if(courseDict[course]["times"][0] == time){
-							var class_span = Math.ceil((courseDict[course]["times"][1]-courseDict[course]["times"][0])/100);
-							if(empty != 1){
-								calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='"+String(class_span)+"'>"
-								calendar += "<span class='SSSTEXTWEEKLY' >"+course+"<br>"+courseDict[course]["instr"]+"<br>"+courseDict[course]["time"]+"<br>"+courseDict[course]["location"]+"<br>"+courseDict[course]["units"]+"</span></td>"
-								empty = 1;
-								prevEntry = course
-							}else{
-								conflictDict[i + ' ' + time] = {
-									'course1': course,
-									'course2': prevEntry
-								}
-							}
-							
+							if (courseDict[course]["mapped"] == false){
+								if(empty != 1){
+									calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='"+String(courseDict[course]["span"])+"'>"
+									calendar += "<span class='SSSTEXTWEEKLY' >"+course+"<br>"+courseDict[course]["instr"]+"<br>"+courseDict[course]["time"]+"<br>"+courseDict[course]["location"]+"<br>"+courseDict[course]["units"]+"</span></td>"
+									empty = 1;
+									prevEntry = course
+								}else{
+									conflictDict[i + ' ' + time] = {
+										'course1': course,
+										'course2': prevEntry
+									}
+								}	
+							}								
 						}
+						else if((courseDict[course]["times"][0] == time-100)&&(courseDict[course]["span"] > 1)){
+							empty = 1;
+						}	
 					}
 				}
 				if (empty == 0){
@@ -564,7 +571,6 @@ $(document).ready(function(){
 		console.log(conflictDict)
 
 		/*
-
 		//8:00 am row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
@@ -578,7 +584,6 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
-
 		//9:00 am row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
@@ -593,7 +598,6 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td><td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
-
 		//10:00 am row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
@@ -605,7 +609,6 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
-
 		//11:00 am row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
@@ -622,7 +625,6 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
-
 		//12:00 pm row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
@@ -636,7 +638,6 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
-
 		//1:00 pm row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
@@ -650,7 +651,6 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
-
 		//2:00 pm row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
@@ -661,7 +661,6 @@ $(document).ready(function(){
 		calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='2'><span class='SSSTEXTWEEKLY' >MCEN 3047 - 013<br>Laboratory<br>2:00PM - 3:50PM<br>Drescher Undergrad Engr 1B10</span></td>"
 		calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='1'><span class='SSSTEXTWEEKLY' >MCEN 3032 - 001<br>Lecture<br>2:00PM - 2:50PM<br>Engineering Classroom Wing 265</span></td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td><td class='PSLEVEL3GRID'>&nbsp;</td></tr>"
-
 		//3:00 pm row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
@@ -673,7 +672,6 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td></tr>"
-
 		//4:00 pm row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
@@ -688,7 +686,6 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
-
 		//5:00 pm row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
@@ -701,7 +698,6 @@ $(document).ready(function(){
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 		calendar += "</tr>"
-
 		//6:00 pm row
 		calendar += "<tr>"
 		calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
