@@ -555,7 +555,13 @@ $(document).ready(function(){
 						courseDict[course]["days"] = schedule[0];
 						courseDict[course]["time"] = schedule[1];
 						courseDict[course]["times"] = schedule[2];
-						courseDict[course]["span"] = Math.ceil((schedule[2][1]-schedule[2][0])/100);
+						var timeSpan = (schedule[2][1]-schedule[2][0]) / 100;
+						if (timeSpan % 1 == 0) {
+							courseDict[course]["span"] = timeSpan * 2;
+						} else {
+							timeSpan = Math.ceil(timeSpan) + 1;
+							courseDict[course]["span"] = timeSpan;
+						}
 						break;
 					}
 				}
@@ -689,7 +695,13 @@ $(document).ready(function(){
 						courseDict[course]["days"] = schedule[0];
 						courseDict[course]["time"] = schedule[1];
 						courseDict[course]["times"] = schedule[2];
-						courseDict[course]["span"] = Math.ceil((schedule[2][1]-schedule[2][0])/100);
+						var timeSpan = (schedule[2][1]-schedule[2][0]) / 100;
+						if (timeSpan % 1 == 0) {
+							courseDict[course]["span"] = timeSpan * 2;
+						} else {
+							timeSpan = Math.ceil(timeSpan) + 1;
+							courseDict[course]["span"] = timeSpan;
+						}
 						break;
 					}
 				}
