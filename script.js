@@ -965,7 +965,11 @@ $(document).ready(function(){
 		}
 
 		calendar.find('tr').each(function(i, row){
-			rowTime = i*50 +750
+			if (i % 2 != 0) {
+				rowTime = i*50 +750;
+			} else {
+				rowTime = i * 50 + 730;
+			}
 			for (conflict in conflictDict){
 				if (conflict.substr(2, conflict.length)  == rowTime) {
 					var dayIndex = parseInt(conflict[0]) + 1
