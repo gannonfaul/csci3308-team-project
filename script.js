@@ -968,9 +968,9 @@ $(document).ready(function(){
 
 		calendar.find('tr').each(function(i, row){
 			if ((i - 1) % 2 != 0) {
-				rowTime = (i - 1) *50 +750;
+				rowTime = (i-1) *50 +750;
 			} else {
-				rowTime = (i - 1) * 50 + 730;
+				rowTime = (i-1) * 50 + 730;
 			}
 			for (conflict in conflictDict){
 				if (conflict.substr(2, conflict.length)  == rowTime) {
@@ -990,13 +990,18 @@ $(document).ready(function(){
 						var tempRow = null
 						for(j = 0; j < conflictDict[conflict].length; j++){
 							var tempTime = courseDict[conflictDict[conflict][j]]['times'][0]
+							if((tempTime % 100) == 30){
+								tempTime += 20 // sets up the time to 850,950, etc if it's a half hour interval for calc purposes
+							}
 							if(tempTime < rowTime){
-								tempRow = calendar.find('tr')[(tempTime-750)/50]
+								
+								tempRow = calendar.find('tr')[(tempTime-700)/50]
 							}
 							if(tempRow != null){
 								break;
 							}
 						}
+						console.log(tempRow)
 						if(tempRow != null){
 							dayIndex = getDayIndex(tempRow, dayIndex)
 							conflictElm = $(tempRow).find('td')[dayIndex]
