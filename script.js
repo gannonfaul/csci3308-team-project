@@ -1010,10 +1010,21 @@ $(document).ready(function(){
 //conflictElm is the <td> element. conflictSpan is the <span> element within it.
 //Anything done to the conflictElm inside the following if statement will properly update to the calendar.
 					if(conflictElm != null){
-						console.log("Hey: " + conflictElm)
 						$(conflictElm).attr('class', 'SSSWEEKLYBACKGROUNDOVLP');
 						$(conflictElm)[0].addEventListener('click', function(){
-							$(this).html('look at how broken this is')
+							var classViewed = conflictElm.firstChild.firstChild;
+							if(classViewed == conflictDict[conflict][0]) {
+								course = conflictDict[conflict][1];
+								console.log(course);
+							} else {
+								course = conflictDict[conflict][0];
+								console.log(course);
+							}
+							$(this).html(course+"<br>"
+						+courseDict[course]["instr"]+"<br>"
+						+courseDict[course]["time"]+"<br>"
+						+courseDict[course]["location"]+"<br>"
+						+courseDict[course]["units"])
 						});
 					} else {
 						console.log('something is broken for ', conflict)
