@@ -664,7 +664,7 @@ $(document).ready(function(){
 				$(this).closest('tr').find('div').each(function(i, imgItem){
 					if(imgItem.id.match("^win0divDERIVED_REGFRM1_SSR_STATUS_LONG")){
 						if($(this).find('img').attr('alt') == "Dropped") {
-							console.log("This class has been dropped");
+							console.log(fullCourseName + " has been dropped.");
 							courseDict[fullCourseName]["dropped"] = true;
 						}
 					}
