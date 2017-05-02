@@ -782,14 +782,16 @@ $(document).ready(function(){
 		//This is all just formatting
 		calendar += "<table cellspacing='0' cellpadding='2' width='100%' class='PSLEVEL1GRIDNBO' id='SHOPPING_CART_SCHED_HTMLAREA'>"
 		calendar += "<colgroup span='1' width='9%' align='center' valign='middle'>"
-		calendar += "<colgroup span='7' width='13%' align='center' valign='middle'><tr><th scope='col' align='center' class='SSSWEEKLYA1BACKGROUND' >Time</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Monday<br>"
+		calendar += "<colgroup span='7' width='13%' align='center' valign='middle'>"
+		calendar += "<tr><th scope='col' align='center' colspan='7' class='SSSWEEKLYA1BACKGROUND' >What-If Calendar (Green: Enrolled --- Blue: Shopping Cart --- Orange: Conflict)</th></tr>"
+		calendar += "<tr><th scope='col' align='center' class='SSSWEEKLYA1BACKGROUND' >Time</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Monday<br>"
 		calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Tuesday<br>"
 		calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Wednesday<br>"
 		calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Thursday<br>"
 		calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Friday<br>"
 		//calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Saturday<br>"
 		//calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Sunday<br>"
-		calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Green: Enrolled<br>Blue: Shopping Cart<br>Red: Conflict<br></th>"
+		calendar += "</th>"
 		calendar += "</tr>"
 
 		//All this populates the calendar
@@ -965,10 +967,10 @@ $(document).ready(function(){
 		}
 
 		calendar.find('tr').each(function(i, row){
-			if (i % 2 != 0) {
-				rowTime = i*50 +750;
+			if ((i - 1) % 2 != 0) {
+				rowTime = (i - 1) *50 +750;
 			} else {
-				rowTime = i * 50 + 730;
+				rowTime = (i - 1) * 50 + 730;
 			}
 			for (conflict in conflictDict){
 				if (conflict.substr(2, conflict.length)  == rowTime) {
