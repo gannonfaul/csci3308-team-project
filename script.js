@@ -828,7 +828,7 @@ $(document).ready(function(){
 			
 			console.log(overflowStr, 'overflow', time)
 			
-			calendar += "<tr" + "overwrittenRows = " + overflowStr + ">"
+			calendar += "<tr" + " overwrittendays = " + overflowStr + ">"
 			calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
 			calendar += "<span class='SSSTEXTWEEKLYTIME' >"+civ_time+"</span>"
 			calendar += "</td>"
@@ -895,6 +895,7 @@ $(document).ready(function(){
 			
 			overflowStr = ''
 		}
+
 		console.log(conflictDict)
 
 		calendar += "</table>"
@@ -943,35 +944,43 @@ $(document).ready(function(){
 
 		var calendar = iframe.find('#SHOPPING_CART_SCHED_HTMLAREA');
 
-		/*calendar.find('tr').each(function(i, row){
-			rowTime = i*100 +700
+		calendar.find('tr').each(function(i, row){
+			rowTime = i*50 +750
 			for (conflict in conflictDict){
 				if (conflict.substr(2, conflict.length)  == rowTime) {
 					var dayIndex = parseInt(conflict[0]) + 1
 					var course = 'BLANK'
-					var conflictElm = $(row).find('td')[dayIndex]
-					var conflictSpan = $(conflictElm).find('span')
+					var conflictElm = null
+					var conflictSpan = null
 					$(conflictElm).attr('conflict', conflict)
-					var courseFlag = 1; //determines whether course1 or course2 should be displayed
-					$(conflictElm)[0].addEventListener('click', function(){
-						courseFlag *= -1;
-						if(courseFlag == 1){
-							course = conflictDict[$(conflictElm).attr('conflict')]['course1']
-
-						}else{
-							course = conflictDict[$(conflictElm).attr('conflict')]['course2']
+					var overwrittenDays = $(row).attr('overwrittendays')
+					console.log(conflict, 'done')
+					if(overwrittenDays.indexOf(weekdays[dayIndex-1]) == -1){
+						if(weekdays.indexOf(overwrittenDays.substr(overwrittenDays.length-2)) < (dayIndex-1) ){
+							//number of 'td' entries will change depending on which days are ommitted.
+							//Ex: a friday when wednesday is overwritten is at $(row).find('td')[4] instead of ...[5].
+							dayIndex -= (overwrittenDays.length / 2)
 						}
-						$(this).html(course+"<br>"
-						+courseDict[course]["instr"]+"<br>"
-						+courseDict[course]["time"]+"<br>"
-						+courseDict[course]["location"]+"<br>"
-						+courseDict[course]["units"])
-					});
+						conflictElm = $(row).find('td')[dayIndex]
+						conflictSpan = $(conflictElm).find('span')
+					}else{
+						console.log(conflict, " is overwritten. Find.")
+					}
+
+					//Change conflict Elm attributes to show conflict
+					if(conflictElm != null){
+						console.log(conflictElm)
+						$(conflictElm)[0].addEventListener('click', function(){
+							$(this).html('look at how broken this is')
+						});
+					} else {
+						console.log('something is broken for ', conflict)
+					}
 
 				}
 
 			}
-		});*/
+		});
 		//document.querySelector("[id^='win0div$ICField']").id.innerHTML += calendar;
 	});
 });
