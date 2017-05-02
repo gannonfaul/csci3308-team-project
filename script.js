@@ -846,8 +846,10 @@ $(document).ready(function(){
 									overflowRows[i][1] = course
 									console.log(course, 'overflows by ' + courseDict[course]["span"])
 									var color = '';
-									if (!courseDict[course]["enrolled"]){ // Makes shopping cart classes show up red
-										color = 'OVLP';
+									if (!courseDict[course]["enrolled"]){ // Makes shopping cart classes show up blue
+										//CART = blue
+										//OVLP = red
+										color = 'CART';
 									}
 									calendar += "<td class='SSSWEEKLYBACKGROUND"+color+"' rowspan='"+String(courseDict[course]["span"])+"'>" //Adds the colored box
 									//Fills in the class information
