@@ -807,6 +807,8 @@ $(document).ready(function(){
 		var time = 800;
 		var half = false;
 		var time_add;
+		var overflowStr = ''
+		var overflowRows = [[0, ''],[0, ''],[0, ''],[0, ''],[0, '']] //For dealing with multi-row crap. 
 		while(time<=max_time){
 			var civ_time = String(Math.floor(time/100));
 			if (time<1200){
@@ -832,7 +834,6 @@ $(document).ready(function(){
 			else{
 				civ_time += ":00 pm"
 			}
-
 			// console.log("Time: " + time + " " + "Civ Time: " + civ_time);
 
 			if (half == false){
@@ -841,40 +842,61 @@ $(document).ready(function(){
 			else{
 				time_add = 70;
 			}
-			calendar += "<tr>"
+			for (j = 0; j < 5; j++){ //
+				if(overflowRows[j] > 0){
+					overflowStr += weekdays[j]
+				}
+			}
+			console.log(overflowStr, 'overflow', time)
+			calendar += "<tr" + "overwrittenRows = " + overflowStr + ">"
 			calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
 			calendar += "<span class='SSSTEXTWEEKLYTIME' >"+civ_time+"</span>"
 			calendar += "</td>"
 			for(var i = 0; i<5; i++){
-				var empty = 0;
+				var empty = true;
 				var prevEntry = null;
 				for(var course in courseDict){
 					if($.inArray(weekdays[i], courseDict[course]["days"])!=(-1)){
-						if (courseDict[course]["dropped"] == false){
-							if((courseDict[course]["times"][0] == time)){
-								if(empty != 1){
+						if((courseDict[course]["times"][0] >= time) && (courseDict[course]["times"][0]<(time+time_add))){
+							if (courseDict[course]["dropped"] == false){
+								if(empty == true && overflowRows[i][0] == 0){
+									overflowRows[i][0] = courseDict[course]["span"]
+									overflowRows[i][1] = course
+									console.log(course, 'overflows by ' + courseDict[course]["span"])
 									calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='"+String(courseDict[course]["span"])+"'>"
 									calendar += "<span class='SSSTEXTWEEKLY' >"+course+"<br>"+courseDict[course]["instr"]+"<br>"+courseDict[course]["time"]+"<br>"+courseDict[course]["location"]+"<br>"+courseDict[course]["units"]+"</span></td>"
-									empty = 1;
+									empty = false
 									prevEntry = course
 								}else{
-									conflictDict[i + ' ' + time] = {
-										'course1': course,
-										'course2': prevEntry
+									if(empty == false){ // Conflict where two courses start at the same time
+										conflictDict[i + ' ' + time] = [course,prevEntry]
+									} else { // Conflict where the tail of one class overlaps the other
+										console.log("I'm crying rn", course)
+										if(conflictDict[i + ' ' + time] == undefined){
+											conflictDict[i + ' ' + time] = [overflowRows[i][1],course]
+										}else{
+											conflictDict[i + ' ' + time] = conflictDict[i + ' ' + time].concat(course)
+										}
 									}
 								}
 							}
-							else if((courseDict[course]["times"][0] < time) && (courseDict[course]["times"][1] > time)){
-								// console.log(i);
-								empty = 1;
-							}
 						}
+
 					}
 				}
-				if (empty == 0){
-					calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
+				if (empty == true){
+					if(overflowRows[i][0] == 0){
+						calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
+					}
 				}
 			}
+			
+			for (j = 0; j < 5; j++){ //
+				if(overflowRows[j][0] > 0){
+					overflowRows[j][0] -= 1
+				}
+			}
+			console.log(overflowRows)
 			calendar += "</tr>"
 			if (half == false){
 				time += time_add;
@@ -884,6 +906,7 @@ $(document).ready(function(){
 				time += time_add;
 				half = false;
 			}
+			overflowStr = ''
 		}
 		console.log(conflictDict)
 
