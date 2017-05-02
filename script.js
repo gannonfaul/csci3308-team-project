@@ -1007,6 +1007,7 @@ $(document).ready(function(){
 //Anything done to the conflictElm inside the following if statement will properly update to the calendar.
 					if(conflictElm != null){
 						console.log(conflictElm)
+						$(conflictElm).attr('class', 'SSSWEEKLYBACKGROUNDOVLP')
 						$(conflictElm)[0].addEventListener('click', function(){
 							$(this).html('look at how broken this is')
 						});
