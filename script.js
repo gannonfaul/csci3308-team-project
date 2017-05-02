@@ -801,71 +801,52 @@ $(document).ready(function(){
 		 * SSTEXTWEEKLY => defines text to add to the cell
 		 * PSLEVEL3GRID "&nbsp => empty cell
 		 */
-
-		var time;
-		var max_time = 2000;
-		var weekdays = ["Mo", "Tu", "We", "Th", "Fr"];
+		
+		var time = 800; //Start calendar at 8:00 am
+		var max_time = 0;
+		//Ends calendar after last class
+		for (course in courseDict){
+			max_time = Math.max(max_time, courseDict[course]["times"][1]);
+		}
+		var weekdays = ["Mo", "Tu", "We", "Th", "Fr"]; //Sets class days
 		var conflictDict = {};
-		var time = 800;
-		var half = false;
-		var time_add;
+		var half = false; //Checks for half hour increments
+		var time_add; //Defines whether to add 30 or 70 for next time increment
 		var overflowStr = ''
 		var overflowRows = [[0, ''],[0, ''],[0, ''],[0, ''],[0, '']] //For dealing with multi-row crap. 
-		while(time<=max_time){
-			var civ_time = String(Math.floor(time/100));
-			if (time<1200){
-				if(half == false){
-					civ_time += ":00 am"
-				}
-				else{
-					civ_time += ":30 am"
-				}
-			}
-			else if (time>1200){
-				if(half == false){
-					civ_time = String(Math.floor((time/100)-12))+":00 pm"
-				}
-				else{
-					if(time > 1230){
-						civ_time = String(Math.floor((time/100)-12))+":30 pm"
-					} else {
-						civ_time = String(Math.floor(time/100)) + ":30 pm"
-					}
-				}
-			}
-			else{
-				civ_time += ":00 pm"
-			}
-			// console.log("Time: " + time + " " + "Civ Time: " + civ_time);
-
-			if (half == false){
-				time_add = 30;
-			}
-			else{
-				time_add = 70;
-			}
-			for (j = 0; j < 5; j++){ //
+		
+		while(time<=max_time){ //Iterates through each half-hour time slot
+			civ_time = civTime(time, half);//Puts time into readable format
+			//console.log("Time: " + time + " " + "Civ Time: " + civ_time);
+			time_add = timeInc(half);//Determines how much time to add to increment the hour
+			
+			for (j = 0; j < 5; j++){
 				if(overflowRows[j][0] > 0){
 					overflowStr += weekdays[j]
 				}
 			}
+			
 			console.log(overflowStr, 'overflow', time)
+			
 			calendar += "<tr" + "overwrittenRows = " + overflowStr + ">"
 			calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
 			calendar += "<span class='SSSTEXTWEEKLYTIME' >"+civ_time+"</span>"
 			calendar += "</td>"
-			for(var i = 0; i<5; i++){
+			
+			for(var i = 0; i<5; i++){ //Iterates through weekdays
 				var empty = true;
 				var prevEntry = null;
-				for(var course in courseDict){
-					if($.inArray(weekdays[i], courseDict[course]["days"])!=(-1)){
-						if((courseDict[course]["times"][0] >= time) && (courseDict[course]["times"][0]<(time+time_add))){
-							if (courseDict[course]["dropped"] == false){
+				for(var course in courseDict){ //Iterates through every course in the courseDict
+					if($.inArray(weekdays[i], courseDict[course]["days"])!=(-1)){ //If the class occurs on the current day
+						var startTime = courseDict[course]["times"][0];
+						if((startTime >= time) && (startTime<(time+time_add))){ //If the current class starts in the next half hour 
+							if (!courseDict[course]["dropped"]){ //If the course hasn't been dropped
 								if(empty == true && overflowRows[i][0] == 0){
 									overflowRows[i][0] = courseDict[course]["span"]
 									overflowRows[i][1] = course
 									console.log(course, 'overflows by ' + courseDict[course]["span"])
-									calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='"+String(courseDict[course]["span"])+"'>"
+									calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='"+String(courseDict[course]["span"])+"'>" //Adds the colored box
+									//Fills in the class information
 									calendar += "<span class='SSSTEXTWEEKLY' >"+course+"<br>"+courseDict[course]["instr"]+"<br>"+courseDict[course]["time"]+"<br>"+courseDict[course]["location"]+"<br>"+courseDict[course]["units"]+"</span></td>"
 									empty = false;
 									prevEntry = course
@@ -891,6 +872,7 @@ $(document).ready(function(){
 				}
 				if (empty == true){
 					if(overflowRows[i][0] == 0){
+						//Adds empty cell to the calendar
 						calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 					}
 				}
@@ -901,14 +883,9 @@ $(document).ready(function(){
 					overflowRows[j][0] -= 1
 				}
 			}
-			if (half == false){
-				time += time_add;
-				half = true;
-			}
-			else{
-				time += time_add;
-				half = false;
-			}
+			time += time_add;
+			half = !half;
+			
 			overflowStr = ''
 		}
 		console.log(conflictDict)
@@ -916,6 +893,46 @@ $(document).ready(function(){
 		calendar += "</table>"
 		calendar += "</div>"
 		calendar += "</div>"
+		
+		function timeInc(half){//Determines increment for next half hour 
+			if (half == false){
+				time_add = 30;
+			}
+			else{
+				time_add = 70;
+			}
+			return time_add;
+		}
+		
+		function civTime(time, half){//Puts time into readable format
+			var civ_time = String(Math.floor(time/100)); 
+			if (time<1200){
+				if(half == false){
+					civ_time += ":00 am"
+				}
+				else{
+					civ_time += ":30 am"
+				}
+			}
+			else if (time>1200){
+				if(half == false){
+					civ_time = String(Math.floor((time/100)-12))+":00 pm"
+				}
+				else{
+					if(time > 1230){
+						civ_time = String(Math.floor((time/100)-12))+":30 pm"
+					} else {
+						civ_time = String(Math.floor(time/100)) + ":30 pm"
+					}
+				}
+			}
+			else{
+				civ_time += ":00 pm"
+			}
+			
+			return civ_time;
+			
+		}
 
 		iframe.find('.PSLEVEL1GRIDNBO').after(calendar);
 
@@ -950,9 +967,6 @@ $(document).ready(function(){
 
 			}
 		});*/
-
-
-
 		//document.querySelector("[id^='win0div$ICField']").id.innerHTML += calendar;
 	});
 });
