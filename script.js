@@ -929,12 +929,10 @@ $(document).ready(function(){
 			else{
 				civ_time += ":00 pm"
 			}
-			
 			return civ_time;
-			
 		}
 
-		iframe.find('.PSLEVEL1GRIDNBO').after(calendar);
+		iframe.find('.PSLEVEL1GRIDNBO').after(calendar); //Injects HTML into the page after the shopping cart
 
 		var calendar = iframe.find('#SHOPPING_CART_SCHED_HTMLAREA');
 
