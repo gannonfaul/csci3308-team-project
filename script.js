@@ -1017,13 +1017,15 @@ $(document).ready(function(){
 							if(classViewed == conflictDict[conflict][0]) {
 								course = conflictDict[conflict][1];
 								classViewed = course;
+								courseText = course;
 								console.log(course);
 							} else {
 								course = conflictDict[conflict][0];
 								classViewed = course;
+								courseText = "CONFLICT: " + course;
 								console.log(course);
 							}
-							$(this).html(course+"<br>"
+							$(this).html(courseText +"<br>"
 						+courseDict[course]["instr"]+"<br>"
 						+courseDict[course]["time"]+"<br>"
 						+courseDict[course]["location"]+"<br>"
