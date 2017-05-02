@@ -1019,19 +1019,28 @@ $(document).ready(function(){
 					if(conflictElm != null){
 						$(conflictElm).attr('class', 'SSSWEEKLYBACKGROUNDOVLP');
 						var clicked = 0;
+						var counter = -1
 						var classViewed = conflictElm.firstChild.firstChild;
+						$(conflictElm).attr('conflictkey', conflict)
+						$(conflictElm).attr('coniterator', 0)
 						$(conflictElm)[0].addEventListener('click', function(){
-							if(classViewed == conflictDict[conflict][0]) {
-								course = conflictDict[conflict][1];
-								classViewed = course;
-								courseText = course;
-								console.log(course);
-							} else {
-								course = conflictDict[conflict][0];
-								classViewed = course;
-								courseText = "CONFLICT: " + course;
-								console.log(course);
+							conflict = $(this).attr('conflictkey')
+							counter = parseInt($(this).attr('coniterator'))
+							console.log(conflictDict[conflict].length, counter)
+							if(counter < conflictDict[conflict].length-1){
+								counter += 1
+							}else{
+								counter = 0
 							}
+							course = conflictDict[conflict][counter]
+							$(this).attr('coniterator',counter)
+							var courseText = ''
+							if(counter > 0){
+								courseText = 'CONFLICT ' + counter + ': ' + course
+							}else{
+								courseText = course
+							}
+							
 							$(this).html(courseText +"<br>"
 						+courseDict[course]["instr"]+"<br>"
 						+courseDict[course]["time"]+"<br>"
