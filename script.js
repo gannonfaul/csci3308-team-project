@@ -833,6 +833,8 @@ $(document).ready(function(){
 			calendar += "<span class='SSSTEXTWEEKLYTIME' >"+civ_time+"</span>"
 			calendar += "</td>"
 			
+			var color = ''; //Controls the color of the calendar block
+			
 			for(var i = 0; i<5; i++){ //Iterates through weekdays
 				var empty = true;
 				var prevEntry = null;
@@ -845,7 +847,6 @@ $(document).ready(function(){
 									overflowRows[i][0] = courseDict[course]["span"]
 									overflowRows[i][1] = course
 									console.log(course, 'overflows by ' + courseDict[course]["span"])
-									var color = '';
 									if (!courseDict[course]["enrolled"]){ // Makes shopping cart classes show up blue
 										//CART = blue
 										//OVLP = red
