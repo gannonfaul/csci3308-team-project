@@ -838,7 +838,7 @@ $(document).ready(function(){
 				var prevEntry = null;
 				for(var course in courseDict){
 					if($.inArray(weekdays[i], courseDict[course]["days"])!=(-1)){
-						if((courseDict[course]["times"][0] >= time) && (courseDict[course]["times"][0]<=(time+time_add))){
+						if((courseDict[course]["times"][0] == time)){
 							if (courseDict[course]["dropped"] == false){
 								if(empty != 1){
 									calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='"+String(courseDict[course]["span"])+"'>"
