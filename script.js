@@ -1011,13 +1011,16 @@ $(document).ready(function(){
 //Anything done to the conflictElm inside the following if statement will properly update to the calendar.
 					if(conflictElm != null){
 						$(conflictElm).attr('class', 'SSSWEEKLYBACKGROUNDOVLP');
+						var clicked = 0;
+						var classViewed = conflictElm.firstChild.firstChild;
 						$(conflictElm)[0].addEventListener('click', function(){
-							var classViewed = conflictElm.firstChild.firstChild;
 							if(classViewed == conflictDict[conflict][0]) {
 								course = conflictDict[conflict][1];
+								classViewed = course;
 								console.log(course);
 							} else {
 								course = conflictDict[conflict][0];
+								classViewed = course;
 								console.log(course);
 							}
 							$(this).html(course+"<br>"
