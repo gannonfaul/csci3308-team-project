@@ -792,17 +792,42 @@ $(document).ready(function(){
 		var max_time = 2000;
 		var weekdays = ["Mo", "Tu", "We", "Th", "Fr"];
 		var conflictDict = {};
-
-		for(time = 800; time<=max_time; time=time+100){
-			var civ_time = String(time/100);
+		var time = 800;
+		var half = false;
+		var time_add;
+		while(time<=max_time){
+			var civ_time = String(Math.floor(time/100));
 			if (time<1200){
-				civ_time += ":00 am"
+				if(half == false){
+					civ_time += ":00 am"
+				}
+				else{
+					civ_time += ":30 am"
+				}
 			}
 			else if (time>1200){
-				civ_time = String((time/100)-12)+":00 pm"
+				if(half == false){
+					civ_time = String(Math.floor((time/100)-12))+":00 pm"
+				}
+				else{
+					if(time > 1230){
+						civ_time = String(Math.floor((time/100)-12))+":30 pm"
+					} else {
+						civ_time = String(Math.floor(time/100)) + ":30 pm"
+					}
+				}
 			}
 			else{
 				civ_time += ":00 pm"
+			}
+
+			console.log("Time: " + time + " " + "Civ Time: " + civ_time);
+
+			if (half == false){
+				time_add = 30;
+			}
+			else{
+				time_add = 70;
 			}
 			calendar += "<tr>"
 			calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
@@ -813,7 +838,7 @@ $(document).ready(function(){
 				var prevEntry = null;
 				for(var course in courseDict){
 					if($.inArray(weekdays[i], courseDict[course]["days"])!=(-1)){
-						if(courseDict[course]["times"][0] == time){
+						if((courseDict[course]["times"][0] >= time) && (courseDict[course]["times"][0]<=(time+time_add))){
 							if (courseDict[course]["dropped"] == false){
 								if(empty != 1){
 									calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='"+String(courseDict[course]["span"])+"'>"
@@ -828,7 +853,7 @@ $(document).ready(function(){
 								}
 							}
 						}
-						else if((courseDict[course]["times"][0] == time-100)&&(courseDict[course]["span"] > 1)){
+						else if((courseDict[course]["times"][0] < time)&&(courseDict[course]["span"] > 2)){
 							empty = 1;
 						}
 					}
@@ -838,6 +863,14 @@ $(document).ready(function(){
 				}
 			}
 			calendar += "</tr>"
+			if (half == false){
+				time += time_add;
+				half = true;
+			}
+			else{
+				time += time_add;
+				half = false;
+			}
 		}
 		console.log(conflictDict)
 
