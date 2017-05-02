@@ -833,7 +833,7 @@ $(document).ready(function(){
 				civ_time += ":00 pm"
 			}
 
-			console.log("Time: " + time + " " + "Civ Time: " + civ_time);
+			// console.log("Time: " + time + " " + "Civ Time: " + civ_time);
 
 			if (half == false){
 				time_add = 30;
@@ -848,18 +848,15 @@ $(document).ready(function(){
 			for(var i = 0; i<5; i++){
 				var empty = 0;
 				var prevEntry = null;
-				var blankSpan = 1;
 				for(var course in courseDict){
 					if($.inArray(weekdays[i], courseDict[course]["days"])!=(-1)){
 						if (courseDict[course]["dropped"] == false){
 							if((courseDict[course]["times"][0] == time)){
-
 								if(empty != 1){
 									calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='"+String(courseDict[course]["span"])+"'>"
 									calendar += "<span class='SSSTEXTWEEKLY' >"+course+"<br>"+courseDict[course]["instr"]+"<br>"+courseDict[course]["time"]+"<br>"+courseDict[course]["location"]+"<br>"+courseDict[course]["units"]+"</span></td>"
 									empty = 1;
 									prevEntry = course
-									blankSpan = courseDict[course]["span"];
 								}else{
 									conflictDict[i + ' ' + time] = {
 										'course1': course,
@@ -868,14 +865,14 @@ $(document).ready(function(){
 								}
 							}
 							else if((courseDict[course]["times"][0] < time) && (courseDict[course]["times"][1] > time)){
-								console.log(i);
+								// console.log(i);
 								empty = 1;
 							}
 						}
 					}
 				}
 				if (empty == 0){
-					calendar += "<td class='PSLEVEL3GRID' rowspan='" + blankSpan + "'>&nbsp;</td>"
+					calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 				}
 			}
 			calendar += "</tr>"
