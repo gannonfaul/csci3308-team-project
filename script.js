@@ -789,7 +789,7 @@ $(document).ready(function(){
 		calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Friday<br>"
 		//calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Saturday<br>"
 		//calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Sunday<br>"
-		calendar += "</th>"
+		calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Green: Enrolled<br>Blue: Shopping Cart<br>Red: Conflict<br></th>"
 		calendar += "</tr>"
 
 		//All this populates the calendar
