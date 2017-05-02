@@ -833,8 +833,6 @@ $(document).ready(function(){
 			calendar += "<span class='SSSTEXTWEEKLYTIME' >"+civ_time+"</span>"
 			calendar += "</td>"
 			
-			var color = ''; //Controls the color of the calendar block
-			
 			for(var i = 0; i<5; i++){ //Iterates through weekdays
 				var empty = true;
 				var prevEntry = null;
@@ -847,6 +845,7 @@ $(document).ready(function(){
 									overflowRows[i][0] = courseDict[course]["span"]
 									overflowRows[i][1] = course
 									console.log(course, 'overflows by ' + courseDict[course]["span"])
+									var color = '';
 									if (!courseDict[course]["enrolled"]){ // Makes shopping cart classes show up blue
 										//CART = blue
 										//OVLP = red
@@ -944,6 +943,27 @@ $(document).ready(function(){
 
 		var calendar = iframe.find('#SHOPPING_CART_SCHED_HTMLAREA');
 
+// Conflict Handling
+
+		function getDayIndex(row, dayIndex){
+			
+			var overwrittenDays = $(row).attr('overwrittendays')
+			var skipcount = 0
+			var continueLooping = true;
+			//number of 'td' entries will change depending on which days are ommitted.
+			//Ex: a friday when wednesday is overwritten is at $(row).find('td')[4] instead of ...[5].
+			while(continueLooping == true){
+				if(overwrittenDays == ''){
+					continueLooping = false;
+				}
+				if(weekdays.indexOf(overwrittenDays.substr(0,2)) < (dayIndex-1) ){
+					skipcount += 1
+				}
+				overwrittenDays = overwrittenDays.substr(2)
+			}
+			return dayIndex - skipcount + 1
+		}
+
 		calendar.find('tr').each(function(i, row){
 			rowTime = i*50 +750
 			for (conflict in conflictDict){
@@ -954,20 +974,37 @@ $(document).ready(function(){
 					var conflictSpan = null
 					$(conflictElm).attr('conflict', conflict)
 					var overwrittenDays = $(row).attr('overwrittendays')
-					console.log(conflict, 'done')
 					if(overwrittenDays.indexOf(weekdays[dayIndex-1]) == -1){
-						if(weekdays.indexOf(overwrittenDays.substr(overwrittenDays.length-2)) < (dayIndex-1) ){
-							//number of 'td' entries will change depending on which days are ommitted.
-							//Ex: a friday when wednesday is overwritten is at $(row).find('td')[4] instead of ...[5].
-							dayIndex -= (overwrittenDays.length / 2)
-						}
+						dayIndex = getDayIndex(row, dayIndex)
 						conflictElm = $(row).find('td')[dayIndex]
 						conflictSpan = $(conflictElm).find('span')
 					}else{
-						console.log(conflict, " is overwritten. Find.")
+						
+						//This is what happens if there's a multi row conflict where the conflictDict time isn't correct.
+						var tempRow = null
+						for(j = 0; j < conflictDict[conflict].length; j++){
+							var tempTime = courseDict[conflictDict[conflict][j]]['times'][0]
+							if(tempTime < rowTime){
+								tempRow = calendar.find('tr')[(tempTime-750)/50]
+							}
+							if(tempRow != null){
+								break;
+							}
+						}
+						if(tempRow != null){
+							dayIndex = getDayIndex(tempRow, dayIndex)
+							conflictElm = $(tempRow).find('td')[dayIndex]
+							conflictSpan = $(conflictElm).find('span')
+						}else{
+							console.log('something is broken', tempRow)
+						}
 					}
 
-					//Change conflict Elm attributes to show conflict
+		// ***************************************
+		//           CONFLICT CHANGES
+		// ***************************************
+//conflictElm is the <td> element. conflictSpan is the <span> element within it.
+//Anything done to the conflictElm inside the following if statement will properly update to the calendar.
 					if(conflictElm != null){
 						console.log(conflictElm)
 						$(conflictElm)[0].addEventListener('click', function(){
