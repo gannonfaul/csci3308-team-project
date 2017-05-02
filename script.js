@@ -865,7 +865,7 @@ $(document).ready(function(){
 									console.log(course, 'overflows by ' + courseDict[course]["span"])
 									calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='"+String(courseDict[course]["span"])+"'>"
 									calendar += "<span class='SSSTEXTWEEKLY' >"+course+"<br>"+courseDict[course]["instr"]+"<br>"+courseDict[course]["time"]+"<br>"+courseDict[course]["location"]+"<br>"+courseDict[course]["units"]+"</span></td>"
-									empty = 1;
+									empty = false;
 									prevEntry = course
 								}else{
 									if(empty == false){ // Conflict where two courses start at the same time
