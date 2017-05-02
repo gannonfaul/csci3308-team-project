@@ -782,7 +782,9 @@ $(document).ready(function(){
 		//This is all just formatting
 		calendar += "<table cellspacing='0' cellpadding='2' width='100%' class='PSLEVEL1GRIDNBO' id='SHOPPING_CART_SCHED_HTMLAREA'>"
 		calendar += "<colgroup span='1' width='9%' align='center' valign='middle'>"
-		calendar += "<colgroup span='7' width='13%' align='center' valign='middle'><tr><th scope='col' align='center' class='SSSWEEKLYA1BACKGROUND' >Time</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Monday<br>"
+		calendar += "<colgroup span='7' width='13%' align='center' valign='middle'>"
+		calendar += "<tr><th scope='col' align='center' colspan='7' class='SSSWEEKLYA1BACKGROUND' >What-If Calendar (Green: Enrolled --- Blue: Shopping Cart --- Orange: Conflict)</th></tr>"
+		calendar += "<tr><th scope='col' align='center' class='SSSWEEKLYA1BACKGROUND' >Time</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Monday<br>"
 		calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Tuesday<br>"
 		calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Wednesday<br>"
 		calendar += "</th><th scope='col' align='center' class='SSSWEEKLYDAYBACKGROUND' >Thursday<br>"
@@ -801,71 +803,58 @@ $(document).ready(function(){
 		 * SSTEXTWEEKLY => defines text to add to the cell
 		 * PSLEVEL3GRID "&nbsp => empty cell
 		 */
-
-		var time;
-		var max_time = 2000;
-		var weekdays = ["Mo", "Tu", "We", "Th", "Fr"];
+		
+		var time = 800; //Start calendar at 8:00 am
+		var max_time = 0;
+		//Ends calendar after last class
+		for (course in courseDict){
+			max_time = Math.max(max_time, courseDict[course]["times"][1]);
+		}
+		var weekdays = ["Mo", "Tu", "We", "Th", "Fr"]; //Sets class days
 		var conflictDict = {};
-		var time = 800;
-		var half = false;
-		var time_add;
+		var half = false; //Checks for half hour increments
+		var time_add; //Defines whether to add 30 or 70 for next time increment
 		var overflowStr = ''
 		var overflowRows = [[0, ''],[0, ''],[0, ''],[0, ''],[0, '']] //For dealing with multi-row crap. 
-		while(time<=max_time){
-			var civ_time = String(Math.floor(time/100));
-			if (time<1200){
-				if(half == false){
-					civ_time += ":00 am"
-				}
-				else{
-					civ_time += ":30 am"
-				}
-			}
-			else if (time>1200){
-				if(half == false){
-					civ_time = String(Math.floor((time/100)-12))+":00 pm"
-				}
-				else{
-					if(time > 1230){
-						civ_time = String(Math.floor((time/100)-12))+":30 pm"
-					} else {
-						civ_time = String(Math.floor(time/100)) + ":30 pm"
-					}
-				}
-			}
-			else{
-				civ_time += ":00 pm"
-			}
-			// console.log("Time: " + time + " " + "Civ Time: " + civ_time);
-
-			if (half == false){
-				time_add = 30;
-			}
-			else{
-				time_add = 70;
-			}
-			for (j = 0; j < 5; j++){ //
+		
+		while(time<=max_time){ //Iterates through each half-hour time slot
+			civ_time = civTime(time, half);//Puts time into readable format
+			//console.log("Time: " + time + " " + "Civ Time: " + civ_time);
+			time_add = timeInc(half);//Determines how much time to add to increment the hour
+			
+			for (j = 0; j < 5; j++){
 				if(overflowRows[j][0] > 0){
 					overflowStr += weekdays[j]
 				}
 			}
-			console.log(overflowStr, 'overflow', time)
-			calendar += "<tr" + "overwrittenRows = " + overflowStr + ">"
+			
+			// console.log(overflowStr, 'overflow', time)
+			
+			calendar += "<tr" + " overwrittendays = " + overflowStr + ">"
 			calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
 			calendar += "<span class='SSSTEXTWEEKLYTIME' >"+civ_time+"</span>"
 			calendar += "</td>"
-			for(var i = 0; i<5; i++){
+			
+			for(var i = 0; i<5; i++){ //Iterates through weekdays
 				var empty = true;
 				var prevEntry = null;
-				for(var course in courseDict){
-					if($.inArray(weekdays[i], courseDict[course]["days"])!=(-1)){
-						if((courseDict[course]["times"][0] >= time) && (courseDict[course]["times"][0]<(time+time_add))){
-							if (courseDict[course]["dropped"] == false){
+				for(var course in courseDict){ //Iterates through every course in the courseDict
+					if($.inArray(weekdays[i], courseDict[course]["days"])!=(-1)){ //If the class occurs on the current day
+						var startTime = courseDict[course]["times"][0];
+						if((startTime >= time) && (startTime<(time+time_add))){ //If the current class starts in the next half hour 
+							if (!courseDict[course]["dropped"]){ //If the course hasn't been dropped
 								if(empty == true && overflowRows[i][0] == 0){
 									overflowRows[i][0] = courseDict[course]["span"]
 									overflowRows[i][1] = course
-									console.log(course, 'overflows by ' + courseDict[course]["span"])
-									calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='"+String(courseDict[course]["span"])+"'>"
+									// console.log(course, 'overflows by ' + courseDict[course]["span"])
+									var color = '';
+									if (!courseDict[course]["enrolled"]){ // Makes shopping cart classes show up blue
+										//CART = blue
+										//OVLP = red
+										color = 'CART';
+									}
+									calendar += "<td class='SSSWEEKLYBACKGROUND"+color+"' rowspan='"+String(courseDict[course]["span"])+"'>" //Adds the colored box
+									//Fills in the class information
 									calendar += "<span class='SSSTEXTWEEKLY' >"+course+"<br>"+courseDict[course]["instr"]+"<br>"+courseDict[course]["time"]+"<br>"+courseDict[course]["location"]+"<br>"+courseDict[course]["units"]+"</span></td>"
 									empty = false;
 									prevEntry = course
@@ -891,6 +880,7 @@ $(document).ready(function(){
 				}
 				if (empty == true){
 					if(overflowRows[i][0] == 0){
+						//Adds empty cell to the calendar
 						calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 					}
 				}
@@ -901,58 +891,156 @@ $(document).ready(function(){
 					overflowRows[j][0] -= 1
 				}
 			}
-			if (half == false){
-				time += time_add;
-				half = true;
-			}
-			else{
-				time += time_add;
-				half = false;
-			}
+			time += time_add;
+			half = !half;
+			
 			overflowStr = ''
 		}
+
 		console.log(conflictDict)
 
 		calendar += "</table>"
 		calendar += "</div>"
 		calendar += "</div>"
+		
+		function timeInc(half){//Determines increment for next half hour 
+			if (half == false){
+				time_add = 30;
+			}
+			else{
+				time_add = 70;
+			}
+			return time_add;
+		}
+		
+		function civTime(time, half){//Puts time into readable format
+			var civ_time = String(Math.floor(time/100)); 
+			if (time<1200){
+				if(half == false){
+					civ_time += ":00 am"
+				}
+				else{
+					civ_time += ":30 am"
+				}
+			}
+			else if (time>1200){
+				if(half == false){
+					civ_time = String(Math.floor((time/100)-12))+":00 pm"
+				}
+				else{
+					if(time > 1230){
+						civ_time = String(Math.floor((time/100)-12))+":30 pm"
+					} else {
+						civ_time = String(Math.floor(time/100)) + ":30 pm"
+					}
+				}
+			}
+			else{
+				civ_time += ":00 pm"
+			}
+			return civ_time;
+		}
 
-		iframe.find('.PSLEVEL1GRIDNBO').after(calendar);
+		iframe.find('.PSLEVEL1GRIDNBO').after(calendar); //Injects HTML into the page after the shopping cart
 
 		var calendar = iframe.find('#SHOPPING_CART_SCHED_HTMLAREA');
 
-		/*calendar.find('tr').each(function(i, row){
-			rowTime = i*100 +700
+// Conflict Handling
+
+		function getDayIndex(row, dayIndex){
+			
+			var overwrittenDays = $(row).attr('overwrittendays')
+			var skipcount = 0
+			var continueLooping = true;
+			//number of 'td' entries will change depending on which days are ommitted.
+			//Ex: a friday when wednesday is overwritten is at $(row).find('td')[4] instead of ...[5].
+			while(continueLooping == true){
+				if(overwrittenDays == ''){
+					continueLooping = false;
+				}
+				if(weekdays.indexOf(overwrittenDays.substr(0,2)) < (dayIndex-1) ){
+					skipcount += 1
+				}
+				overwrittenDays = overwrittenDays.substr(2)
+			}
+			return dayIndex - skipcount + 1
+		}
+
+		calendar.find('tr').each(function(i, row){
+			if ((i - 1) % 2 != 0) {
+				rowTime = (i - 1) *50 +750;
+			} else {
+				rowTime = (i - 1) * 50 + 730;
+			}
 			for (conflict in conflictDict){
 				if (conflict.substr(2, conflict.length)  == rowTime) {
 					var dayIndex = parseInt(conflict[0]) + 1
 					var course = 'BLANK'
-					var conflictElm = $(row).find('td')[dayIndex]
-					var conflictSpan = $(conflictElm).find('span')
+					var conflictElm = null
+					var conflictSpan = null
 					$(conflictElm).attr('conflict', conflict)
-					var courseFlag = 1; //determines whether course1 or course2 should be displayed
-					$(conflictElm)[0].addEventListener('click', function(){
-						courseFlag *= -1;
-						if(courseFlag == 1){
-							course = conflictDict[$(conflictElm).attr('conflict')]['course1']
-
-						}else{
-							course = conflictDict[$(conflictElm).attr('conflict')]['course2']
+					var overwrittenDays = $(row).attr('overwrittendays')
+					if(overwrittenDays.indexOf(weekdays[dayIndex-1]) == -1){
+						dayIndex = getDayIndex(row, dayIndex)
+						conflictElm = $(row).find('td')[dayIndex]
+						conflictSpan = $(conflictElm).find('span')
+					}else{
+						
+						//This is what happens if there's a multi row conflict where the conflictDict time isn't correct.
+						var tempRow = null
+						for(j = 0; j < conflictDict[conflict].length; j++){
+							var tempTime = courseDict[conflictDict[conflict][j]]['times'][0]
+							if(tempTime < rowTime){
+								tempRow = calendar.find('tr')[(tempTime-750)/50]
+							}
+							if(tempRow != null){
+								break;
+							}
 						}
-						$(this).html(course+"<br>"
+						if(tempRow != null){
+							dayIndex = getDayIndex(tempRow, dayIndex)
+							conflictElm = $(tempRow).find('td')[dayIndex]
+							conflictSpan = $(conflictElm).find('span')
+						}else{
+							console.log('something is broken', tempRow)
+						}
+					}
+
+		// ***************************************
+		//           CONFLICT CHANGES
+		// ***************************************
+//conflictElm is the <td> element. conflictSpan is the <span> element within it.
+//Anything done to the conflictElm inside the following if statement will properly update to the calendar.
+					if(conflictElm != null){
+						$(conflictElm).attr('class', 'SSSWEEKLYBACKGROUNDOVLP');
+						var clicked = 0;
+						var classViewed = conflictElm.firstChild.firstChild;
+						$(conflictElm)[0].addEventListener('click', function(){
+							if(classViewed == conflictDict[conflict][0]) {
+								course = conflictDict[conflict][1];
+								classViewed = course;
+								courseText = course;
+								console.log(course);
+							} else {
+								course = conflictDict[conflict][0];
+								classViewed = course;
+								courseText = "CONFLICT: " + course;
+								console.log(course);
+							}
+							$(this).html(courseText +"<br>"
 						+courseDict[course]["instr"]+"<br>"
 						+courseDict[course]["time"]+"<br>"
 						+courseDict[course]["location"]+"<br>"
 						+courseDict[course]["units"])
-					});
+						});
+					} else {
+						console.log('something is broken for ', conflict)
+					}
 
 				}
 
 			}
-		});*/
-
-
-
+		});
 		//document.querySelector("[id^='win0div$ICField']").id.innerHTML += calendar;
 	});
 });
