@@ -843,7 +843,7 @@ $(document).ready(function(){
 				time_add = 70;
 			}
 			for (j = 0; j < 5; j++){ //
-				if(overflowRows[j] > 0){
+				if(overflowRows[j][0] > 0){
 					overflowStr += weekdays[j]
 				}
 			}
@@ -865,7 +865,7 @@ $(document).ready(function(){
 									console.log(course, 'overflows by ' + courseDict[course]["span"])
 									calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='"+String(courseDict[course]["span"])+"'>"
 									calendar += "<span class='SSSTEXTWEEKLY' >"+course+"<br>"+courseDict[course]["instr"]+"<br>"+courseDict[course]["time"]+"<br>"+courseDict[course]["location"]+"<br>"+courseDict[course]["units"]+"</span></td>"
-									empty = false
+									empty = 1;
 									prevEntry = course
 								}else{
 									if(empty == false){ // Conflict where two courses start at the same time
@@ -885,7 +885,6 @@ $(document).ready(function(){
 								}
 							}
 						}
-
 					}
 				}
 				if (empty == true){
@@ -894,14 +893,12 @@ $(document).ready(function(){
 					}
 				}
 			}
-			
+			calendar += "</tr>"			
 			for (j = 0; j < 5; j++){ //
 				if(overflowRows[j][0] > 0){
 					overflowRows[j][0] -= 1
 				}
 			}
-			console.log(overflowRows)
-			calendar += "</tr>"
 			if (half == false){
 				time += time_add;
 				half = true;
