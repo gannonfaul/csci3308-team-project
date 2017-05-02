@@ -488,7 +488,11 @@ $(document).ready(function(){
 				}
 				// Split the course name into a department tag and a course number:
 				var classinfo = getNameParts(textObj);
-				$(item).attr('title', prereqs[classinfo[0]][classinfo[1]]);
+
+				// REMOVE TO GET PRE-REQS FOR ALL CLASSES
+				if(classinfo[0] == "CSCI") { 
+					$(item).attr('title', prereqs[classinfo[0]][classinfo[1]]);
+				}
 				//Create our link to the course catalog based on the info we pulled from the class name:
 				var classCatalogLink = 'http://www.colorado.edu/catalog/2016-17/courses?subject='+classinfo[0]+'&number='+classinfo[1]
 
