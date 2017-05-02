@@ -869,9 +869,13 @@ $(document).ready(function(){
 									prevEntry = course
 								}else{
 									if(empty == false){ // Conflict where two courses start at the same time
-										conflictDict[i + ' ' + time] = [course,prevEntry]
+										if(conflictDict[i + ' ' + time] == undefined){
+											conflictDict[i + ' ' + time] = [course,prevEntry]
+										}else{
+											conflictDict[i + ' ' + time] = conflictDict[i + ' ' + time].concat(course)
+										}
+										
 									} else { // Conflict where the tail of one class overlaps the other
-										console.log("I'm crying rn", course)
 										if(conflictDict[i + ' ' + time] == undefined){
 											conflictDict[i + ' ' + time] = [overflowRows[i][1],course]
 										}else{
