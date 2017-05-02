@@ -793,12 +793,12 @@ $(document).ready(function(){
 		var weekdays = ["Mo", "Tu", "We", "Th", "Fr"];
 		var conflictDict = {};
 		var time = 800;
-		var half = false;
+		var half = true;
 		var time_add;
 		while(time<=max_time){
 			var civ_time = String(Math.ceil(time/100));
 			if (time<1200){
-				if(half == false){
+				if(half == true){
 					civ_time += ":00 am"
 				}
 				else{
@@ -806,7 +806,7 @@ $(document).ready(function(){
 				}
 			}
 			else if (time>1200){
-				if(half == false){
+				if(half == true){
 					civ_time = String(Math.ceil((time/100)-12))+":00 pm"
 				}
 				else{
@@ -816,7 +816,7 @@ $(document).ready(function(){
 			else{
 				civ_time += ":00 pm"
 			}
-			if (half == false){
+			if (half == true){
 				time_add = 30;
 			}
 			else{
@@ -846,9 +846,12 @@ $(document).ready(function(){
 								}
 							}
 						}
-						else if((courseDict[course]["times"][0] < time)&&(courseDict[course]["span"] > 2)){
+						
+						//THIS IS WHERE SHIT IS BREAKING!!!
+						else if((courseDict[course]["times"][0] < time)&&(courseDict[course]["times"][0]>= time-(50*courseDict[course]["span"]))){
 							empty = 1;
 						}
+						//
 					}
 				}
 				if (empty == 0){
@@ -856,14 +859,9 @@ $(document).ready(function(){
 				}
 			}
 			calendar += "</tr>"
-			if (half == false){
-				time += time_add;
-				half = true;
-			}
-			else{
-				time += time_add;
-				half = false;
-			}
+			console.log(time);
+			time += time_add;
+			half = !half;
 		}
 		console.log(conflictDict)
 
