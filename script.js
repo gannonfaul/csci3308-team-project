@@ -852,10 +852,10 @@ $(document).ready(function(){
 					if($.inArray(weekdays[i], courseDict[course]["days"])!=(-1)){
 						if((courseDict[course]["times"][0] == time)){
 							if (courseDict[course]["dropped"] == false){
-								if(empty < i){
+								if(empty != 1){
 									calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='"+String(courseDict[course]["span"])+"'>"
 									calendar += "<span class='SSSTEXTWEEKLY' >"+course+"<br>"+courseDict[course]["instr"]+"<br>"+courseDict[course]["time"]+"<br>"+courseDict[course]["location"]+"<br>"+courseDict[course]["units"]+"</span></td>"
-									empty += 1;
+									empty = 1;
 									prevEntry = course
 								}else{
 									conflictDict[i + ' ' + time] = {
@@ -866,11 +866,11 @@ $(document).ready(function(){
 							}
 						}
 						else if((courseDict[course]["times"][0] < time) && (courseDict[course]["span"] > 4)){
-							empty += 1;
+							empty = 1;
 						}
 					}
 				}
-				if (empty < i){
+				if (empty == 0){
 					calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 				}
 			}
