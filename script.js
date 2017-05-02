@@ -919,7 +919,7 @@ $(document).ready(function(){
 
 		var calendar = iframe.find('#SHOPPING_CART_SCHED_HTMLAREA');
 
-		calendar.find('tr').each(function(i, row){
+		/*calendar.find('tr').each(function(i, row){
 			rowTime = i*100 +700
 			for (conflict in conflictDict){
 				if (conflict.substr(2, conflict.length)  == rowTime) {
@@ -947,7 +947,7 @@ $(document).ready(function(){
 				}
 
 			}
-		});
+		});*/
 
 
 
