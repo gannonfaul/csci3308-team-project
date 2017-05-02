@@ -461,138 +461,6 @@ $(document).ready(function(){
 		// Create course dictionary for use in "What If" Calendar
 		var courseDict = {};
 
-		// ***************************************
-		//         ENROLLED COURSE DATA
-		// ***************************************
-
-		// Loop through courses already registered and apply desired parsing/functions
-		iframe.find('.PSLEVEL2GRIDROW').find('span').each(function(i, item){
-
-			// Parse Course Name Information from enrolled courses
-			if(item.id.match("^E_CLASS_NAME")){
-				/*
-				First thing's first, after locating a "course" in our course list, we have to get the course name.
-				The text that defines the course ("CSCI 1300", for example) will be found as the first child of item if the
-				course has no link attached (.id == undefined) and will be the first child's first child if it is a hyperlink.
-				*/
-				var textObj = item.firstChild;
-				//console.log(textObj)
-				if(textObj.id != undefined){
-					textObj = textObj.firstChild;
-					//console.log(textObj);
-				}
-				else{
-					//console.log(textObj);
-				}
-
-				// Create dictionary entry for the course in courseDict for future use in "What If" Calendar
-				var fullCourseName = textObj.data;
-				courseDict[fullCourseName] = {
-						"days": "null",
-						"time": "null",
-						"times": "null",
-						"location": "null",
-						"instr": "null",
-						"units": "null",
-						"span": "null",
-						"enrolled": true,
-						"mapped": false,
-						"dropped": false
-				};
-
-				$(this).closest('tr').find('div').each(function(i, imgItem){
-					if(imgItem.id.match("^win0divDERIVED_REGFRM1_SSR_STATUS_LONG")){
-						if($(this).find('img').attr('alt') == "Dropped") {
-							console.log(fullCourseName + " has been dropped.");
-							courseDict[fullCourseName]["dropped"] = true;
-						}
-					}
-				});
-			}
-
-			// Parse Course Time Information from enrolled courses
-			else if(item.id.match("^DERIVED_REGFRM1_SSR_MTG_SCHED_LONG")) {
-				// console.log(item);
-				var timeText = $(this).text();
-				//console.log(timeText);
-
-				// Parse course time into more usable format
-				var schedule = getDaysandTime(timeText);
-
-				// Search for first course in dictionary missing a date/time and populate with new data
-				for (var course in courseDict) {
-					if(!courseDict.hasOwnProperty(course)) {
-						continue;
-					}
-					if (courseDict[course]["days"] == "null") {
-						courseDict[course]["days"] = schedule[0];
-						courseDict[course]["time"] = schedule[1];
-						courseDict[course]["times"] = schedule[2];
-
-						courseDict[course]["span"] = Math.ceil((schedule[2][1]-schedule[2][0])/50);
-]
-						break;
-					}
-				}
-
-			}
-
-			// Parse Course Location Information from enrolled courses
-			else if(item.id.match("^DERIVED_REGFRM1_SSR_MTG_LOC_LONG")) {
-				// console.log(item);
-				var locText = $(this).text();
-				//console.log(locText);
-
-				// Search for first course in dictionary missing a location and populate with new data
-				for (var course in courseDict) {
-					if(!courseDict.hasOwnProperty(course)) {
-						continue;
-					}
-					if (courseDict[course]["location"] == "null") {
-						courseDict[course]["location"] = locText;
-						break;
-					}
-				}
-
-			}
-
-			// Parse Course Instructor Information from enrolled courses
-			else if(item.id.match("^DERIVED_REGFRM1_SSR_INSTR_LONG")) {
-				//console.log(item);
-				var instrText = $(this).text();
-				//console.log(instrText);
-
-				// Search for first course in dictionary missing an instructor and populate with new data
-				for (var course in courseDict) {
-					if(!courseDict.hasOwnProperty(course)) {
-						continue;
-					}
-					if (courseDict[course]["instr"] == "null") {
-						courseDict[course]["instr"] = instrText;
-						break;
-					}
-				}
-
-			}
-
-			// Parse Course Unit Information from enrolled courses
-			else if(item.id.match("^STDNT_ENRL_SSVW_UNT_TAKEN")) {
-				// console.log(item);
-				var unitText = $(this).text();
-				// console.log(unitText);
-
-				// Search for first course in dictionary missing unit information and populate with new data
-				for (var course in courseDict) {
-					if(!courseDict.hasOwnProperty(course)) {
-						continue;
-					}
-					if (courseDict[course]["units"] == "null") {
-						courseDict[course]["units"] = unitText;
-						break;
-					}
-				}
-			}
-		});
 
 
 		// ***************************************
@@ -667,15 +535,6 @@ $(document).ready(function(){
 						"mapped": false,
 						"dropped": false
 				};
-
-				$(this).closest('tr').find('div').each(function(i, imgItem){
-					if(imgItem.id.match("^win0divDERIVED_REGFRM1_SSR_STATUS_LONG")){
-						if($(this).find('img').attr('alt') == "Dropped") {
-							console.log("This class has been dropped");
-							courseDict[fullCourseName]["dropped"] = true;
-						}
-					}
-				});
 			}
 
 			// Parse Course Time Information from shopping cart
@@ -696,9 +555,13 @@ $(document).ready(function(){
 						courseDict[course]["days"] = schedule[0];
 						courseDict[course]["time"] = schedule[1];
 						courseDict[course]["times"] = schedule[2];
-
-						courseDict[course]["span"] = Math.ceil((schedule[2][1]-schedule[2][0])/50);
-
+						var timeSpan = (schedule[2][1]-schedule[2][0]) / 100;
+						if (timeSpan % 1 == 0) {
+							courseDict[course]["span"] = timeSpan * 2;
+						} else {
+							timeSpan = Math.ceil(timeSpan) + 1;
+							courseDict[course]["span"] = timeSpan;
+						}
 						break;
 					}
 				}
@@ -763,6 +626,145 @@ $(document).ready(function(){
 
 		});
 
+
+
+		// ***************************************
+		//         ENROLLED COURSE DATA
+		// ***************************************
+
+		// Loop through courses already registered and apply desired parsing/functions
+		iframe.find('.PSLEVEL2GRIDROW').find('span').each(function(i, item){
+
+			// Parse Course Name Information from enrolled courses
+			if(item.id.match("^E_CLASS_NAME")){
+				/*
+				First thing's first, after locating a "course" in our course list, we have to get the course name.
+				The text that defines the course ("CSCI 1300", for example) will be found as the first child of item if the
+				course has no link attached (.id == undefined) and will be the first child's first child if it is a hyperlink.
+				*/
+				var textObj = item.firstChild;
+				//console.log(textObj)
+				if(textObj.id != undefined){
+					textObj = textObj.firstChild;
+					//console.log(textObj);
+				}
+				else{
+					//console.log(textObj);
+				}
+
+				// Create dictionary entry for the course in courseDict for future use in "What If" Calendar
+				var fullCourseName = textObj.data;
+				courseDict[fullCourseName] = {
+						"days": "null",
+						"time": "null",
+						"times": "null",
+						"location": "null",
+						"instr": "null",
+						"units": "null",
+						"span": "null",
+						"enrolled": true,
+						"mapped": false,
+						"dropped": false
+				};
+
+				$(this).closest('tr').find('div').each(function(i, imgItem){
+					if(imgItem.id.match("^win0divDERIVED_REGFRM1_SSR_STATUS_LONG")){
+						if($(this).find('img').attr('alt') == "Dropped") {
+							console.log(fullCourseName + " has been dropped.");
+							courseDict[fullCourseName]["dropped"] = true;
+						}
+					}
+				});
+			}
+
+			// Parse Course Time Information from enrolled courses
+			else if(item.id.match("^DERIVED_REGFRM1_SSR_MTG_SCHED_LONG")) {
+				// console.log(item);
+				var timeText = $(this).text();
+				//console.log(timeText);
+
+				// Parse course time into more usable format
+				var schedule = getDaysandTime(timeText);
+
+				// Search for first course in dictionary missing a date/time and populate with new data
+				for (var course in courseDict) {
+					if(!courseDict.hasOwnProperty(course)) {
+						continue;
+					}
+					if (courseDict[course]["days"] == "null") {
+						courseDict[course]["days"] = schedule[0];
+						courseDict[course]["time"] = schedule[1];
+						courseDict[course]["times"] = schedule[2];
+						var timeSpan = (schedule[2][1]-schedule[2][0]) / 100;
+						if (timeSpan % 1 == 0) {
+							courseDict[course]["span"] = timeSpan * 2;
+						} else {
+							timeSpan = Math.floor(timeSpan) * 2 + 1;
+							courseDict[course]["span"] = timeSpan;
+						}
+						break;
+					}
+				}
+
+			}
+
+			// Parse Course Location Information from enrolled courses
+			else if(item.id.match("^DERIVED_REGFRM1_SSR_MTG_LOC_LONG")) {
+				// console.log(item);
+				var locText = $(this).text();
+				//console.log(locText);
+
+				// Search for first course in dictionary missing a location and populate with new data
+				for (var course in courseDict) {
+					if(!courseDict.hasOwnProperty(course)) {
+						continue;
+					}
+					if (courseDict[course]["location"] == "null") {
+						courseDict[course]["location"] = locText;
+						break;
+					}
+				}
+
+			}
+
+			// Parse Course Instructor Information from enrolled courses
+			else if(item.id.match("^DERIVED_REGFRM1_SSR_INSTR_LONG")) {
+				//console.log(item);
+				var instrText = $(this).text();
+				//console.log(instrText);
+
+				// Search for first course in dictionary missing an instructor and populate with new data
+				for (var course in courseDict) {
+					if(!courseDict.hasOwnProperty(course)) {
+						continue;
+					}
+					if (courseDict[course]["instr"] == "null") {
+						courseDict[course]["instr"] = instrText;
+						break;
+					}
+				}
+
+			}
+
+			// Parse Course Unit Information from enrolled courses
+			else if(item.id.match("^STDNT_ENRL_SSVW_UNT_TAKEN")) {
+				// console.log(item);
+				var unitText = $(this).text();
+				// console.log(unitText);
+
+				// Search for first course in dictionary missing unit information and populate with new data
+				for (var course in courseDict) {
+					if(!courseDict.hasOwnProperty(course)) {
+						continue;
+					}
+					if (courseDict[course]["units"] == "null") {
+						courseDict[course]["units"] = unitText;
+						break;
+					}
+				}
+			}
+		});
+
 		// Display  final course dictionary for "What If" Calendar
 		console.log(courseDict);
 
@@ -803,14 +805,12 @@ $(document).ready(function(){
 		var weekdays = ["Mo", "Tu", "We", "Th", "Fr"];
 		var conflictDict = {};
 		var time = 800;
-		var half = true;
+		var half = false;
 		var time_add;
-		var overflowStr = ''
-		var overflowRows = [[0,''],[0,''],[0,''],[0,''],[0,'']] //For dealing with multi-row crap. 
 		while(time<=max_time){
-			var civ_time = String(Math.ceil(time/100));
+			var civ_time = String(Math.floor(time/100));
 			if (time<1200){
-				if(half == true){
+				if(half == false){
 					civ_time += ":00 am"
 				}
 				else{
@@ -818,92 +818,72 @@ $(document).ready(function(){
 				}
 			}
 			else if (time>1200){
-				if(half == true){
-					civ_time = String(Math.ceil((time/100)-12))+":00 pm"
+				if(half == false){
+					civ_time = String(Math.floor((time/100)-12))+":00 pm"
 				}
 				else{
-					civ_time = String(Math.ceil((time/100)-12))+":30 pm"
+					if(time > 1230){
+						civ_time = String(Math.floor((time/100)-12))+":30 pm"
+					} else {
+						civ_time = String(Math.floor(time/100)) + ":30 pm"
+					}
 				}
 			}
 			else{
 				civ_time += ":00 pm"
 			}
-			if (half == true){
+
+			// console.log("Time: " + time + " " + "Civ Time: " + civ_time);
+
+			if (half == false){
 				time_add = 30;
 			}
 			else{
 				time_add = 70;
 			}
-			for (j = 0; j < 5; j++){ //
-				if(overflowRows[j][0] > 0){
-					overflowStr += weekdays[j]
-				}
-			}
-			console.log(overflowStr, 'overflow', time)
-			calendar += "<tr" + "overwrittenRows = " + overflowStr + ">"
+			calendar += "<tr>"
 			calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
 			calendar += "<span class='SSSTEXTWEEKLYTIME' >"+civ_time+"</span>"
 			calendar += "</td>"
 			for(var i = 0; i<5; i++){
-				var empty = true;
+				var empty = 0;
 				var prevEntry = null;
 				for(var course in courseDict){
-					// console.log(course);
 					if($.inArray(weekdays[i], courseDict[course]["days"])!=(-1)){
-						if((courseDict[course]["times"][0] >= time) && (courseDict[course]["times"][0]<(time+time_add))){
-							if (courseDict[course]["dropped"] == false){
-								if(empty == true && overflowRows[i][0] == 0){
-									overflowRows[i][0] = courseDict[course]["span"]
-									console.log(course, 'overflows by ' + courseDict[course]["span"])
+						if (courseDict[course]["dropped"] == false){
+							if((courseDict[course]["times"][0] == time)){
+								if(empty != 1){
 									calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='"+String(courseDict[course]["span"])+"'>"
 									calendar += "<span class='SSSTEXTWEEKLY' >"+course+"<br>"+courseDict[course]["instr"]+"<br>"+courseDict[course]["time"]+"<br>"+courseDict[course]["location"]+"<br>"+courseDict[course]["units"]+"</span></td>"
-									empty = false
+									empty = 1;
 									prevEntry = course
 								}else{
-									var conTime = time + (half*50)
-									if(empty == false){ // Conflict where two courses start at the same time
-										if(conflictDict[i, + ' ' + conTime] == undefined){
-											conflictDict[i + ' ' + conTime] = [prevEntry, course]
-										}
-										else{
-											conflictDict[i, + ' ' + conTime] = conflictDict[i, + ' ' + conTime].concat(course)
-										}
-									} else { // Conflict where the tail of one class overlaps the other
-										if(conflictDict[i, + ' ' + conTime] == undefined){
-											console.log('new conflict entry for ' + course + ' and ' + overflowRows[i][1])
-											conflictDict[i, + ' ' + conTime] = [overflowRows[i][1], course]
-										} else {
-											conflictDict[i, + ' ' + conTime] = conflictDict[i, + ' ' + conTime].concat(course)	
-										}
+									conflictDict[i + ' ' + time] = {
+										'course1': course,
+										'course2': prevEntry
 									}
 								}
 							}
+							else if((courseDict[course]["times"][0] < time) && (courseDict[course]["times"][1] > time)){
+								// console.log(i);
+								empty = 1;
+							}
 						}
-						
-						//THIS IS WHERE SHIT IS BREAKING!!!
-						/*else if((courseDict[course]["times"][0] < time)&&(courseDict[course]["times"][0]>= time-(50*courseDict[course]["span"]))){
-							empty = false;
-						}*/
-						//
 					}
 				}
-				if (empty == true){
-					if(overflowRows[i][0] == 0){
-						calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
-					}
+				if (empty == 0){
+					calendar += "<td class='PSLEVEL3GRID'>&nbsp;</td>"
 				}
 			}
-			
-			for (j = 0; j < 5; j++){ //
-				if(overflowRows[j][0] > 0){
-					overflowRows[j][0] -= 1
-				}
-			}
-			console.log(overflowRows)
 			calendar += "</tr>"
-			time += time_add;
-			half = !half;
-			overflowStr = ''
+			if (half == false){
+				time += time_add;
+				half = true;
+			}
+			else{
+				time += time_add;
+				half = false;
+			}
 		}
 		console.log(conflictDict)
 
@@ -916,7 +896,7 @@ $(document).ready(function(){
 		var calendar = iframe.find('#SHOPPING_CART_SCHED_HTMLAREA');
 
 		calendar.find('tr').each(function(i, row){
-			rowTime = i*50 +700
+			rowTime = i*100 +700
 			for (conflict in conflictDict){
 				if (conflict.substr(2, conflict.length)  == rowTime) {
 					var dayIndex = parseInt(conflict[0]) + 1
@@ -945,7 +925,7 @@ $(document).ready(function(){
 			}
 		});
 
-		console.log(courseDict);
+
 
 		//document.querySelector("[id^='win0div$ICField']").id.innerHTML += calendar;
 	});
