@@ -845,7 +845,11 @@ $(document).ready(function(){
 									overflowRows[i][0] = courseDict[course]["span"]
 									overflowRows[i][1] = course
 									console.log(course, 'overflows by ' + courseDict[course]["span"])
-									calendar += "<td class='SSSWEEKLYBACKGROUND' rowspan='"+String(courseDict[course]["span"])+"'>" //Adds the colored box
+									var color = '';
+									if (!courseDict[course]["enrolled"]){ // Makes shopping cart classes show up red
+										color = 'OVLP';
+									}
+									calendar += "<td class='SSSWEEKLYBACKGROUND"+color+"' rowspan='"+String(courseDict[course]["span"])+"'>" //Adds the colored box
 									//Fills in the class information
 									calendar += "<span class='SSSTEXTWEEKLY' >"+course+"<br>"+courseDict[course]["instr"]+"<br>"+courseDict[course]["time"]+"<br>"+courseDict[course]["location"]+"<br>"+courseDict[course]["units"]+"</span></td>"
 									empty = false;
