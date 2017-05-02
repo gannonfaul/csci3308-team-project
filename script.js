@@ -826,7 +826,7 @@ $(document).ready(function(){
 				}
 			}
 			
-			console.log(overflowStr, 'overflow', time)
+			// console.log(overflowStr, 'overflow', time)
 			
 			calendar += "<tr" + " overwrittendays = " + overflowStr + ">"
 			calendar += "<td class='SSSWEEKLYTIMEBACKGROUND' rowspan='1'>"
@@ -844,7 +844,7 @@ $(document).ready(function(){
 								if(empty == true && overflowRows[i][0] == 0){
 									overflowRows[i][0] = courseDict[course]["span"]
 									overflowRows[i][1] = course
-									console.log(course, 'overflows by ' + courseDict[course]["span"])
+									// console.log(course, 'overflows by ' + courseDict[course]["span"])
 									var color = '';
 									if (!courseDict[course]["enrolled"]){ // Makes shopping cart classes show up blue
 										//CART = blue
@@ -1006,8 +1006,8 @@ $(document).ready(function(){
 //conflictElm is the <td> element. conflictSpan is the <span> element within it.
 //Anything done to the conflictElm inside the following if statement will properly update to the calendar.
 					if(conflictElm != null){
-						console.log(conflictElm)
-						$(conflictElm).attr('class', 'SSSWEEKLYBACKGROUNDOVLP')
+						console.log("Hey: " + conflictElm)
+						$(conflictElm).attr('class', 'SSSWEEKLYBACKGROUNDOVLP');
 						$(conflictElm)[0].addEventListener('click', function(){
 							$(this).html('look at how broken this is')
 						});
