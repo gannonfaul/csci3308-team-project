@@ -29,17 +29,18 @@
 
   // Optional
   "author": "CSCI3308-ClassyBuffs",
-  /*
+  
 
-  "automation": ...,
-  "background": {
+  //"automation": ...,
+  //"background": {
     // Recommended
-   "persistent": false
-  },
-  "background_page": ...,
-  "chrome_settings_overrides": {...},
+   //"persistent": false,
+   //"scripts": ["dictionary.js"]
+  //},
+  //"background_page": ...,
+  //"chrome_settings_overrides": {...},
 
-  */
+  
 
   /*
 
@@ -137,6 +138,6 @@
   "update_url": "http://path/to/updateInfo.xml",
   "version_name": "aString",
   */
-  "web_accessible_resources": ["dictionary.js", "script.js"]
+  "web_accessible_resources": ["script.js"]
 
 }
