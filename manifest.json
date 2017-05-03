@@ -17,7 +17,7 @@
     "default_icon": "Icon.png",
     "default_popup": "popup.html"
   },
-  
+
   */
 
   "browser_action": {
