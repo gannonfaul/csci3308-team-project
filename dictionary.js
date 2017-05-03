@@ -1,4 +1,4 @@
-exports.dictionary = {
+var prereqs = {
   'CSCI': {
     '4113': 'Requisites: Requires prerequisite course of CSCI 2400 (minimum grade C-).',
     '5573': 'Requisites: Requires prerequisite course of CSCI 2400 (minimum grade C). Restricted to Computer Science (CSEN) graduate students or Computer Science Concurrent Degree majors only.',
@@ -7637,3 +7637,5 @@ exports.dictionary = {
     '2010': 'None'
   }
 };
+
+//console.log("Dictionary loaded");

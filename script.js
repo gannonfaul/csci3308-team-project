@@ -1,11 +1,7 @@
 console.log('Script.js injected!');
 
 //Dictionary of prerequisites
-global.Data = {
-  Dictionary: require('./data/dictionary.js').dictionary
-};
-
-alert("working?")
+console.log(prereqs);
 
 
 // ***************************************
@@ -695,6 +691,10 @@ $(document).ready(function(){
 		var calendar = iframe.find('#SHOPPING_CART_SCHED_HTMLAREA');
 
 // Conflict Handling
+
+		if (conflictDict.length > 0){
+			alert("It seems you have a conflict! It is shown in red on the calendar, click to toggle between classes");
+		}
 
 		function getDayIndex(row, dayIndex){
 
