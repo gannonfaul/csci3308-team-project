@@ -7645,23 +7645,23 @@ var prereqs = {
 //           HELPER FUNCTIONS
 // ***************************************
 
-// FUNCTION: getFrame() accesses page data for us to manipulate
+// - FUNCTION: getFrame() accesses page data for us to manipulate
 function getFrame(){
 	return $("#ptifrmtgtframe").contents();
 }
 
-// FUNCTION: getNameParts() parses courses into departments and numbers
-// INPUT: ("PSCI 3020-001")
-// OUTPUT: [   "PSCI" ,  "3020"   ]
+// - FUNCTION: getNameParts() parses courses into departments and numbers
+// - INPUT: ("PSCI 3020-001")
+// - OUTPUT: [   "PSCI" ,  "3020"   ]
 function getNameParts(courseObj){
 	var department = courseObj.data.split(" ")[0];
 	var courseNumber = courseObj.data.replace("-"," ").split(" ")[1];
 	return [department, courseNumber]
 }
 
-// FUNCTION: getDaysandTime() parses course times into more usable pieces
-// INPUT: ("MoWeFr 2:00PM - 2:50PM")
-// OUTPUT: [    ["Mo, "We", "Fr"],   "2:00PM - 2:50PM",   [200, 300]    ]
+// - FUNCTION: getDaysandTime() parses course times into more usable pieces
+// - INPUT: ("MoWeFr 2:00PM - 2:50PM")
+// - OUTPUT: [    ["Mo, "We", "Fr"],   "2:00PM - 2:50PM",   [200, 300]    ]
 function getDaysandTime(timeText) {
 	var data = timeText.split(" ");
 	var days = data[0];
@@ -7743,7 +7743,7 @@ $(document).ready(function(){
 
 
 
-		// FUNCTION: sortShoppingCart() enables the sort function in myCUinfo to work correctly without breaking our script
+		// FUNCTION: - sortShoppingCart() enables the sort function in myCUinfo to work correctly without breaking our script
 		function sortShoppingCart(f,n, tableBody){
 			var rows = $(tableBody).find('tr').get();
 			console.log(tableBody)
@@ -7760,7 +7760,7 @@ $(document).ready(function(){
 			});
 
 
-			// FUNCTION: getVal() is a helper function that determines the desired order of shopping cart courses 
+			// - FUNCTION: getVal() is a helper function that determines the desired order of shopping cart courses 
 			function getVal(elm){
 				var v = -1
 				if (n == 7) { // Case Status
@@ -8210,9 +8210,9 @@ $(document).ready(function(){
 		calendar += "</div>"
 		calendar += "</div>"
 
-		// FUNCTION: timeInc() returns the correct incrementation for our time value
-		// INPUT: boolean
-		// OUTPUT: integer (30 or 70)
+		// - FUNCTION: timeInc() returns the correct incrementation for our time value
+		// - INPUT: boolean
+		// - OUTPUT: integer (30 or 70)
 		function timeInc(half){
 			if (half == false){
 				time_add = 30;
@@ -8223,9 +8223,9 @@ $(document).ready(function(){
 			return time_add;
 		}
 
-		// FUNCTION: civTime() formats time values into user-readable format
-		// INPUT: (1530, true)
-		// OUTPUT: "3:30 pm"
+		// - FUNCTION: civTime() formats time values into user-readable format
+		// - INPUT: (1530, true)
+		// - OUTPUT: "3:30 pm"
 		function civTime(time, half){
 			var civ_time = String(Math.floor(time/100));
 			if (time<1200){
@@ -8269,9 +8269,9 @@ $(document).ready(function(){
 			alert("It seems you have a conflict! It is shown in red on the calendar, click to toggle between classes");
 		}
 
-		// FUNCTION: getDayIndex() returns the proper index for a given calendar day and row
-		// INPUT: (tr, integer)
-		// OUTPUT: integer
+		// - FUNCTION: getDayIndex() returns the proper index for a given calendar day and row
+		// - INPUT: (tr, integer)
+		// - OUTPUT: integer
 		function getDayIndex(row, dayIndex){
 
 			var overwrittenDays = $(row).attr('overwrittendays')
