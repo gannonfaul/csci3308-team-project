@@ -610,7 +610,7 @@ $(document).ready(function(){
 								}else{
 									if(empty == false){ // Conflict where two courses start at the same time
 										if(conflictDict[i + ' ' + time] == undefined){
-											conflictDict[i + ' ' + time] = [course,prevEntry]
+											conflictDict[i + ' ' + time] = [prevEntry, course]
 										}else{
 											conflictDict[i + ' ' + time] = conflictDict[i + ' ' + time].concat(course)
 										}
