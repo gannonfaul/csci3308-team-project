@@ -19,3 +19,5 @@ To use, simply download the code from our repo, and follow the steps outlined he
 
 **Project Tracking software:** Trello
 * Link: https://trello.com/b/WbCF7xuU
+
+**Auto Documenter:** Docco 
