@@ -34,7 +34,7 @@
   "automation": ...,
   "background": {
     // Recommended
-    "persistent": false
+   "persistent": false
   },
   "background_page": ...,
   "chrome_settings_overrides": {...},
@@ -62,7 +62,7 @@
 
   "content_scripts": [
 	{"matches":["https://portal.prod.cu.edu/psp/epprod/UCB2/HRMS/c/SA_LEARNER_SERVICES.SSR_SSENRL_CART.GBL?Page=SSR_SSENRL_CART"],
-	"js":["content.js", "dictionary.js", "script.js"]
+	"js":["content.js"]
 }
   ],
 
